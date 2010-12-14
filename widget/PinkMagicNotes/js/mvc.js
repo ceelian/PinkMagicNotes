@@ -36,7 +36,7 @@ MVC.Helper.ServerAPI = (function () {
 	
 	/* private methods */
 	
-	_SERVICE_URL = './webService/....', 
+	_SERVICE_URL = './webService/notes_api.php', 
 
 	_sendRequest = function(parameter, callback, url){
 		if(typeof url == 'undefined')
@@ -65,4 +65,4 @@ MVC.Helper.ServerAPI = (function () {
 	
 	debug('MVC loaded');
 	return interFace;
-}());
+}();
