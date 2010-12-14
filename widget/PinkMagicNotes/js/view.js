@@ -55,7 +55,6 @@ MVC.View = (function (interFace, Controller, $) {
 
 		var tag_string = "{";
 		for(i = 0; i < pd.tags.length; i++) {
-			debug(pd.tags[i]);
 			tag_string += pd.tags[i];
 			if(i + 1 != pd.tags.length) {
 				tag_string += ", ";
