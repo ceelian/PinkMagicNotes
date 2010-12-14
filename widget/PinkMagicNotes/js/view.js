@@ -32,22 +32,40 @@ MVC.View = (function (interFace, Controller, $) {
 		});
 	};
 		
-	/* end of public methods */
-	
 	interFace.showNotesListView = function(pd) {
 		debug('View showUserInterestsData(): write the interests data into DOM and show the div containing interests data');
 		var html_code = "";
 		for(var key in pd.notes) {
 			var note = pd.notes[key];
-			/* call __() function to append the translated strings to DOM */
+			html_code += '<div id="' + key + '" class="list-item ui-corner-all ui-widget-content"><div class="list-item-icon"/><h2>' + note.title + '</h2><div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
+		}
+		
+		$('div#noteslist').empty();
+		$(html_code).appendTo('div#noteslist');
+		$("div#singlenoteview").hide();
+		$("div#listview").show();
+		_setDynamicClickEvents();
+	};
+
+	interFace.showDetailNotesView = function(pd) {
+		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
+		var html_code = "";
+		debug(pd);
+		/*
+		for(var key in pd.notes) {
+			var note = pd.notes[key];
 			html_code += '<div class="list-item ui-corner-all ui-widget-content"><div class="list-item-icon"/><h2>' + note.title + '</h2><div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
 		}
 		
 		$('div#noteslist').empty();
 		$(html_code).appendTo('div#noteslist');
 		$("div#listview").show();
+		*/
+		$("div#listview").hide();
+		$("div#singlenoteview").show();
 	};
-
+	
+	/* end of public methods */
 	
 	
 	
@@ -70,10 +88,22 @@ MVC.View = (function (interFace, Controller, $) {
 
 	_setClickEvents = function() {
 
-		debug('View _setClickEvents(): set click event for button#button_show_noteslistview');
+		debug('View _setClickEvents(): set click event for div#button_show_noteslistview');
 			$("button#button_show_noteslistview").click(function() {
 				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
 				Controller.notesListViewDataAsked();
+		});
+	},
+
+	_setDynamicClickEvents = function() {
+
+		debug('View _setClickEvents(): set click event for #id');
+
+		$('div#noteslist').children().each(function() {
+       			$(this).click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.notesDetailViewDataAsked($(this).attr("id"));
+			});
 		});
 	}; 
 

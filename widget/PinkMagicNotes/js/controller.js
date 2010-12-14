@@ -23,6 +23,15 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		);
         };
 	
+        interFace.notesDetailViewDataAsked = function(id) {
+                debug('Controller notesDetailViewDataAsked: get notes from Servics and let View append it to DOM');
+		Request.getSingleNote(id, 
+			function(interestsJsonData) {
+				debug("Controller notesDetailViewDataAsked: command the View to append the interests data into DOM.");
+				View.showDetailNotesView(interestsJsonData);
+			}
+		);
+        };
 	/* end of public methods */
 	
 	

@@ -34,6 +34,15 @@ MVC.Helper.ServerAPI = (function () {
                                 "action":'getAllNotes'
                         }
                         _sendRequest(param, callback);
+                },
+
+		getSingleNote: function(note_id, callback) {
+                        debug("Helper.ServerAPI getSingleNotes: send a xhr request to fetch a single notes from the web service");
+                        var param = {
+                                "notes_id":note_id,
+                                "action":'getSingleNote'
+                        }
+                        _sendRequest(param, callback);
                 }
 		
 		/* end of public methods */
