@@ -65,4 +65,4 @@ MVC.Helper.ServerAPI = (function () {
 	
 	debug('MVC loaded');
 	return interFace;
-}());
+}();
