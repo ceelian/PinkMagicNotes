@@ -54,9 +54,10 @@
 
 
 		<div id="listview">
-                    <div id="navbar_list_view" class="ui-corner-all ui-widget-content"> <button id="button_show_noteslistview" ><span lang="en">show notes</span></button>
+                    <div id="navbar_list_view" class="ui-corner-all ui-widget-content">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Add Note"><span class="ui-icon ui-icon-plus"></span></li>
+                                <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.notesListViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
                         </ul>
                     </div>
                     <div id="noteslist">
