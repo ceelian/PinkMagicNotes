@@ -48,8 +48,9 @@ textarea {
 
 }
 
-#noteslist .icon {
-    
+#noteslist {
+    height: 210px;
+    overflow:auto;
 }
 
 ul#icons {
@@ -60,4 +61,31 @@ ul#icons {
 ul#icons li {
      float: left;
      margin: 0 4px;
+}
+
+.list-item-icon{
+    width:32px;
+    height:32px;
+    float:left;
+    background-image: url('../pics/knotes_32.png');
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
+.list-item {
+    margin: 2px;
+    padding:7px;
+}
+
+
+.list-item h2{
+    /*float: left;*/
+    margin-bottom:0px;
+}
+
+.list-item-bgcolor {
+    width: 260px;
+    height: 5px;
+    clear: both;
+    margin: 0 auto;
 }
