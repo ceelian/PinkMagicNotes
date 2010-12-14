@@ -50,23 +50,27 @@ MVC.View = (function (interFace, Controller, $) {
 	interFace.showDetailNotesView = function(pd) {
 		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
 		var html_code = "";
-		debug(pd);
-		/*
-		for(var key in pd.notes) {
-			var note = pd.notes[key];
-			html_code += '<div class="list-item ui-corner-all ui-widget-content"><div class="list-item-icon"/><h2>' + note.title + '</h2><div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
+
+		$("input#title").val(pd.title);
+
+		var tag_string = "{";
+		for(i = 0; i < pd.tags.length; i++) {
+			debug(pd.tags[i]);
+			tag_string += pd.tags[i];
+			if(i + 1 != pd.tags.length) {
+				tag_string += ", ";
+			}
 		}
-		
-		$('div#noteslist').empty();
-		$(html_code).appendTo('div#noteslist');
-		$("div#listview").show();
-		*/
+		tag_string += "}";
+
+		$("input#tags").val(tag_string);
+		$("textarea#description").val(pd.content);
+
 		$("div#listview").hide();
 		$("div#singlenoteview").show();
 	};
 	
 	/* end of public methods */
-	
 	
 	
 	/* private methods */
