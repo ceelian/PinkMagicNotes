@@ -23,11 +23,14 @@
 				$response = NotesService::getAllNotes();
 			break;
 
-			case 'getSpecificNote':
-				if(!isset($_GET['notes_id']) || $_GET)
+			case 'getSingleNote':
+				if(!isset($_GET['notes_id']))
 					throw new Exception("Notes-ID is undefined.");
 				else
-					$response = NotesService::getSpecificNote($_GET['notes_id']);
+					$response = NotesService::getSingleNote($_GET['notes_id']);
+                    if($response==NULL) {
+                        throw new Exception("No Note was found for this ID");
+                    }
 			break;
 			
 			default:
@@ -75,16 +78,21 @@ class NotesService {
 		return self::readFileContent(self::$filename);
 	}
 
-    public static function getSpecificNote($note_id) {
+    public static function getSingleNote($note_id) {
         $content = self::readFileContent(self::$filename);
-        #$content = json_decode($content);
-        #$content = trim($content);
-        #echo $content;
-        #echo "after trim";
-        #echo $content;
-        #echo $content;
-        #$php_content = json_decode($content);
-        #echo $php_content;
+        
+        #$content = json_encode($content);
+        $php_content = json_decode($content,TRUE);
+        $notes = $php_content['notes'];
+        foreach ($notes as $key => $value) {
+            if ($key == $note_id) {
+                $result = json_encode($value);
+                break;
+            }
+        }
+        return $result;
+
+        #print $php_content->{'notes'};
     }
 }
 	
