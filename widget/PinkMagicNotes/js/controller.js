@@ -21,7 +21,6 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 				View.howNotesListView(interestsJsonData);
 			}
 		);
-                }
         };
 	
 	/* end of public methods */
@@ -40,7 +39,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		else {
 			View.init(null);
 		}
-    };
+    	};
 	
 	/* end of private methods */
 	
