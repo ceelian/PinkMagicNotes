@@ -1,0 +1,63 @@
+#notesedits {
+
+    padding:10px;
+}
+
+#color_picker{
+    list-style-image: none;
+    float:right;
+    margin:0 auto;
+    width:250px
+
+}
+
+#color_picker_box {
+    margin: 5px 0px;
+
+}
+
+#color_picker li{
+    display: inline;
+    margin: 0px 6px;
+}
+
+input {
+    
+    width: 80%;
+}
+
+textarea {
+    width:100%;
+    height: 140px;
+}
+
+.clrflt {
+    clear: both;
+}
+
+#singlenoteview {
+    height: 250px;
+    overflow:auto;
+}
+
+#singlenoteview h2{
+    margin:0px;
+    padding:0px;
+    margin: 0;
+    text-align: center;
+
+}
+
+#noteslist .icon {
+    
+}
+
+ul#icons {
+
+    list-style-image: none;
+}
+
+ul#icons li {
+     float: left;
+     margin: 0 4px;
+}
