@@ -2,10 +2,10 @@
 	xmlns:palette="http://palette.ercim.org/ns/"
 	width="300"
 	height="260"
-	id="MyWidget">
+	id="PinkMagicNotes">
 
-    <title>My Widget</title>
-	<author url="" email="">Your Name</author>
+    <title>NotitzZettel Widget</title>
+	<author url="" email="">PinkMagicNotes Team</author>
     <description>A Description for Your Widget</description>
 	<icon src="icon.png" width="16" height="16" />
 	<palette:preferences>
