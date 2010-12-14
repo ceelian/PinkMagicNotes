@@ -1,0 +1,17 @@
+<widget xmlns="http://www.w3.org/TR/widgets/"
+	xmlns:palette="http://palette.ercim.org/ns/"
+	width="300"
+	height="260"
+	id="MyWidget">
+
+    <title>My Widget</title>
+	<author url="" email="">Your Name</author>
+    <description>A Description for Your Widget</description>
+	<icon src="icon.png" width="16" height="16" />
+	<palette:preferences>
+		<palette:preference name="lang" display_name="Language" datatype="enumeration" default_value="de">
+			<palette:enumeration value="en" display_value="English"/>
+			<palette:enumeration value="de" display_value="Deutsch"/>
+		</palette:preference>
+	</palette:preferences>
+</widget>

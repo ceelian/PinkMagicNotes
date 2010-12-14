@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>My Widget</title>
+		
+		<!-- comment in the other css to try out the stylability -->
+		<!--<link type="text/css" href="./css/smoothness/jquery-ui-1.8.6.custom.css" rel="stylesheet" />-->
+		<link type="text/css" href="./css/ui-darkness/jquery-ui-1.8.6.custom.css" rel="stylesheet" />
+
+		<style type="text/css">
+			#errorContainer { display: none; }
+		</style>
+		
+		<!--embedding the jquery libraries-->
+		<script type="text/javascript" src="./libs/jquery-1.4.3.min.js"></script>
+		<script type="text/javascript" src="./libs/jquery-ui-1.8.6.custom.min.js"></script>
+		
+		<!--defining some helpful functions (before loading js files, debug is used there)-->
+		<script type="text/javascript">
+			//debug function
+			function debug(msg){
+				if(typeof parent != 'undefined' && typeof parent.debug != 'undefined')
+					parent.debug(msg);
+				else alert(msg);
+			}
+			
+			
+			//is called after the DOM tree is fully loaded
+			function onLoad(){
+				var lang = widget.preferenceForKey('lang');
+				MVC.Controller.init(lang);
+
+			}
+			
+		</script>
+		
+		<!--embedding code for the MVC pattern-->
+		<script type="text/javascript" src="./js/mvc.js"></script>
+		<script type="text/javascript" src="./js/model.js"></script>
+		<script type="text/javascript" src="./js/view.js"></script>
+		<script type="text/javascript" src="./js/controller.js"></script>
+	</head>
+	<body>
+		
+		<div class="ui-widget" id="errorContainer">
+			<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.5em;">
+				<p></p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;"></span>
+				<span id="notification"></span></p>
+			</div>
+		</div>
+		
+		<!-- your static html code if needed  -->
+		
+		
+		<!-- end of your static html code if needed  -->
+
+	</body>
+</html>
