@@ -15,10 +15,10 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 
         interFace.notesListViewDataAsked = function() {
                 debug('Controller notesListViewDataAsked: get notes from Servics and let View append it to the listview DOM');
-		Request.getNotes(
+		Request.getAllNotes(
 			function(interestsJsonData) {
 				debug("Controller notesListViewDataAsked: command the View to append the interests data into DOM.");
-				View.howNotesListView(interestsJsonData);
+				View.showNotesListView(interestsJsonData);
 			}
 		);
         };
