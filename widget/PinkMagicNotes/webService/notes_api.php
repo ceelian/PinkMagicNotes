@@ -10,6 +10,7 @@
  * - Errors can be server caused (internal server errors, connection timeouts, DB exceptions etc..)
  */
 
+    #$response = NotesService::getSpecificNote(1);
 	
 	$action = isset($_GET['action']) ? $_GET['action'] : '';
 	$response = "";
@@ -59,7 +60,7 @@
  */
 class NotesService {
     private static $filename = "notes.json";
-	private static function readfile($filename) {
+	private static function readFileContent($filename) {
                 $file = fopen($filename,"r");
                 $content = fread($file, filesize($filename));
                 fclose($file);
@@ -71,16 +72,16 @@ class NotesService {
 	}
 	
 	public static function getAllNotes() {
-		return readfile(self::$filename);
+		return self::readFileContent(self::$filename);
 	}
 
     public static function getSpecificNote($note_id) {
-        echo self::$filename;
-        $content = readfile(self::$filename);
-        echo "after readfile";
-        $content = trim($content);
-        echo $content;
-        echo "after trim";
+        $content = self::readFileContent(self::$filename);
+        #$content = json_decode($content);
+        #$content = trim($content);
+        #echo $content;
+        #echo "after trim";
+        #echo $content;
         #echo $content;
         #$php_content = json_decode($content);
         #echo $php_content;
