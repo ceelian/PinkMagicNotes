@@ -71,8 +71,8 @@ MVC.View = (function (interFace, Controller, $) {
 
 		debug('View _setClickEvents(): set click event for button#button_show_noteslistview');
 			$("button#button_show_noteslistview").click(function() {
-			debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
-		//Controller.userInterestsDataAsked();
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.notesListViewAsked();
 		});
 	}; 
 

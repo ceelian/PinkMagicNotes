@@ -12,6 +12,16 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	interFace.init = function(language) {
 		_init(language);
 	};
+
+        interFace.notesListViewDataAsked = function() {
+                debug('Controller notesListViewDataAsked: get notes from Servics and let View append it to the listview DOM');
+		Request.getNotes(
+			function(interestsJsonData) {
+				debug("Controller notesListViewDataAsked: command the View to append the interests data into DOM.");
+				View.howNotesListView(interestsJsonData);
+			}
+		);
+        };
 	
 	/* end of public methods */
 	
@@ -29,7 +39,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		else {
 			View.init(null);
 		}
-    };
+    	};
 	
 	/* end of private methods */
 	
