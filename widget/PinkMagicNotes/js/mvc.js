@@ -26,7 +26,15 @@ MVC.Helper.ServerAPI = (function () {
 
 		getTranslations: function(lang, callback) {
 			_sendRequest({}, callback, './locale/lang.'+lang);
-		}
+		},
+	
+		getAllNotes: function(callback) {
+                        debug("Helper.ServerAPI getAllNotes: send a xhr request to fetch all notes from the web service");
+                        var param = {
+                                "action":'getAllNotes'
+                        }
+                        _sendRequest(param, callback);
+                }
 		
 		/* end of public methods */
 	},
