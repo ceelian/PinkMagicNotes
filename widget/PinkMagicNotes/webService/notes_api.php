@@ -11,7 +11,7 @@
  */
 
     #$response = NotesService::getSpecificNote(1);
-	
+
 	$action = isset($_GET['action']) ? $_GET['action'] : '';
 	$response = "";
 
@@ -19,11 +19,11 @@
 	try{
 
 		switch($action) {
-			case 'getAllNotes'
+			case 'getAllNotes':
 				$response = NotesService::getAllNotes();
 			break;
 
-			case 'getSpecificNote'
+			case 'getSpecificNote':
 				if(!isset($_GET['notes_id']) || $_GET)
 					throw new Exception("Notes-ID is undefined.");
 				else
