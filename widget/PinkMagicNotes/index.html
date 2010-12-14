@@ -6,7 +6,8 @@
 		
 		<!-- comment in the other css to try out the stylability -->
 		<link type="text/css" href="./css/ui-darkness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />
-
+                <link type="text/css" href="./css/global.css" rel="stylesheet" />
+                
 		<style type="text/css">
 			#errorContainer { display: none; }
 		</style>
@@ -41,7 +42,7 @@
 		<script type="text/javascript" src="./js/controller.js"></script>
 	</head>
 	<body>
-		<button id="button_show_noteslistview"><span lang="en">show notes</span></button>
+		
 
 		<div class="ui-widget" id="errorContainer">
 			<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.5em;">
@@ -52,8 +53,8 @@
 
 
 
-		<div id="listview" class="ui-helper-hidden" >
-                    <div id="navbar_list_view"></div>
+		<div id="listview">
+                    <div id="navbar_list_view" class="ui-corner-all ui-widget-content"> <button id="button_show_noteslistview" ><span lang="en">show notes</span></button></div>
                     <div id="noteslist">
 		
 			<div class="list-item ui-corner-all ui-widget-content">
@@ -66,19 +67,27 @@
                     <div id="searchbox"></div>
 		</div>
 
-                <div id="singlenoteview">
-                    <div id="navbar_singlenoteview"></div>
+                <div id="singlenoteview" class="ui-helper-hidden">
+                    <div id="navbar_singlenoteview" class="ui-corner-all ui-widget-content">
+                       
+                    </div>
                     <div id="notesedits" class="ui-corner-all ui-widget-content">
                         <h2>Note</h2>
                         <div class="ui-widget">
                             <label for="title">Title: </label>
                             <input id="title">
                         </div>
-                        <div class="ui-widget">
-                            <label for="color">Color: </label>
-                            <ul id="color">
-                                <li></li>
+                        <div class="ui-widget" id="color_picker_box">
+                            <label for="color_picker">Color: </label>
+                            <ul id="color_picker">
+                                <li><img src="pics/color_red.png"></li>
+                                <li><img src="pics/color_orange.png"></li>
+                                <li><img src="pics/color_blue.png"></li>
+                                <li><img src="pics/color_yellow.png"></li>
+                                <li><img src="pics/color_green.png"></li>
+                                <li><img src="pics/color_no.png"></li>
                             </ul>
+                            <div class="clrflt"></div>
                         </div>
                         <div class="ui-widget">
                             <label for="tags">Tags: </label>
