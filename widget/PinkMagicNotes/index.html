@@ -54,7 +54,11 @@
 
 
 		<div id="listview">
-                    <div id="navbar_list_view" class="ui-corner-all ui-widget-content"> <button id="button_show_noteslistview" ><span lang="en">show notes</span></button></div>
+                    <div id="navbar_list_view" class="ui-corner-all ui-widget-content"> <button id="button_show_noteslistview" ><span lang="en">show notes</span></button>
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Add Note"><span class="ui-icon ui-icon-plus"></span></li>
+                        </ul>
+                    </div>
                     <div id="noteslist">
 		
 			<div class="list-item ui-corner-all ui-widget-content">
@@ -70,19 +74,23 @@
 		</div>
 
                 <div id="singlenoteview" class="ui-helper-hidden">
+
                     <div id="navbar_singlenoteview" class="ui-corner-all ui-widget-content">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
-                            <li class="ui-state-default ui-corner-all" title=".ui-icon-minus"><span class="ui-icon ui-icon-minus"></span></li>
-                            <li class="ui-state-default ui-corner-all" title=".ui-icon-folder-open"><span class="ui-icon ui-icon-folder-open"></span></li>
-                            <li class="ui-state-default ui-corner-all" title=".ui-icon-trash"><span class="ui-icon ui-icon-trash"></span></li>
+                            <li class="ui-state-default ui-corner-all" title="Add Note"><span class="ui-icon ui-icon-plus"></span></li>
+                            <li class="ui-state-default ui-corner-all" title="List View" onclick="alert('add SwitchToListView() Function here')"><span class="ui-icon ui-icon-folder-open"></span></li>
+                            <li class="ui-state-default ui-corner-all" title="Delete Note"><span class="ui-icon ui-icon-trash"></span></li>
                         </ul>
                     </div>
+
                     <div id="notesedits" class="ui-corner-all ui-widget-content">
                         <h2>Note</h2>
+
                         <div class="ui-widget">
                             <label for="title">Title: </label>
                             <input id="title">
                         </div>
+
                         <div class="ui-widget" id="color_picker_box">
                             <label for="color_picker">Color: </label>
                             <ul id="color_picker">
@@ -95,10 +103,12 @@
                             </ul>
                             <div class="clrflt"></div>
                         </div>
+
                         <div class="ui-widget">
                             <label for="tags">Tags: </label>
                             <input id="tags">
                         </div>
+
                         <div class="ui-widget">
                             <label for="description">Description: </label>
                             <textarea id="description"></textarea>

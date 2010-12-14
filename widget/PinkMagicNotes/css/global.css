@@ -48,6 +48,10 @@ textarea {
 
 }
 
+#navbar_singlenoteview {
+    margin: 2px 0px;
+}
+
 #noteslist {
     height: 210px;
     overflow:auto;
@@ -55,12 +59,14 @@ textarea {
 
 ul#icons {
 
-    list-style-image: none;
+margin:0;
+padding:5px;
 }
 
 ul#icons li {
      float: left;
      margin: 0 4px;
+     list-style: none;
 }
 
 .list-item-icon{
@@ -75,6 +81,12 @@ ul#icons li {
 .list-item {
     margin: 2px;
     padding:7px;
+}
+
+.list-item:hover {
+    background-color: gray;
+    background-image: none;
+    border: 4px white solid;
 }
 
 
