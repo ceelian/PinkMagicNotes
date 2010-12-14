@@ -10,7 +10,6 @@
  * - Errors can be server caused (internal server errors, connection timeouts, DB exceptions etc..)
  */
 	
-	
 	$action = isset($_GET['action']) ? $_GET['action'] : '';
 	$response = "";
 
@@ -18,8 +17,8 @@
 	try{
 
 		switch($action) {
-			case 'getXXXData'
-				// fill $response with node server
+			case 'getAllNotes'
+				$response = NotesService::getAllNotes();
 			break;
 			
 			default:
@@ -51,16 +50,20 @@
  * returns all responses as JSON
  */
 class NotesService {
+	private static function readfile($filename) {
+                $file = fopen($filename,"r");
+                $contents = fread($file, filesize($filename));
+                fclose($file);
+		return $contents;
+	}
+
 	private static function arrayToJson($arr) {
 		return json_encode($arr);
 	}
 	
-	public static function getXXXData() {
-		$xxx_data = array(
-			"id" => 1,
-			"text" => "I'm a Note"
-		);
-		return json_encode($xxx_data);
+	public static function getAllNotes() {
+		return readfile("notes.json");
+
 	}
 }
 	
