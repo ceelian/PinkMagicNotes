@@ -18,7 +18,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		Request.getAllNotes(
 			function(interestsJsonData) {
 				debug("Controller notesListViewDataAsked: command the View to append the interests data into DOM.");
-				View.howNotesListView(interestsJsonData);
+				View.showNotesListView(interestsJsonData);
 			}
 		);
         };
