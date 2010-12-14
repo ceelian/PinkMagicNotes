@@ -11,6 +11,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
     
 	interFace.init = function(language) {
 		_init(language);
+        this.notesListViewDataAsked();
 	};
 
         interFace.notesListViewDataAsked = function() {
