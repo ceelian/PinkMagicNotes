@@ -37,14 +37,14 @@ MVC.View = (function (interFace, Controller, $) {
 	interFace.showNotesListView = function(pd) {
 		debug('View showUserInterestsData(): write the interests data into DOM and show the div containing interests data');
 		var html_code = "";
-		for(var i=0; i<pd.length; i++) {
+		for(var key in pd.notes) {
+			var note = pd.notes[key];
 			/* call __() function to append the translated strings to DOM */
-			html_code += __(pd[i]) + ', ';
+			html_code += '<div class="list-item ui-corner-all ui-widget-content"><div class="list-item-icon"/><h2>' + note.title + '</h2><div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
 		}
-		if(html_code != "")
-			html_code = '<span>' +html_code.substr(0, html_code.length-2) +'</span>';
 		
-		$("div#listview").find('> p').html(html_code);
+		$('div#noteslist').empty();
+		$(html_code).appendTo('div#noteslist');
 		$("div#listview").show();
 	};
 
