@@ -67,6 +67,10 @@ MVC.View = (function (interFace, Controller, $) {
             $("input#end_date").val(pd.end_date);
         if (pd.reminder != null)
             $("input#reminder").val(pd.reminder);
+        if (pd.color != null) 
+            $("[name=color]").filter("[value="+pd.color+"]").attr("checked",true);
+        else
+            $("[name=color]").filter("[value=#FFFFFF]").attr("checked",true);
 		$("input#tags").val(tag_string);
 		$("textarea#description").val(pd.content);
         $("input#id").val(id);

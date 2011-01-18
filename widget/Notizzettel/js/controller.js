@@ -46,6 +46,15 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	
         interFace.notesAddNewNote = function() {
 
+            document.getElementById('location').value = "";
+            document.getElementById('description').value = "";
+            $("input[@name=color]:checked").attr('checked',false);
+            document.getElementById('title').value = "";
+            document.getElementById('start_date').value = "";
+            document.getElementById('end_date').value = "";
+            document.getElementById('reminder').value = "";
+            document.getElementById('tags').value = "";
+            document.getElementById('id').value="";
             debug('Controller notesAddNewNote: show form for adding a new note');
             View.showAddNote();
         };
