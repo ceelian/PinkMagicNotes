@@ -48,23 +48,29 @@ MVC.View = (function (interFace, Controller, $) {
 		_setDynamicClickEvents();
 	};
 
-	interFace.showDetailNotesView = function(pd) {
+	interFace.showDetailNotesView = function(pd,id) {
 		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
 		var html_code = "";
-
 		$("input#title").val(pd.title);
-
-		var tag_string = "{";
+		var tag_string = "[";
 		for(i = 0; i < pd.tags.length; i++) {
 			tag_string += pd.tags[i];
 			if(i + 1 != pd.tags.length) {
 				tag_string += ", ";
 			}
 		}
-		tag_string += "}";
-
+		tag_string += "]";
+        if (pd.location != null)
+            $("input#location").val(pd.location);
+        if (pd.start_date != null)
+            $("input#start_date").val(pd.start_date);
+        if (pd.end_date != null)
+            $("input#end_date").val(pd.end_date);
+        if (pd.reminder != null)
+            $("input#reminder").val(pd.reminder);
 		$("input#tags").val(tag_string);
 		$("textarea#description").val(pd.content);
+        $("input#id").val(id);
 
 		$("div#listview").hide();
 		$("div#tagcloudview").hide();

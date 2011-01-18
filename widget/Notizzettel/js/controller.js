@@ -29,7 +29,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		Request.getSingleNote(id, 
 			function(interestsJsonData) {
 				debug("Controller notesDetailViewDataAsked: command the View to append the interests data into DOM.");
-				View.showDetailNotesView(interestsJsonData);
+				View.showDetailNotesView(interestsJsonData,id);
 			}
 		);
         };
@@ -59,6 +59,47 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             debug('Controller notesAddNewNote: show form for adding a new note');
             View.showAddNote();
         };
+
+       interFace.notesReturnToListView = function() {
+            var id = document.getElementById('id').value;
+            var jsonObj = {};
+            jsonObj["location"] = document.getElementById('location').value;
+            jsonObj["content"] = document.getElementById('description').value;
+            jsonObj["color"] = $("input[@name=color]:checked").val();
+            jsonObj["title"] = document.getElementById('title').value;
+            jsonObj["start_date"] = document.getElementById('start_date').value;
+            jsonObj["end_date"] = document.getElementById('end_date').value;
+            jsonObj["reminder"] = document.getElementById('reminder').value;
+            var tags =  document.getElementById('tags').value;  
+            tags = tags.split(','); 
+            tags[0] = tags[0].substr(1);
+            tags[tags.length-1] = tags[tags.length-1].substr(0,tags[tags.length-1].length-1);
+            
+            for (var i = 0; i<tags.length; i++)  {
+                tags[i]=tags[i].replace(/^\s+|\s+$/g,"");
+            }    
+            jsonObj["tags"] = tags;
+            console.log(jsonObj["tags"]);
+            console.log(document.getElementById('tags').value);
+            json_string = JSON.stringify(jsonObj);
+            console.log(json_string);
+            debug('Controller notesReturnToListView: saving note');
+            Request.updateNote(id,json_string, function(interestsJsonData) {
+                debug('Controller notesReturnToListView: show list view');
+                
+
+            });
+            document.getElementById('location').value = "";
+            document.getElementById('description').value = "";
+            $("input[@name=color]:checked").attr('checked',false);
+            document.getElementById('title').value = "";
+            document.getElementById('start_date').value = "";
+            document.getElementById('end_date').value = "";
+            document.getElementById('reminder').value = "";
+            document.getElementById('tags').value = "";
+            document.getElementById('id').value="";
+            this.notesListViewDataAsked();
+        }
 	/* end of public methods */
 	
 	

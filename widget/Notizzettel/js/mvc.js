@@ -53,6 +53,15 @@ MVC.Helper.ServerAPI = (function () {
                         _sendRequest(param, callback);
                 },
 
+        updateNote: function(id, json_string,callback) {
+                        debug("Helper.ServerAPI updateNote: send a xhr request to update the actual note");
+                        var param = {
+                            "uuid":id,
+                            "json_note":json_string,
+                            "action":'updateNote'
+                        }
+                        _sendRequest(param,callback);
+        },
 		getNotesForTag: function(tag, callback) {
                         debug("Helper.ServerAPI getNotesForTag:: send a xhr request to fetch a notes by tag from the web service");
                         var param = {
