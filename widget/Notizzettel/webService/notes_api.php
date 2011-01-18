@@ -39,7 +39,16 @@
 					break;
 				case 'gettagsweightened':
 					$response = NotesService::getTagsWeightened();
-				break;
+					break;
+				case 'getnotesfortag':
+					if(!isset($_GET['tag']))
+						throw new Exception("Tag is undefined.");
+					else
+						$response = NotesService::getNotesForTag($_GET['tag']);
+					if($response==NULL) {
+						throw new Exception("No Note was found for this ID");
+					}
+					break;
 			
 				default:
 					// action is empty or not defined
@@ -178,6 +187,27 @@ class NotesService {
 			}
 		}
                 $result = json_encode($tags);
+		return $result;
+	}
+
+	public static function getNotesForTag($tag) {
+		$content = self::readFileContent(self::$filename);
+		$php_content = json_decode($content,TRUE);
+		$notes = $php_content['notes'];
+
+		foreach ($notes as $key => $value) {
+				$taglist = $value['tags'];
+				$found = false;
+				foreach($taglist as $stag) {
+					if(strcmp($tag, $stag) == 0) {
+						$found = true;
+					}
+				}
+				if(!$found) {
+					unset($notes[$key]);
+				}
+		}
+		$result = json_encode($notes);
 		return $result;
 	}
 

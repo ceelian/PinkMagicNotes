@@ -51,6 +51,15 @@ MVC.Helper.ServerAPI = (function () {
                                 "action":'getTagsWeightened'
                         }
                         _sendRequest(param, callback);
+                },
+
+		getNotesForTag: function(tag, callback) {
+                        debug("Helper.ServerAPI getNotesForTag:: send a xhr request to fetch a notes by tag from the web service");
+                        var param = {
+                                "tag":tag,
+                                "action":'getNotesForTag'
+                        }
+                        _sendRequest(param, callback);
                 }
 		
 		/* end of public methods */
