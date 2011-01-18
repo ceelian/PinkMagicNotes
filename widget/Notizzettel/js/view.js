@@ -72,7 +72,40 @@ MVC.View = (function (interFace, Controller, $) {
         $("input#id").val(id);
 
 		$("div#listview").hide();
+		$("div#tagcloudview").hide();
 		$("div#singlenoteview").show();
+	};
+
+	interFace.showTagCloudView = function(pd) {
+		debug('View showTagCloudView: write the interests data into DOM and show the div containing interests data');
+
+		$('div#tags').empty();
+		var html_code = "";
+
+		if(pd) {
+			html_code += "<ul>";
+			var max = 0;
+			for(var tag in pd) {
+				var cnt = pd[tag];
+				if(cnt > max) {
+					max = cnt;
+				}
+			}
+
+			var fac = 10 / max;
+			for(var tag in pd) {
+				var cnt_tmp = pd[tag];
+				var cnt = Math.round(cnt_tmp * fac);
+				html_code += '<li class="tag' + cnt + '"><a href="#">' + tag + '</a></li>';
+			}
+			html_code += "</ul>";
+		}
+
+		$(html_code).appendTo('div#tags');
+		$("div#singlenoteview").hide();
+		$("div#listview").hide();
+		$("div#tagcloudview").show();
+		$("input#title").val(pd.title);
 	};
 
     interFace.showAddNote = function() {
@@ -82,6 +115,7 @@ MVC.View = (function (interFace, Controller, $) {
         $("input#title").val("");
         $("textarea#description").val("");
         $("div#listview").hide();
+        $("div#tagcloudview").hide();
         $("div#singlenoteview").show();
     };
 	

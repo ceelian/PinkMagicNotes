@@ -18,9 +18,15 @@
 	
 		$action = isset($_GET['action']) ? $_GET['action'] : '';
 		$filename = isset($_GET['apikey']) ? $_GET['apikey'].".json" : $filename;
-
+		
 	
 		try{
+			if(filter_var($filename, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9]+\.json$/"))) === false) {
+				throw new Exception("APIKEY is syntactically wrong.");
+			}
+			if (!file_exists($filename)) {
+				throw new Exception("APIKEY is wrong.");
+			}
 			$action = strtolower($action);
 			switch($action) {
 				case 'getallnotes':
@@ -37,12 +43,22 @@
 					}
 					break;
 				case 'gettagsweightened':
-					$response = NotesService::getTagsWeightened();
+					$response = NotesService::getTagsWeightened($filename);
 				break;
 
                 case 'updatenote': 
 					$uuid = isset($_GET['uuid']) ? $_GET['uuid'] : '';
 					$response = NotesService::updateNote($uuid,$_GET['json_note'],$filename);
+					
+					break;
+				case 'getnotesfortag':
+					if(!isset($_GET['tag']))
+						throw new Exception("Tag is undefined.");
+					else
+						$response = NotesService::getNotesForTag($_GET['tag'],$filename);
+					if($response==NULL) {
+						throw new Exception("No Note was found for this ID");
+					}
 					break;
 			
 				default:
@@ -60,6 +76,12 @@
 		$action = isset($_POST['action']) ? $_POST['action'] : '';
 		$filename = isset($_POST['apikey']) ? $_POST['apikey'].".json" : $filename;
 		try{
+			if(filter_var($filename, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9]+\.json$/"))) === false) {
+				throw new Exception("APIKEY is syntactically wrong.");
+			}
+			if (!file_exists($filename)) {
+				throw new Exception("APIKEY is wrong.");
+			}
 			$action = strtolower($action);
 			switch($action) {
 				case 'updatenote': 
@@ -193,6 +215,27 @@ class NotesService {
 			}
 		}
                 $result = json_encode($tags);
+		return $result;
+	}
+
+	public static function getNotesForTag($tag, $filename) {
+		$content = self::readFileContent($filename);
+		$php_content = json_decode($content,TRUE);
+		$notes = $php_content['notes'];
+
+		foreach ($notes as $key => $value) {
+				$taglist = $value['tags'];
+				$found = false;
+				foreach($taglist as $stag) {
+					if(strcmp($tag, $stag) == 0) {
+						$found = true;
+					}
+				}
+				if(!$found) {
+					unset($notes[$key]);
+				}
+		}
+		$result = json_encode($notes);
 		return $result;
 	}
 

@@ -11,7 +11,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
     
 	interFace.init = function(language) {
 		_init(language);
-        this.notesListViewDataAsked();
+		this.notesListViewDataAsked();
 	};
 
         interFace.notesListViewDataAsked = function() {
@@ -34,6 +34,16 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		);
         };
         
+        interFace.tagCloudViewDataAsked = function() {
+                debug('Controller tagCloudViewDataAsked: get notes from Servics and let View append it to the tagcloud DOM');
+		Request.getTagsWeightened(
+			function(interestsJsonData) {
+				debug("Controller tagCloudViewDataAsked: command the View to append the interests data into DOM.");
+				View.showTagCloudView(interestsJsonData);
+			}
+		);
+        };
+	
         interFace.notesAddNewNote = function() {
 
             debug('Controller notesAddNewNote: show form for adding a new note');
