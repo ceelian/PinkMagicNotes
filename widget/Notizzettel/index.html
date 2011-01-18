@@ -7,6 +7,7 @@
 		<!-- comment in the other css to try out the stylability -->
 		<link type="text/css" href="./css/ui-darkness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />
                 <link type="text/css" href="./css/global.css" rel="stylesheet" />
+                <link type="text/css" href="./css/tagclouds.css" rel="stylesheet" />
                 
 		<style type="text/css">
 			#errorContainer { display: none; }
@@ -15,6 +16,7 @@
 		<!--embedding the jquery libraries-->
 		<script type="text/javascript" src="./libs/jquery-1.4.4.min.js"></script>
 		<script type="text/javascript" src="./libs/jquery-ui-1.8.7.custom.min.js"></script>
+		<script type="text/javascript" src="./libs/tinysort.js"></script>
 		
 		<!--defining some helpful functions (before loading js files, debug is used there)-->
 		<script type="text/javascript">
@@ -121,6 +123,19 @@
 
                     <div id="searchbox"></div>
 		</div>
+
+		<div id="tagcloudview">
+                    <div id="navbar_tagcloud_view" class="ui-corner-all ui-widget-content">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Add Note" onclick="MVC.Controller.notesAddNewNote();"><span class="ui-icon ui-icon-plus"></span></li>
+                                <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
+                        </ul>
+                    </div>
+                    <div id="tags">
+		
+                    </div>
+		</div>
+
 
 		<!-- your static html code if needed  -->
 	
