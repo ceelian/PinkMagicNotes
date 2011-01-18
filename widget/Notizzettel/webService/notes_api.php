@@ -18,9 +18,15 @@
 	
 		$action = isset($_GET['action']) ? $_GET['action'] : '';
 		$filename = isset($_GET['apikey']) ? $_GET['apikey'].".json" : $filename;
-
+		
 	
 		try{
+			if(filter_var($filename, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9]+\.json$/"))) === false) {
+				throw new Exception("APIKEY is syntactically wrong.");
+			}
+			if (!file_exists($filename)) {
+				throw new Exception("APIKEY is wrong.");
+			}
 			$action = strtolower($action);
 			switch($action) {
 				case 'getallnotes':
@@ -55,6 +61,12 @@
 		$action = isset($_POST['action']) ? $_POST['action'] : '';
 		$filename = isset($_POST['apikey']) ? $_POST['apikey'].".json" : $filename;
 		try{
+			if(filter_var($filename, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9]+\.json$/"))) === false) {
+				throw new Exception("APIKEY is syntactically wrong.");
+			}
+			if (!file_exists($filename)) {
+				throw new Exception("APIKEY is wrong.");
+			}
 			$action = strtolower($action);
 			switch($action) {
 				case 'updatenote': 
