@@ -235,8 +235,9 @@ class NotesService {
 					unset($notes[$key]);
 				}
 		}
-		$result = json_encode($notes);
-		return $result;
+		$php_content['notes'] = $notes;
+        	$content = self::arrayToJson($php_content);
+		return $content;
 	}
 
 	/**

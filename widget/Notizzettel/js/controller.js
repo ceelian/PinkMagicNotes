@@ -43,6 +43,16 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 			}
 		);
         };
+
+        interFace.tagCloudSelectedViewDataAsked = function(tag) {
+                debug('Controller tagCloudViewDataAsked: get notes from Servics and let View append it to the tagcloud DOM');
+		Request.getNotesForTag(tag,
+			function(interestsJsonData) {
+				debug("Controller tagCloudViewDataAsked: command the View to append the interests data into DOM.");
+				View.showNotesListView(interestsJsonData);
+			}
+		);
+        };
 	
         interFace.notesAddNewNote = function() {
 
