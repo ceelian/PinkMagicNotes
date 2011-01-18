@@ -33,10 +33,13 @@
 						throw new Exception("Notes-ID is undefined.");
 					else
 						$response = NotesService::getSingleNote($_GET['notes_id']);
-		            if($response==NULL) {
-		                throw new Exception("No Note was found for this ID");
-		            }
+					if($response==NULL) {
+						throw new Exception("No Note was found for this ID");
+					}
 					break;
+				case 'gettagsweightened':
+					$response = NotesService::getTagsWeightened();
+				break;
 			
 				default:
 					// action is empty or not defined
@@ -89,28 +92,28 @@
  * returns all responses as JSON
  */
 class NotesService {
-    private static $filename = "notes.json";
-	private static function readFileContent($filename) {
-                $file = fopen($filename,"r");
-                $content = fread($file, filesize($filename));
-                fclose($file);
-		        return $content;
+	private static $filename = "notes.json";
+		private static function readFileContent($filename) {
+			$file = fopen($filename,"r");
+			$content = fread($file, filesize($filename));
+			fclose($file);
+			return $content;
 	}
 
-    private static function writeFileContent($filename, $content) {
-                $file = fopen($filename,"w");
-                fwrite($file, $content);
-                fclose($file);
-        
-    }
+	private static function writeFileContent($filename, $content) {
+		$file = fopen($filename,"w");
+		fwrite($file, $content);
+		fclose($file);
+	}
 
 	private static function arrayToJson($arr) {
-		return json_encode($arr);
+		return self::json_format(json_encode($arr));
 	}
 	
 	public static function getAllNotes() {
 		return self::readFileContent(self::$filename);
 	}
+
 
     public static function getSingleNote($note_id) {
         $content = self::readFileContent(self::$filename);
@@ -141,9 +144,10 @@ class NotesService {
             }
         }
         $php_content['notes'] = $notes;
-        $content = json_encode($php_content);
+        $content = self::arrayToJson($php_content);
         self::writeFileContent(self::$filename, $content);
     }
+
 
 	public static function updateNote($uuid, $json_note){
 		
@@ -151,11 +155,35 @@ class NotesService {
 		$php_content = json_decode($content,TRUE);
 		$notes = $php_content['notes'];
 		if ($uuid == '') $uuid = self::uuid();
+		//error_log($json_note);
 		$new_note = json_decode($json_note,TRUE);
 		$notes[$uuid] = $new_note;
-		print $new_note;
-		return self::arrayToJson($notes);
+		//#rint $new_note;
+		$content = self::arrayToJson($notes);
+		self::writeFileContent(self::$filename, $content);
 	
+	}
+
+	public static function getTagsWeightened() {
+        	$content = self::readFileContent(self::$filename);
+		$php_content = json_decode($content,TRUE);
+		$notes = $php_content['notes'];
+
+		$tags=array();
+		foreach ($notes as $key => $value) {
+			$taglist = $value['tags'];
+			foreach ($taglist as $tag) {
+				if(array_key_exists($tag, $tags)) {
+					$val = $tags[$tag];
+					$val = $val + 1;
+					$tags[$tag] = $val;
+				} else {
+					$tags[$tag] = 1;
+				}
+			}
+		}
+                $result = json_encode($tags);
+		return $result;
 	}
 
 	/**
@@ -202,6 +230,84 @@ class NotesService {
 		    mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535) // 48 bits for "node" 
 		); 
 	}
+
+	private static function json_format($json)
+	{
+		$tab = "  ";
+		$new_json = "";
+		$indent_level = 0;
+		$in_string = false;
+
+		$json_obj = json_decode($json);
+
+		if($json_obj === false)
+		    return false;
+
+		$json = json_encode($json_obj);
+		$len = strlen($json);
+
+		for($c = 0; $c < $len; $c++)
+		{
+		    $char = $json[$c];
+		    switch($char)
+		    {
+		        case '{':
+		        case '[':
+		            if(!$in_string)
+		            {
+		                $new_json .= $char . "\n" . str_repeat($tab, $indent_level+1);
+		                $indent_level++;
+		            }
+		            else
+		            {
+		                $new_json .= $char;
+		            }
+		            break;
+		        case '}':
+		        case ']':
+		            if(!$in_string)
+		            {
+		                $indent_level--;
+		                $new_json .= "\n" . str_repeat($tab, $indent_level) . $char;
+		            }
+		            else
+		            {
+		                $new_json .= $char;
+		            }
+		            break;
+		        case ',':
+		            if(!$in_string)
+		            {
+		                $new_json .= ",\n" . str_repeat($tab, $indent_level);
+		            }
+		            else
+		            {
+		                $new_json .= $char;
+		            }
+		            break;
+		        case ':':
+		            if(!$in_string)
+		            {
+		                $new_json .= ": ";
+		            }
+		            else
+		            {
+		                $new_json .= $char;
+		            }
+		            break;
+		        case '"':
+		            if($c > 0 && $json[$c-1] != '\\')
+		            {
+		                $in_string = !$in_string;
+		            }
+		        default:
+		            $new_json .= $char;
+		            break;                   
+		    }
+		}
+
+		return $new_json;
+	} 
 }
 	
 ?>
