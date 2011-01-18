@@ -68,6 +68,16 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#listview").hide();
 		$("div#singlenoteview").show();
 	};
+
+    interFace.showAddNote = function() {
+
+        debug('View showAddNote: display the form');
+        $("input#tags").val("");
+        $("input#title").val("");
+        $("textarea#description").val("");
+        $("div#listview").hide();
+        $("div#singlenoteview").show();
+    };
 	
 	/* end of public methods */
 	

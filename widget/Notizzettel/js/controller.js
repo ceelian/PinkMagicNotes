@@ -33,6 +33,12 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 			}
 		);
         };
+        
+        interFace.notesAddNewNote = function() {
+
+            debug('Controller notesAddNewNote: show form for adding a new note');
+            View.showAddNote();
+        };
 	/* end of public methods */
 	
 	
