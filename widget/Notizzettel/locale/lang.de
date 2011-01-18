@@ -4,6 +4,6 @@
 	"Title": "Titel",
 	"Color": "Farbe",
 	"Tags": "Schlagworte",
-	"Description": "Beschreibung"
-    "Location": "Ort"
+	"Description": "Beschreibung",
+	"Location": "Ort"
 }
