@@ -39,6 +39,11 @@
 				case 'gettagsweightened':
 					$response = NotesService::getTagsWeightened();
 				break;
+
+                case 'updatenote': 
+					$uuid = isset($_GET['uuid']) ? $_GET['uuid'] : '';
+					$response = NotesService::updateNote($uuid,$_GET['json_note'],$filename);
+					break;
 			
 				default:
 					// action is empty or not defined
@@ -166,7 +171,7 @@ class NotesService {
 		$php_content['notes']=$notes;
 		$content = self::arrayToJson($php_content);
 		self::writeFileContent($filename, $content);
-	
+	    return $content;
 	}
 
 	public static function getTagsWeightened($filename) {

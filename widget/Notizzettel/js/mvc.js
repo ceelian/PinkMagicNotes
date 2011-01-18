@@ -51,6 +51,16 @@ MVC.Helper.ServerAPI = (function () {
                                 "action":'getTagsWeightened'
                         }
                         _sendRequest(param, callback);
+                },
+
+        updateNote: function(id, json_string,callback) {
+                        debug("Helper.ServerAPI updateNote: send a xhr request to update the actual note");
+                        var param = {
+                            "uuid":id,
+                            "json_note":json_string,
+                            "action":'updateNote'
+                        }
+                        _sendRequest(param,callback);
                 }
 		
 		/* end of public methods */
