@@ -32,6 +32,10 @@
                         throw new Exception("No Note was found for this ID");
                     }
 			break;
+
+			case 'getTagsWeightened':
+				$response = NotesService::getTagsWeightened();
+			break;
 			
 			default:
 				// action is empty or not defined
@@ -94,6 +98,28 @@ class NotesService {
 
         #print $php_content->{'notes'};
     }
+
+	public static function getTagsWeightened() {
+        	$content = self::readFileContent(self::$filename);
+		$php_content = json_decode($content,TRUE);
+		$notes = $php_content['notes'];
+
+		$tags=array();
+		foreach ($notes as $key => $value) {
+			$taglist = $value['tags'];
+			foreach ($taglist as $tag) {
+				if(array_key_exists($tag, $tags)) {
+					$val = $tags[$tag];
+					$val = $val + 1;
+					$tags[$tag] = $val;
+				} else {
+					$tags[$tag] = 1;
+				}
+			}
+		}
+                $result = json_encode($tags);
+		return $result;
+	}
 }
 	
 ?>

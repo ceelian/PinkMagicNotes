@@ -43,6 +43,14 @@ MVC.Helper.ServerAPI = (function () {
                                 "action":'getSingleNote'
                         }
                         _sendRequest(param, callback);
+                },
+
+		getTagsWeightened: function(callback) {
+                        debug("Helper.ServerAPI getTagsWeightened: send a xhr request to fetch all tags from the web service");
+                        var param = {
+                                "action":'getTagsWeightened'
+                        }
+                        _sendRequest(param, callback);
                 }
 		
 		/* end of public methods */
