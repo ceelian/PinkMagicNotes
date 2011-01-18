@@ -116,44 +116,47 @@ class NotesService {
 	}
 
 	private static function arrayToJson($arr) {
-		return json_encode($arr);
+		return self::json_format(json_encode($arr));
 	}
 	
 	public static function getAllNotes() {
 		return self::readFileContent(self::$filename);
 	}
 
-	public static function getSingleNote($note_id) {
-		$content = self::readFileContent(self::$filename);
 
-		#$content = json_encode($content);
-		$php_content = json_decode($content,TRUE);
-		$notes = $php_content['notes'];
-		foreach ($notes as $key => $value) {
-			if ($key == $note_id) {
-				$result = json_encode($value);
-				break;
-			}
-		}
-		return $result;
+    public static function getSingleNote($note_id) {
+        $content = self::readFileContent(self::$filename);
+        
+        #$content = json_encode($content);
+        $php_content = json_decode($content,TRUE);
+        $notes = $php_content['notes'];
+        foreach ($notes as $key => $value) {
+            if ($key == $note_id) {
+                $result = json_encode($value);
+                break;
+            }
+        }
+        return $result;
 
-		#print $php_content->{'notes'};
-	}
+        #print $php_content->{'notes'};
+    }
 
-	public static function deleteNote($note_id) {
-		$content = self::readFileContent(self::$filename);
-		print_r($content);
-		$php_content = json_decode($content, TRUE);
-		$notes = $php_content['notes'];
-		foreach ($notes as $key => $value) {
-			if ($key == $note_id) {
-				unset($notes[$key]);
-			}
-		}
-		$php_content['notes'] = $notes;
-		$content = json_encode($php_content);
-		self::writeFileContent(self::$filename, $content);
-	}
+
+    public static function deleteNote($note_id) {
+        $content = self::readFileContent(self::$filename);
+        print_r($content);
+        $php_content = json_decode($content, TRUE);
+        $notes = $php_content['notes'];
+        foreach ($notes as $key => $value) {
+            if ($key == $note_id) {
+                unset($notes[$key]);
+            }
+        }
+        $php_content['notes'] = $notes;
+        $content = self::arrayToJson($php_content);
+        self::writeFileContent(self::$filename, $content);
+    }
+
 
 	public static function updateNote($uuid, $json_note){
 		
@@ -161,10 +164,12 @@ class NotesService {
 		$php_content = json_decode($content,TRUE);
 		$notes = $php_content['notes'];
 		if ($uuid == '') $uuid = self::uuid();
+		//error_log($json_note);
 		$new_note = json_decode($json_note,TRUE);
 		$notes[$uuid] = $new_note;
-		print $new_note;
-		return self::arrayToJson($notes);
+		//#rint $new_note;
+		$content = self::arrayToJson($notes);
+		self::writeFileContent(self::$filename, $content);
 	
 	}
 
@@ -255,6 +260,84 @@ class NotesService {
 		    mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535) // 48 bits for "node" 
 		); 
 	}
+
+	private static function json_format($json)
+	{
+		$tab = "  ";
+		$new_json = "";
+		$indent_level = 0;
+		$in_string = false;
+
+		$json_obj = json_decode($json);
+
+		if($json_obj === false)
+		    return false;
+
+		$json = json_encode($json_obj);
+		$len = strlen($json);
+
+		for($c = 0; $c < $len; $c++)
+		{
+		    $char = $json[$c];
+		    switch($char)
+		    {
+		        case '{':
+		        case '[':
+		            if(!$in_string)
+		            {
+		                $new_json .= $char . "\n" . str_repeat($tab, $indent_level+1);
+		                $indent_level++;
+		            }
+		            else
+		            {
+		                $new_json .= $char;
+		            }
+		            break;
+		        case '}':
+		        case ']':
+		            if(!$in_string)
+		            {
+		                $indent_level--;
+		                $new_json .= "\n" . str_repeat($tab, $indent_level) . $char;
+		            }
+		            else
+		            {
+		                $new_json .= $char;
+		            }
+		            break;
+		        case ',':
+		            if(!$in_string)
+		            {
+		                $new_json .= ",\n" . str_repeat($tab, $indent_level);
+		            }
+		            else
+		            {
+		                $new_json .= $char;
+		            }
+		            break;
+		        case ':':
+		            if(!$in_string)
+		            {
+		                $new_json .= ": ";
+		            }
+		            else
+		            {
+		                $new_json .= $char;
+		            }
+		            break;
+		        case '"':
+		            if($c > 0 && $json[$c-1] != '\\')
+		            {
+		                $in_string = !$in_string;
+		            }
+		        default:
+		            $new_json .= $char;
+		            break;                   
+		    }
+		}
+
+		return $new_json;
+	} 
 }
 	
 ?>
