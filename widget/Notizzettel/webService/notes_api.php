@@ -128,6 +128,7 @@ class NotesService {
 		$php_content = json_decode($content,TRUE);
 		$notes = $php_content['notes'];
 		if ($uuid == '') $uuid = self::uuid();
+		error_log($json_note);
 		$new_note = json_decode($json_note,TRUE);
 		$notes[$uuid] = $new_note;
 		print $new_note;
