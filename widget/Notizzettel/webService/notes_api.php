@@ -33,9 +33,9 @@
 						throw new Exception("Notes-ID is undefined.");
 					else
 						$response = NotesService::getSingleNote($_GET['notes_id']);
-		            if($response==NULL) {
-		                throw new Exception("No Note was found for this ID");
-		            }
+					if($response==NULL) {
+						throw new Exception("No Note was found for this ID");
+					}
 					break;
 				case 'gettagsweightened':
 					$response = NotesService::getTagsWeightened();
@@ -92,20 +92,19 @@
  * returns all responses as JSON
  */
 class NotesService {
-    private static $filename = "notes.json";
-	private static function readFileContent($filename) {
-                $file = fopen($filename,"r");
-                $content = fread($file, filesize($filename));
-                fclose($file);
-		        return $content;
+	private static $filename = "notes.json";
+		private static function readFileContent($filename) {
+			$file = fopen($filename,"r");
+			$content = fread($file, filesize($filename));
+			fclose($file);
+			return $content;
 	}
 
-    private static function writeFileContent($filename, $content) {
-                $file = fopen($filename,"w");
-                fwrite($file, $content);
-                fclose($file);
-        
-    }
+	private static function writeFileContent($filename, $content) {
+		$file = fopen($filename,"w");
+		fwrite($file, $content);
+		fclose($file);
+	}
 
 	private static function arrayToJson($arr) {
 		return json_encode($arr);
@@ -115,37 +114,37 @@ class NotesService {
 		return self::readFileContent(self::$filename);
 	}
 
-    public static function getSingleNote($note_id) {
-        $content = self::readFileContent(self::$filename);
-        
-        #$content = json_encode($content);
-        $php_content = json_decode($content,TRUE);
-        $notes = $php_content['notes'];
-        foreach ($notes as $key => $value) {
-            if ($key == $note_id) {
-                $result = json_encode($value);
-                break;
-            }
-        }
-        return $result;
+	public static function getSingleNote($note_id) {
+		$content = self::readFileContent(self::$filename);
 
-        #print $php_content->{'notes'};
-    }
+		#$content = json_encode($content);
+		$php_content = json_decode($content,TRUE);
+		$notes = $php_content['notes'];
+		foreach ($notes as $key => $value) {
+			if ($key == $note_id) {
+				$result = json_encode($value);
+				break;
+			}
+		}
+		return $result;
 
-    public static function deleteNote($note_id) {
-        $content = self::readFileContent(self::$filename);
-        print_r($content);
-        $php_content = json_decode($content, TRUE);
-        $notes = $php_content['notes'];
-        foreach ($notes as $key => $value) {
-            if ($key == $note_id) {
-                unset($notes[$key]);
-            }
-        }
-        $php_content['notes'] = $notes;
-        $content = json_encode($php_content);
-        self::writeFileContent(self::$filename, $content);
-    }
+		#print $php_content->{'notes'};
+	}
+
+	public static function deleteNote($note_id) {
+		$content = self::readFileContent(self::$filename);
+		print_r($content);
+		$php_content = json_decode($content, TRUE);
+		$notes = $php_content['notes'];
+		foreach ($notes as $key => $value) {
+			if ($key == $note_id) {
+				unset($notes[$key]);
+			}
+		}
+		$php_content['notes'] = $notes;
+		$content = json_encode($php_content);
+		self::writeFileContent(self::$filename, $content);
+	}
 
 	public static function updateNote($uuid, $json_note){
 		
