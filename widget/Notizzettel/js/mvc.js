@@ -61,6 +61,7 @@ MVC.Helper.ServerAPI = (function () {
                             "action":'updateNote'
                         }
                         _sendRequest(param,callback);
+        },
 		getNotesForTag: function(tag, callback) {
                         debug("Helper.ServerAPI getNotesForTag:: send a xhr request to fetch a notes by tag from the web service");
                         var param = {

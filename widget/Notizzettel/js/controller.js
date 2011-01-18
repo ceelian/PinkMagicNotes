@@ -87,6 +87,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             document.getElementById('end_date').value = "";
             document.getElementById('reminder').value = "";
             document.getElementById('tags').value = "";
+            document.getElementById('id').value="";
             this.notesListViewDataAsked();
         }
 	/* end of public methods */
