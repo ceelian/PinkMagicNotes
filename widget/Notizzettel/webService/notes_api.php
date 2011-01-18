@@ -179,6 +179,7 @@ class NotesService {
 		}
                 $result = json_encode($tags);
 		return $result;
+	}
 
 	/**
 	 * Generates a Universally Unique IDentifier, version 4.
