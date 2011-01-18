@@ -1,3 +1,8 @@
 {
-	"id": "de"
+	"id": "de",
+	"Note": "Notiz",
+	"Title": "Titel",
+	"Color": "Farbe",
+	"Tags": "Schlagworte",
+	"Description": "Beschreibung"
 }
