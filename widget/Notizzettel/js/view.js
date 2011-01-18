@@ -91,8 +91,6 @@ MVC.View = (function (interFace, Controller, $) {
 				var cnt_tmp = pd[tag];
 				var cnt = Math.round(cnt_tmp * fac);
 				html_code += '<li class="tag' + cnt + '"><a href="#">' + tag + '</a></li>';
-				debug(tag);
-				debug(cnt);
 			}
 			html_code += "</ul>";
 		}
