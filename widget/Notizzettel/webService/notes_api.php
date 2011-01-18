@@ -10,7 +10,7 @@
  * - Errors can be server caused (internal server errors, connection timeouts, DB exceptions etc..)
  */
 
-    #$response = NotesService::getSpecificNote(1);
+    //$response = NotesService::deleteNote('e46613l5-283e-4968-9df9-4081d0beba6a');
 
 	$action = isset($_GET['action']) ? $_GET['action'] : '';
 	$response = "";
@@ -70,6 +70,13 @@ class NotesService {
 		        return $content;
 	}
 
+    private static function writeFileContent($filename, $content) {
+                $file = fopen($filename,"w");
+                fwrite($file, $content);
+                fclose($file);
+        
+    }
+
 	private static function arrayToJson($arr) {
 		return json_encode($arr);
 	}
@@ -93,6 +100,21 @@ class NotesService {
         return $result;
 
         #print $php_content->{'notes'};
+    }
+
+    public static function deleteNote($note_id) {
+        $content = self::readFileContent(self::$filename);
+        print_r($content);
+        $php_content = json_decode($content, TRUE);
+        $notes = $php_content['notes'];
+        foreach ($notes as $key => $value) {
+            if ($key == $note_id) {
+                unset($notes[$key]);
+            }
+        }
+        $php_content['notes'] = $notes;
+        $content = json_encode($php_content);
+        self::writeFileContent(self::$filename, $content);
     }
 }
 	
