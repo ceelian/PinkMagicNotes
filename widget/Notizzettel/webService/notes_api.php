@@ -119,7 +119,7 @@ class NotesService {
 
 
     public static function getSingleNote($note_id,$filename) {
-        $content = self::readFileContent(self::$filename);
+        $content = self::readFileContent($filename);
         
         #$content = json_encode($content);
         $php_content = json_decode($content,TRUE);
