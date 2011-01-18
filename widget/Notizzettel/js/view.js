@@ -157,7 +157,7 @@ MVC.View = (function (interFace, Controller, $) {
 
 	_setDynamicClickEvents = function() {
 
-		debug('View _setClickEvents(): set click event for #id');
+		debug('View _setDynamicClickEvents(): set click event for #id');
 
 		$('div#noteslist').children().each(function() {
        			$(this).click(function() {
