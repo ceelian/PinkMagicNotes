@@ -10,29 +10,28 @@
  * - Errors can be server caused (internal server errors, connection timeouts, DB exceptions etc..)
  */
 
-    #$response = NotesService::getSpecificNote(1);
-	error_log("METHOD: ".$_SERVER['REQUEST_METHOD']);
+	$filename = "notes.json";
 
 	$response = "";
 	if ($_SERVER['REQUEST_METHOD'] == 'GET')
 	{
 	
 		$action = isset($_GET['action']) ? $_GET['action'] : '';
-	
+		$filename = isset($_GET['apikey']) ? $_GET['apikey'].".json" : $filename;
 
 	
 		try{
 			$action = strtolower($action);
 			switch($action) {
 				case 'getallnotes':
-					$response = NotesService::getAllNotes();
+					$response = NotesService::getAllNotes($filename);
 					break;
 
 				case 'getsinglenote':
 					if(!isset($_GET['notes_id']))
 						throw new Exception("Notes-ID is undefined.");
 					else
-						$response = NotesService::getSingleNote($_GET['notes_id']);
+						$response = NotesService::getSingleNote($_GET['notes_id'],$filename);
 					if($response==NULL) {
 						throw new Exception("No Note was found for this ID");
 					}
@@ -54,13 +53,13 @@
 	}
 	else{
 		$action = isset($_POST['action']) ? $_POST['action'] : '';
-		
+		$filename = isset($_POST['apikey']) ? $_POST['apikey'].".json" : $filename;
 		try{
 			$action = strtolower($action);
 			switch($action) {
 				case 'updatenote': 
 					$uuid = isset($_POST['uuid']) ? $_POST['uuid'] : '';
-					$response = NotesService::updateNote($uuid,$_POST['json_note']);
+					$response = NotesService::updateNote($uuid,$_POST['json_note'],$filename);
 					break;
 			
 				default:
@@ -92,9 +91,13 @@
  * returns all responses as JSON
  */
 class NotesService {
-	private static $filename = "notes.json";
-		private static function readFileContent($filename) {
+	
+	private static function readFileContent($filename) {
 			$file = fopen($filename,"r");
+			if ($file == FALSE) {
+				error_log('fnf');			
+				throw new Exception("DB File not found");
+			}
 			$content = fread($file, filesize($filename));
 			fclose($file);
 			return $content;
@@ -110,12 +113,12 @@ class NotesService {
 		return self::json_format(json_encode($arr));
 	}
 	
-	public static function getAllNotes() {
-		return self::readFileContent(self::$filename);
+	public static function getAllNotes($filename) {
+		return self::readFileContent($filename);
 	}
 
 
-    public static function getSingleNote($note_id) {
+    public static function getSingleNote($note_id,$filename) {
         $content = self::readFileContent(self::$filename);
         
         #$content = json_encode($content);
@@ -133,8 +136,8 @@ class NotesService {
     }
 
 
-    public static function deleteNote($note_id) {
-        $content = self::readFileContent(self::$filename);
+    public static function deleteNote($note_id, $filename) {
+        $content = self::readFileContent($filename);
         print_r($content);
         $php_content = json_decode($content, TRUE);
         $notes = $php_content['notes'];
@@ -145,13 +148,14 @@ class NotesService {
         }
         $php_content['notes'] = $notes;
         $content = self::arrayToJson($php_content);
-        self::writeFileContent(self::$filename, $content);
+        self::writeFileContent($filename, $content);
     }
 
 
-	public static function updateNote($uuid, $json_note){
+	public static function updateNote($uuid, $json_note,$filename){
 		
-		$content = self::readFileContent(self::$filename);
+		
+		$content = self::readFileContent($filename);
 		$php_content = json_decode($content,TRUE);
 		$notes = $php_content['notes'];
 		if ($uuid == '') $uuid = self::uuid();
@@ -159,13 +163,14 @@ class NotesService {
 		$new_note = json_decode($json_note,TRUE);
 		$notes[$uuid] = $new_note;
 		//#rint $new_note;
-		$content = self::arrayToJson($notes);
-		self::writeFileContent(self::$filename, $content);
+		$php_content['notes']=$notes;
+		$content = self::arrayToJson($php_content);
+		self::writeFileContent($filename, $content);
 	
 	}
 
-	public static function getTagsWeightened() {
-        	$content = self::readFileContent(self::$filename);
+	public static function getTagsWeightened($filename) {
+        	$content = self::readFileContent($filename);
 		$php_content = json_decode($content,TRUE);
 		$notes = $php_content['notes'];
 
