@@ -43,6 +43,7 @@ MVC.View = (function (interFace, Controller, $) {
 		$('div#noteslist').empty();
 		$(html_code).appendTo('div#noteslist');
 		$("div#singlenoteview").hide();
+		$("div#tagcloudview").hide();
 		$("div#listview").show();
 		_setDynamicClickEvents();
 	};
@@ -90,7 +91,7 @@ MVC.View = (function (interFace, Controller, $) {
 			for(var tag in pd) {
 				var cnt_tmp = pd[tag];
 				var cnt = Math.round(cnt_tmp * fac);
-				html_code += '<li class="tag' + cnt + '"><a href="#">' + tag + '</a></li>';
+				html_code += '<li id="' + tag + '" class="tag' + cnt + '"><a href="#">' + tag + '</a></li>';
 			}
 			html_code += "</ul>";
 		}
@@ -100,6 +101,8 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#listview").hide();
 		$("div#tagcloudview").show();
 		$("input#title").val(pd.title);
+
+		_setDynamicTagClickEvents();
 	};
 
     interFace.showAddNote = function() {
@@ -150,6 +153,20 @@ MVC.View = (function (interFace, Controller, $) {
        			$(this).click(function() {
 				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
 				Controller.notesDetailViewDataAsked($(this).attr("id"));
+			});
+		});
+	}; 
+
+	_setDynamicTagClickEvents = function() {
+
+		debug('View _setDynamicTagClickEvents(): set click event for #id');
+
+		//$('div#tags').ul').children().each(function() {
+		$('div#tags > ul').children().each(function() {
+       			$(this).click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				debug($(this));
+				Controller.tagCloudSelectedViewDataAsked($(this).attr("id"));
 			});
 		});
 	}; 
