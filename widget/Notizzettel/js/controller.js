@@ -54,8 +54,9 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		);
         };
 	
-        interFace.notesAddNewNote = function() {
+        interFace.notesAddNewNote = function(schema) {
 
+            document.getElementById('schema').value = schema;
 		$('div#slider_progress').slider( "option", "value", 0 );
 		$('div#slider_priority').slider( "option", "value", 0 );
             document.getElementById('location').value = "";
@@ -66,10 +67,9 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             document.getElementById('end_date').value = "";
             document.getElementById('reminder').value = "";
             document.getElementById('tags').value = "";
-            document.getElementById('schema').value = "";
             document.getElementById('id').value="";
             debug('Controller notesAddNewNote: show form for adding a new note');
-            View.showAddNote();
+            View.showAddNote(schema);
         };
 
        interFace.notesReturnToListView = function() {

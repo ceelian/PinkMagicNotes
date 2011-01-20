@@ -225,16 +225,92 @@ MVC.View = (function (interFace, Controller, $) {
 		_setDynamicTagClickEvents();
     };
 
-    interFace.showAddNote = function() {
+    interFace.showAddNote = function(new_schema) {
+		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
+		var schema = new_schema.toLowerCase();
 
-        debug('View showAddNote: display the form');
-        $("input#tags").val("");
-        $("input#title").val("");
-        $("textarea#description").val("");
-        $("div#listview").hide();
-        $("div#tagcloudview").hide();
-        $("div#singlenoteview").show();
-        $("div#tag_cloud_outside").hide();
+		// hidden fields
+		$("input#id").val('');
+		$("input#schema").val(schema);
+
+		if(Controller.containsTypeField(schema, "title")) {
+			$("#edit_title").show();
+			$("input#title").val("");
+		} else {
+			$("#edit_title").hide();
+		}
+
+		if(Controller.containsTypeField(schema, "tags")) {
+			$("#edit_tags").show();
+			var tag_string = "";
+			$("input#tags").val(tag_string);
+
+            		$('input#tags').tagsInput({'height':'50px'});
+		} else {
+			$("#edit_tags").hide();
+		}
+
+		if(Controller.containsTypeField(schema, "content")) {
+			$("#edit_content").show();
+			$("textarea#description").val("");
+		} else {
+			$("#edit_content").hide();
+		}
+
+		if(Controller.containsTypeField(schema, "location")) {
+			$("#edit_location").show();
+			$("input#location").val("");
+		} else {
+			$("#edit_location").hide();
+		}
+
+		if(Controller.containsTypeField(schema, "date_start")) {
+			$("#edit_date_start").show();
+			$("input#start_date").val(null);
+		} else {
+			$("#edit_date_start").hide();
+		}
+
+		if(Controller.containsTypeField(schema, "date_end")) {
+			$("#edit_date_end").show();
+			$("input#end_date").val(null);
+		} else {
+			$("#edit_date_end").hide();
+		}
+
+		if(Controller.containsTypeField(schema, "reminder")) {
+			$("#edit_reminder").show();
+			$("input#reminder").val(null);
+		} else {
+			$("#edit_reminder").hide();
+		}
+
+		if(Controller.containsTypeField(schema, "color")) {
+			$('div#color_div').show();
+			$('div#color_div').children('.crayonbox').uncolor();
+		} else {
+			$('div#color_div').hide();
+		}
+
+		if(Controller.containsTypeField(schema, "progress")) {
+			$('div#edit_progress').show();
+			$('div#slider_progress').slider( "option", "value", 0 );
+		} else {
+			$('div#edit_progress').hide();
+		}
+
+		if(Controller.containsTypeField(schema, "priority")) {
+			$('div#edit_priority').show();
+			$('div#slider_priority').slider( "option", "value", 0 );
+		} else {
+			$('div#edit_priority').hide();
+		}
+
+        
+		$("div#listview").hide();
+		$("div#tagcloudview").hide();
+		$("div#tag_cloud_outside").hide();
+		$("div#singlenoteview").show();
     };
 	
 	/* end of public methods */
