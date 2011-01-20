@@ -2,7 +2,7 @@
   "notes": {
     "5faa449b-b801-4769-a379-00e6cf40a96b": {
       "location": "",
-      "content": "Create mockups with paper, do prototyping",
+      "content": "MMIS Mockup Text",
       "color": "#001FFF",
       "title": "MMIS Mockups",
       "start_date": "",
@@ -13,31 +13,23 @@
         "mmis"
       ]
     },
-    "9ec1341d-789c-4bf9-92cc-12922e74a464": {
-      "location": "Graz",
-      "content": "Due date: 15.12.2010",
-      "color": "#001FFF",
-      "title": "MMIS Abgabe",
-      "start_date": "",
-      "end_date": "",
-      "reminder": "",
-      "tags": [
-        "uni",
-        "mmis"
-      ]
-    },
     "96b0e219-3200-445a-9439-187031741871": {
-      "location": "Tschibuti",
-      "content": "blabal und kuhmuh",
-      "color": "#FF9800",
+      "location": "Tschibuti ",
+      "content": "asdf",
+      "color": "#FFF300",
       "title": "Chili D\u00fcnger",
       "start_date": "01\/12\/2011",
-      "end_date": "01\/20\/2011",
+      "end_date": "01\/19\/2011",
       "reminder": "01\/19\/2011",
       "tags": [
         "chili",
         "duenger",
-        "e-mail"
+        "e-mail",
+        "mmis",
+        "literatur",
+        "super",
+        "skriptum",
+        "chili"
       ]
     },
     "e46613c5-283e-4968-9df9-4081d0beba6a": {
@@ -51,7 +43,12 @@
       "tags": [
         "uni",
         "ibl",
-        "literatur"
+        "literatur",
+        "ibl",
+        "humphy",
+        "mmis",
+        "blabal",
+        "skriptum"
       ]
     },
     "e46613l5-283e-4968-9df9-4081d0beba6a": {
@@ -64,7 +61,8 @@
       "reminder": "01\/12\/2011",
       "tags": [
         "daisy",
-        "humphy"
+        "humphy",
+        "mmis"
       ]
     },
     "96c340a7-3efc-2d84-352b-204d61824401": {

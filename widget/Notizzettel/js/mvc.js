@@ -69,7 +69,15 @@ MVC.Helper.ServerAPI = (function () {
                                 "action":'getNotesForTag'
                         }
                         _sendRequest(param, callback);
-                }
+                },
+        deleteNote: function(id, callback) {
+                       debug("Helper.ServerAPI deleteNote:: send a xhr request to delete a note"); 
+                       var param = {
+                                "uuid":id,
+                                "action":"deleteNote"
+                        }
+                        _sendRequest(param,callback);
+        }
 		
 		/* end of public methods */
 	},

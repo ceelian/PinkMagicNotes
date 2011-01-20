@@ -17,7 +17,6 @@
 		<!--embedding the jquery libraries-->
 		<script type="text/javascript" src="./libs/jquery-1.4.4.min.js"></script>
 		<script type="text/javascript" src="./libs/jquery-ui-1.8.7.custom.min.js"></script>
-		<script type="text/javascript" src="http://www.json.org/json2.js"></script>
 		<script type="text/javascript" src="./libs/tinysort.js"></script>
 		<script type="text/javascript" src="./libs/jquery.crayonbox.js"></script>
 
@@ -48,6 +47,11 @@
 				MVC.Controller.init(lang);
 
 			}
+
+            function appendTagToField(tag) {
+                $( "input#tags" ).val($( "input#tags" ).val() + ", "+ tag);
+
+            }
 
             $(function() {
 		        $( "#start_date" ).datepicker();
@@ -98,7 +102,7 @@
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                             <li class="ui-state-default ui-corner-all" title="Add Note" onclick="MVC.Controller.notesAddNewNote();"><span class="ui-icon ui-icon-plus"></span></li>
                             <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesReturnToListView()"><span class="ui-icon ui-icon-arrowreturnthick-1-w"></span></li>
-                            <li class="ui-state-default ui-corner-all" title="Delete Note"><span class="ui-icon ui-icon-trash"></span></li>
+                            <li class="ui-state-default ui-corner-all" title="Delete Note" onclick="MVC.Controller.notesDeleteNote()"><span class="ui-icon ui-icon-trash"></span></li>
                         </ul>
                     </div>
 
@@ -118,7 +122,13 @@
 
                         <div class="ui-widget">
                             <label for="tags"><span lang="en">Tags</span>: </label>
-                            <input id="tags">
+                            <input id="tags" onclick="MVC.Controller.getTagCloudData();">
+                            <div id="tag_cloud_outside">
+                                     <div style="float:left"><h2>Tag Cloud</h2></div>
+                                    <div style="float:right"><span class="ui-icon ui-icon-circle-close" onclick=" $('div#tag_cloud_outside').hide();" "></span></div>
+                                     <div style="clear: both;" id="tag_cloud">
+                                     </div>
+                            </div>
                         </div>
 
                         <div class="ui-widget">

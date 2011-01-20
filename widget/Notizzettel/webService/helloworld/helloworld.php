@@ -8,7 +8,7 @@
  * "if none match" functionality.
  *
  * @namespace Tonic\Examples\Helloworld
- * @uri /helloworld
+ * @uri /helloworld/(?P<bla>.*)/
  */
 class HelloWorldResource extends Resource {
     
@@ -20,33 +20,23 @@ class HelloWorldResource extends Resource {
     function get($request) {
         
         $response = new Response($request);
-        
-        $etag = md5($request->uri);
-        if ($request->ifNoneMatch($etag)) {
-            
-            $response->code = Response::NOTMODIFIED;
-            
-        } else {
-            
-            $response->code = Response::OK;
-            $response->addHeader('Content-type', 'text/plain');
-            $response->addEtag($etag);
-            $response->body =
-                "Hello world!\n".
-                "\n".
-                "This request:\n".
-                "\n".
-                $request->__toString()."\n".
-                "\n".
-                "This response:\n".
-                "\n".
-                $response->__toString();
-            
-        }
-        
+        $response->code = Response::OK;
+        $response->addHeader('Content-type', 'text/plain');
+        /*$response->body = print_r($_GET, 1);
+        foreach ($request->negotiatedUris as $uri) {
+             $response->body .= $uri."\n";
+        }*/
+        //$response->body .= $request->__toString();
+		//$response->body .= $request->uris[0];
+		//$response->body .= $request->uri;
+			           
+		$res = $request->get_var_matches();
+		$response->body .= $res['bla'];
         return $response;
         
     }
+
+    
     
 }
 

@@ -323,6 +323,7 @@ class Request {
                 
                 preg_match_all('/@uri\s+([^\s]+)(?:\s([0-9]+))?/', $comment, $annotations);
                 if (isset($annotations[1])) {
+		    
                     $uris = $annotations[1];
                 } else {
                     $uris = array('/');
@@ -334,11 +335,14 @@ class Request {
                 } else {
                     $mountPoint = '';
                 }
-                
+
+                $this->uris = $uris;
+
                 foreach ($uris as $index => $uri) {
                     if (substr($uri, -1, 1) == '/') { // remove trailing slash problem
                         $uri = substr($uri, 0, -1);
                     }
+		    
                     $this->resources[$mountPoint.$uri] = array(
                         'namespace' => $namespaceName,
                         'class' => $className,
@@ -406,7 +410,7 @@ class Request {
         
         $uriMatches = array();
         foreach ($this->resources as $uri => $resource) {
-            if (preg_match('#^'.$this->baseUri.$uri.'$#', $this->uri, $matches)) {
+	    if (preg_match('#^'.$this->baseUri.$uri.'$#', $this->uri, $matches)) {
                 array_shift($matches);
                 $uriMatches[$resource['priority']] = array(
                     $resource['class'],
@@ -447,6 +451,21 @@ class Request {
         }
         return in_array($etag, $this->ifNoneMatch);
     }
+
+	/**
+     * Return an array of all mathing variables based on the uri pattern
+     * @param $uri_num in case you have given more than one uri pattern, here you can choose which one to use.
+     * @return Array of matched vars
+     */
+	function get_var_matches($uri_num=0){
+
+		if (substr($this->uris[$uri_num], -1, 1) == '/') { // remove trailing slash problem
+		                    $uri = substr($this->uris[0], 0, -1);
+		}
+		preg_match('#^'.$uri.'$#',$this->uri, $matches);
+		return $matches;
+        
+	}
     
 }
 
