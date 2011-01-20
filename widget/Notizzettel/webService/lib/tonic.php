@@ -115,12 +115,6 @@ class Request {
     public $noResource = 'NoResource';
     
     /**
-     * The resource classes loaded and how they are wired to URIs
-     * @var str[]
-     */
-    public $resources = array();
-    
-    /**
      * A list of URL to namespace/package mappings for routing requests to a
      * group of resources that are wired into a different URL-space
      * @var str[]
@@ -336,21 +330,8 @@ class Request {
                     $mountPoint = '';
                 }
 
-                $this->uris = $uris;
-
-                foreach ($uris as $index => $uri) {
-                    if (substr($uri, -1, 1) == '/') { // remove trailing slash problem
-                        $uri = substr($uri, 0, -1);
-                    }
-		    
-                    $this->resources[$mountPoint.$uri] = array(
-                        'namespace' => $namespaceName,
-                        'class' => $className,
-                        'filename' => $resourceReflector->getFileName(),
-                        'line' => $resourceReflector->getStartLine(),
-                        'priority' => isset($annotations[2][$index]) && is_numeric($annotations[2][$index]) ? intval($annotations[2][$index]) : 0
-                    );
-                }
+                
+                
             }
         }
         
@@ -392,13 +373,7 @@ class Request {
             }
             $str .= "\n";
         }
-        $str .= 'Loaded Resources:'."\n";
-        foreach ($this->resources as $uri => $resource) {
-            $str .= "\t".$uri."\n";
-            if ($resource['namespace']) $str .= "\t\tNamespace: ".$resource['namespace']."\n";
-            $str .= "\t\tClass: ".$resource['class']."\n";
-            $str .= "\t\tFile: ".$resource['filename'].'#'.$resource['line']."\n";
-        }
+        
         return $str;
     }
     
@@ -406,12 +381,13 @@ class Request {
      * Instantiate the resource class that matches the request URI the best
      * @return Resource
      */
-    function loadResource() {
-        
+    function loadResource($urls) {
+	
         $uriMatches = array();
-        foreach ($this->resources as $uri => $resource) {
+        foreach ($urls as $uri => $resource) {
 	    if (preg_match('#^'.$this->baseUri.$uri.'$#', $this->uri, $matches)) {
                 array_shift($matches);
+				$resource['priority'] = 0;
                 $uriMatches[$resource['priority']] = array(
                     $resource['class'],
                     $matches
@@ -451,21 +427,7 @@ class Request {
         }
         return in_array($etag, $this->ifNoneMatch);
     }
-
-	/**
-     * Return an array of all mathing variables based on the uri pattern
-     * @param $uri_num in case you have given more than one uri pattern, here you can choose which one to use.
-     * @return Array of matched vars
-     */
-	function get_var_matches($uri_num=0){
-
-		if (substr($this->uris[$uri_num], -1, 1) == '/') { // remove trailing slash problem
-		                    $uri = substr($this->uris[0], 0, -1);
-		}
-		preg_match('#^'.$uri.'$#',$this->uri, $matches);
-		return $matches;
-        
-	}
+	
     
 }
 
@@ -475,14 +437,14 @@ class Request {
  */
 class Resource {
     
-    private $parameters = array();
+    protected $parameters = array();
     
     /**
      * Resource constructor
      * @param str[] parameters Parameters passed in from the URL as matched from the URI regex
      */
     function  __construct($parameters = array()) {
-        $this->parameters = $parameters;
+		$this->parameters = $parameters;
     }
     
     /**
