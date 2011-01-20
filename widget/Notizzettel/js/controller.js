@@ -58,7 +58,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 
             document.getElementById('location').value = "";
             document.getElementById('description').value = "";
-            $("input[@name=color]:checked").attr('checked',false);
+	    $('div#color_div').children('.crayonbox').uncolor();
             document.getElementById('title').value = "";
             document.getElementById('start_date').value = "";
             document.getElementById('end_date').value = "";
@@ -74,7 +74,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             var jsonObj = {};
             jsonObj["location"] = document.getElementById('location').value;
             jsonObj["content"] = document.getElementById('description').value;
-            jsonObj["color"] = $("input[@name=color]:checked").val();
+            jsonObj["color"] = document.getElementById('colorSelector').value;
             jsonObj["title"] = document.getElementById('title').value;
             jsonObj["start_date"] = document.getElementById('start_date').value;
             jsonObj["end_date"] = document.getElementById('end_date').value;
@@ -100,7 +100,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             });
             document.getElementById('location').value = "";
             document.getElementById('description').value = "";
-            $("input[@name=color]:checked").attr('checked',false);
+	    $('div#color_div').children('.crayonbox').uncolor();
             document.getElementById('title').value = "";
             document.getElementById('start_date').value = "";
             document.getElementById('end_date').value = "";
