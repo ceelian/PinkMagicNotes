@@ -67,3 +67,18 @@
 	.btn{display:block;}
 	
 /* // Tag cloud */
+#tag_cloud {  
+    background-color:#000000; text-align:center; padding:5px;  
+    overflow:auto; font-size:70%; font-family:arial;  
+  }  
+ #tag_cloud h2 {  
+   color:#ffffff; font-size:2.5em; margin:0 0 10px 0;  
+   background:url(images/cloud.gif) no-repeat 0; padding:15px 0 15px 80px;  
+ }  
+ #tag_list { margin:0; padding:0; }  
+ #tag_list li {  
+   list-style-type:none; float:left; margin:0 10px; height:35px;  
+ }  
+ #tag_list li a { text-decoration:none; color:#ffffff; }  
+ #tag_list li a:hover ( text-decoration:underline; }  
+

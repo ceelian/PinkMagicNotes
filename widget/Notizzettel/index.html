@@ -35,6 +35,11 @@
 
 			}
 
+            function appendTagToField(tag) {
+                $( "input#tags" ).val($( "input#tags" ).val() + ", "+ tag);
+
+            }
+
             $(function() {
 		        $( "#start_date" ).datepicker();
                 $( "#end_date" ).datepicker();
@@ -116,7 +121,13 @@
 
                         <div class="ui-widget">
                             <label for="tags"><span lang="en">Tags</span>: </label>
-                            <input id="tags">
+                            <input id="tags" onclick="MVC.Controller.getTagCloudData();">
+                            <div id="tag_cloud_outside">
+                                     <div style="float:left"><h2>Tag Cloud</h2></div>
+                                    <div style="float:right"><span class="ui-icon ui-icon-circle-close" onclick=" $('div#tag_cloud_outside').hide();" "></span></div>
+                                     <div style="clear: both;" id="tag_cloud">
+                                     </div>
+                            </div>
                         </div>
 
                         <div class="ui-widget">
