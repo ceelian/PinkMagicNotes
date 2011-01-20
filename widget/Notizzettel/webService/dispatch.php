@@ -11,6 +11,12 @@
 //patch to support also not apache2 rewrite webservers (eg. TU-Graz)
 //just give the restresource with the dispatch.php as endpoint
 //http://www.restserver.org/dispatch.php/helloworld/asd/?var1=haha&var2=aa
+
+if (strpos($_SERVER['PATH_INFO'],$_SERVER['SCRIPT_NAME'])=== 0){
+	$_SERVER['PATH_INFO']=substr_replace($_SERVER['PATH_INFO'], '',0, strlen($_SERVER['SCRIPT_NAME']));
+}
+
+
 if (!isset($_SERVER['REDIRECT_URL'])){
 	$_SERVER['REDIRECT_URL']=$_SERVER['PATH_INFO'];
 }
@@ -18,6 +24,22 @@ if (!isset($_SERVER['REDIRECT_URL'])){
 
 //=== TONIC LIBRARY ============================================================
 // load Tonic library
+
+class Logger {
+  
+    public static $logfile_path = 'log.txt';
+    
+    public static function log($msg) {
+        if( $fh = @fopen(Logger::$logfile_path, "a+" ) ) {
+            fwrite($fh, '['.date('d-m-Y H:i:s').'] '.$msg."\n");
+            fclose($fh);
+            return( true );
+        } else {
+            return( false );
+        }
+    }
+
+}
 
 /**
  * Model the data of the incoming HTTP request
@@ -403,16 +425,22 @@ class Request {
     function loadResource($urls) {
 
         $uriMatches = array();
+       
         foreach ($urls as $uri => $resource) {
-	    if (preg_match('#^'.$this->baseUri.$uri.'$#', $this->uri, $matches)) {
+               $regex = '#^'.$this->baseUri.$uri.'$#';
+            
+	    if (preg_match($regex, $this->uri, $matches)) {
+                
                 array_shift($matches);
-				$resource['priority'] = 0;
+		$resource['priority'] = 0;
                 $uriMatches[$resource['priority']] = array(
                     $resource['class'],
                     $matches
                 );
             }
         }
+
+        
         ksort($uriMatches);
 
         if ($uriMatches) {
@@ -734,7 +762,13 @@ class HelloWorldResource extends Resource {
 }
 
 
+
 //=== MAIN ENTRY POINT =========================================================
+
+
+
+
+
 // define url mapping
 $urls = array();
 $urls['/helloworld/(?P<bla>.*)']=array('class' => 'HelloWorldResource');
