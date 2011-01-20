@@ -66,7 +66,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             document.getElementById('end_date').value = "";
             document.getElementById('reminder').value = "";
             document.getElementById('tags').value = "";
-            document.getElementById('type').value = "";
+            document.getElementById('schema').value = "";
             document.getElementById('id').value="";
             debug('Controller notesAddNewNote: show form for adding a new note');
             View.showAddNote();
@@ -77,21 +77,21 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             var jsonObj = {};
             if (document.getElementById('title').value) {
 
-		var type = "default";
+		var schema = "default";
 
-            	if (document.getElementById('type').value) {
-			type = $("input#type").val();
+            	if (document.getElementById('schema').value) {
+			schema = $("input#schema").val();
 		}
-		// type
-                jsonObj["type"] = type;
+		// schema
+                jsonObj["schema"] = schema;
 
 		// title
-		if(this.containsTypeField(type, "title")) {
+		if(this.containsTypeField(schema, "title")) {
                 	jsonObj["title"] = $("input#title").val();
 		}
 
 		// tags
-		if(this.containsTypeField(type, "tags")) {
+		if(this.containsTypeField(schema, "tags")) {
                 	var tags2 = document.getElementById('tags_tagsinput').getElementsByTagName('span');
                     var i = 0;
                     var tags = new Array();
@@ -105,40 +105,40 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		}
 
 		// content
-		if(this.containsTypeField(type, "content")) {
+		if(this.containsTypeField(schema, "content")) {
                 	jsonObj["content"] = $("textarea#description").val();
 		}
 
 		// location
-		if(this.containsTypeField(type, "location")) {
+		if(this.containsTypeField(schema, "location")) {
                 	jsonObj["location"] = $("input#location").val();
 		}
 
 		// start and end date
-		if(this.containsTypeField(type, "date_start")) {
+		if(this.containsTypeField(schema, "date_start")) {
                 	jsonObj["start_date"] = $("input#start_date").val();
 		}
-		if(this.containsTypeField(type, "date_end")) {
+		if(this.containsTypeField(schema, "date_end")) {
                 	jsonObj["end_date"] = $("input#end_date").val();
 		}
 
 		// color
-		if(this.containsTypeField(type, "color")) {
+		if(this.containsTypeField(schema, "color")) {
                 	jsonObj["color"] = $("input#colorSelector").val();
 		}
 		
 		// reminder
-		if(this.containsTypeField(type, "reminder")) {
+		if(this.containsTypeField(schema, "reminder")) {
                 	jsonObj["reminder"] = $("input#reminder").val();
 		}
 
 		// progress
-		if(this.containsTypeField(type, "progress")) {
+		if(this.containsTypeField(schema, "progress")) {
 			jsonObj["progress"] = $('div#slider_progress').slider( "option", "value" );
 		}
 
 		// priority
-		if(this.containsTypeField(type, "priority")) {
+		if(this.containsTypeField(schema, "priority")) {
 			jsonObj["priority"] = $('div#slider_priority').slider( "option", "value" );
 		}
 
@@ -153,7 +153,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             $("input#location").val("");
             $("textarea#description").val("");
             $("input#title").val("");
-            $("input#type").val("");
+            $("input#schema").val("");
             $("input#start_date").val("");
             $("input#end_date").val("");
             $("input#reminder").val("");
@@ -185,10 +185,10 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		);
         };
 
-	interFace.containsTypeField = function(type, field) {
+	interFace.containsTypeField = function(schema, field) {
 		var ret = false;
 
-		switch(type) {
+		switch(schema) {
 		case "note":
 			switch(field) {
 			case "title":

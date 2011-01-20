@@ -39,7 +39,7 @@ MVC.View = (function (interFace, Controller, $) {
 			var note = pd.notes[key];
 			var icon_style = "list-item-icon-dflt";
 
-			switch(note.type) {
+			switch(note.schema) {
 			case "note":
 				icon_style ="list-item-icon-note";
 				break;
@@ -63,16 +63,16 @@ MVC.View = (function (interFace, Controller, $) {
 
 	interFace.showDetailNotesView = function(pd,id) {
 		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
-		var type = "default";
-		if('type' in pd) {
-			type = pd.type.toLowerCase();
+		var schema = "default";
+		if('schema' in pd) {
+			schema = pd.schema.toLowerCase();
 		}
 
 		// hidden fields
 		$("input#id").val(id);
-		$("input#type").val(type);
+		$("input#schema").val(schema);
 
-		if(Controller.containsTypeField(type, "title")) {
+		if(Controller.containsTypeField(schema, "title")) {
 			$("#edit_title").show();
  			if (pd.title != null) {
 				$("input#title").val(pd.title);
@@ -83,7 +83,7 @@ MVC.View = (function (interFace, Controller, $) {
 			$("#edit_title").hide();
 		}
 
-		if(Controller.containsTypeField(type, "tags")) {
+		if(Controller.containsTypeField(schema, "tags")) {
 			$("#edit_tags").show();
 
 			var tag_string = "";
@@ -104,7 +104,7 @@ MVC.View = (function (interFace, Controller, $) {
 			$("#edit_tags").hide();
 		}
 
-		if(Controller.containsTypeField(type, "content")) {
+		if(Controller.containsTypeField(schema, "content")) {
 			$("#edit_content").show();
 			if (pd.content != null) {
 				$("textarea#description").val(pd.content);
@@ -115,7 +115,7 @@ MVC.View = (function (interFace, Controller, $) {
 			$("#edit_content").hide();
 		}
 
-		if(Controller.containsTypeField(type, "location")) {
+		if(Controller.containsTypeField(schema, "location")) {
 			$("#edit_location").show();
 			if (pd.location != null) {
 				$("input#location").val(pd.location);
@@ -126,7 +126,7 @@ MVC.View = (function (interFace, Controller, $) {
 			$("#edit_location").hide();
 		}
 
-		if(Controller.containsTypeField(type, "date_start")) {
+		if(Controller.containsTypeField(schema, "date_start")) {
 			$("#edit_date_start").show();
 			if (pd.start_date != null) {
 				$("input#start_date").val(pd.start_date);
@@ -137,7 +137,7 @@ MVC.View = (function (interFace, Controller, $) {
 			$("#edit_date_start").hide();
 		}
 
-		if(Controller.containsTypeField(type, "date_end")) {
+		if(Controller.containsTypeField(schema, "date_end")) {
 			$("#edit_date_end").show();
 			if (pd.end_date != null) {
 				$("input#end_date").val(pd.end_date);
@@ -148,7 +148,7 @@ MVC.View = (function (interFace, Controller, $) {
 			$("#edit_date_end").hide();
 		}
 
-		if(Controller.containsTypeField(type, "reminder")) {
+		if(Controller.containsTypeField(schema, "reminder")) {
 			$("#edit_reminder").show();
 			if (pd.reminder != null) {
 				$("input#reminder").val(pd.reminder);
@@ -159,14 +159,14 @@ MVC.View = (function (interFace, Controller, $) {
 			$("#edit_reminder").hide();
 		}
 
-		if(Controller.containsTypeField(type, "color")) {
+		if(Controller.containsTypeField(schema, "color")) {
 			$('div#color_div').show();
 			$('div#color_div').children('.crayonbox').find('[title=' + pd.color + ']').trigger('click')
 		} else {
 			$('div#color_div').hide();
 		}
 
-		if(Controller.containsTypeField(type, "progress")) {
+		if(Controller.containsTypeField(schema, "progress")) {
 			$('div#edit_progress').show();
 			if (pd.progress != null) {
 				$('div#slider_progress').slider( "option", "value", pd.progress );
@@ -177,7 +177,7 @@ MVC.View = (function (interFace, Controller, $) {
 			$('div#edit_progress').hide();
 		}
 
-		if(Controller.containsTypeField(type, "priority")) {
+		if(Controller.containsTypeField(schema, "priority")) {
 			$('div#edit_priority').show();
 			if (pd.priority != null) {
 				$('div#slider_priority').slider( "option", "value", pd.priority );
