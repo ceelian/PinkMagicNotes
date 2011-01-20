@@ -52,14 +52,14 @@ MVC.View = (function (interFace, Controller, $) {
 		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
 		var html_code = "";
 		$("input#title").val(pd.title);
-		var tag_string = "[";
+		var tag_string = "";
 		for(i = 0; i < pd.tags.length; i++) {
 			tag_string += pd.tags[i];
 			if(i + 1 != pd.tags.length) {
 				tag_string += ", ";
 			}
 		}
-		tag_string += "]";
+		tag_string += "";
         if (pd.location != null)
             $("input#location").val(pd.location);
         if (pd.start_date != null)
@@ -79,6 +79,7 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#listview").hide();
 		$("div#tagcloudview").hide();
 		$("div#singlenoteview").show();
+        $("div#tag_cloud_outside").hide();
 	};
 
 	interFace.showTagCloudView = function(pd) {
@@ -87,8 +88,58 @@ MVC.View = (function (interFace, Controller, $) {
 		$('div#tags').empty();
 		var html_code = "";
 
-		if(pd) {
-			html_code += "<ul>";
+		html_code = _createTagList("",pd);
+
+		$(html_code).appendTo('div#tags');
+		$("div#singlenoteview").hide();
+		$("div#listview").hide();
+		$("div#tagcloudview").show();
+		$("input#title").val(pd.title);
+
+		_setDynamicTagClickEvents();
+	};
+
+    interFace.createTagCloud = function(pd) {
+        debug('View createTagCloud: write the interests data into DOM and show the div containing interests data');
+		$('div#tag_cloud').empty();
+		var html_code = "";
+
+		
+       html_code = _createTagList('tag_list',pd);
+		$(html_code).appendTo('div#tag_cloud');
+        $("div#tag_cloud_outside").show();
+
+		_setDynamicTagClickEvents();
+    };
+
+    interFace.showAddNote = function() {
+
+        debug('View showAddNote: display the form');
+        $("input#tags").val("");
+        $("input#title").val("");
+        $("textarea#description").val("");
+        $("div#listview").hide();
+        $("div#tagcloudview").hide();
+        $("div#singlenoteview").show();
+        $("div#tag_cloud_outside").hide();
+    };
+	
+	/* end of public methods */
+	
+
+	/* private methods */
+
+	/* variable to cache translation data */
+    var _lang_data = null,
+	
+
+    _createTagList = function(id,pd) {
+        var html_code = "";
+        if(pd) {
+            if (id)
+			    html_code += "<ul id='"+id+"'>";
+            else
+                html_code += "<ul>";
 			var max = 0;
 			for(var tag in pd) {
 				var cnt = pd[tag];
@@ -101,39 +152,12 @@ MVC.View = (function (interFace, Controller, $) {
 			for(var tag in pd) {
 				var cnt_tmp = pd[tag];
 				var cnt = Math.round(cnt_tmp * fac);
-				html_code += '<li id="' + tag + '" class="tag' + cnt + '"><a href="#">' + tag + '</a></li>';
+				html_code += '<li id="' + tag + '" class="tag' + cnt + '"><a href="#" onclick="appendTagToField(\''+tag+'\');">' + tag + '</a></li>';
 			}
 			html_code += "</ul>";
 		}
-
-		$(html_code).appendTo('div#tags');
-		$("div#singlenoteview").hide();
-		$("div#listview").hide();
-		$("div#tagcloudview").show();
-		$("input#title").val(pd.title);
-
-		_setDynamicTagClickEvents();
-	};
-
-    interFace.showAddNote = function() {
-
-        debug('View showAddNote: display the form');
-        $("input#tags").val("");
-        $("input#title").val("");
-        $("textarea#description").val("");
-        $("div#listview").hide();
-        $("div#tagcloudview").hide();
-        $("div#singlenoteview").show();
-    };
-	
-	/* end of public methods */
-	
-	
-	/* private methods */
-
-	/* variable to cache translation data */
-    var _lang_data = null,
-	
+        return html_code;
+    },
 	/* the function that translates the existing strings in DOM, if the translation for a string does not exist, the string is returned */
 	_translateExistingStringsInDOM = function(lang) {
 		$("* [lang='en']").each(function() {
