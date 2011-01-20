@@ -56,6 +56,8 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	
         interFace.notesAddNewNote = function() {
 
+		$('div#slider_progress').slider( "option", "value", 0 );
+		$('div#slider_priority').slider( "option", "value", 0 );
             document.getElementById('location').value = "";
             document.getElementById('description').value = "";
 	    $('div#color_div').children('.crayonbox').uncolor();
@@ -64,6 +66,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             document.getElementById('end_date').value = "";
             document.getElementById('reminder').value = "";
             document.getElementById('tags').value = "";
+            document.getElementById('type').value = "";
             document.getElementById('id').value="";
             debug('Controller notesAddNewNote: show form for adding a new note');
             View.showAddNote();
@@ -73,42 +76,89 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             var id = document.getElementById('id').value;
             var jsonObj = {};
             if (document.getElementById('title').value) {
-                jsonObj["location"] = $("input#location").val();
-                jsonObj["content"] = $("textarea#description").val();
-                jsonObj["color"] = $("input#colorSelector").val();
-                jsonObj["title"] = $("input#title").val();
-                jsonObj["start_date"] = $("input#start_date").val();
-                jsonObj["end_date"] = $("input#end_date").val();
-                jsonObj["reminder"] = $("input#reminder").val();
-                var tags =  $("input#tags").val(); 
-                tags = tags.split(','); 
-                //tags[0] = tags[0].substr(1);
-                //tags[tags.length-1] = tags[tags.length-1].substr(0,tags[tags.length-1].length-1);
-                
-                for (var i = 0; i<tags.length; i++)  {
-                    tags[i]=tags[i].replace(/^\s+|\s+$/g,"");
-                }    
-                jsonObj["tags"] = tags;
-                console.log(jsonObj["tags"]);
-                console.log(document.getElementById('tags').value);
+		var type = "default";
+
+            	if (document.getElementById('type').value) {
+			type = $("input#type").val();
+		}
+		// type
+                jsonObj["type"] = type;
+
+		// title
+		if(this.containsTypeField(type, "title")) {
+                	jsonObj["title"] = $("input#title").val();
+		}
+
+		// tags
+		if(this.containsTypeField(type, "tags")) {
+                	var tags =  $("input#tags").val(); 
+                	tags = tags.split(','); 
+                	//tags[0] = tags[0].substr(1);
+                	//tags[tags.length-1] = tags[tags.length-1].substr(0,tags[tags.length-1].length-1);
+                	
+                	for (var i = 0; i<tags.length; i++)  {
+                    	tags[i]=tags[i].replace(/^\s+|\s+$/g,"");
+                	}    
+                	jsonObj["tags"] = tags;
+		}
+
+		// content
+		if(this.containsTypeField(type, "content")) {
+                	jsonObj["content"] = $("textarea#description").val();
+		}
+
+		// location
+		if(this.containsTypeField(type, "location")) {
+                	jsonObj["location"] = $("input#location").val();
+		}
+
+		// start and end date
+		if(this.containsTypeField(type, "date_start")) {
+                	jsonObj["start_date"] = $("input#start_date").val();
+		}
+		if(this.containsTypeField(type, "date_end")) {
+                	jsonObj["end_date"] = $("input#end_date").val();
+		}
+
+		// color
+		if(this.containsTypeField(type, "color")) {
+                	jsonObj["color"] = $("input#colorSelector").val();
+		}
+		
+		// reminder
+		if(this.containsTypeField(type, "reminder")) {
+                	jsonObj["reminder"] = $("input#reminder").val();
+		}
+
+		// progress
+		if(this.containsTypeField(type, "progress")) {
+			jsonObj["progress"] = $('div#slider_progress').slider( "option", "value" );
+		}
+
+		// priority
+		if(this.containsTypeField(type, "priority")) {
+			jsonObj["priority"] = $('div#slider_priority').slider( "option", "value" );
+		}
+
                 json_string = JSON.stringify(jsonObj);
                 console.log(json_string);
                 debug('Controller notesReturnToListView: saving note');
                 Request.updateNote(id,json_string, function(interestsJsonData) {
                     debug('Controller notesReturnToListView: show list view');
-                    
-
                 });
             }
 
             $("input#location").val("");
             $("textarea#description").val("");
             $("input#title").val("");
+            $("input#type").val("");
             $("input#start_date").val("");
             $("input#end_date").val("");
             $("input#reminder").val("");
 	    $('div#color_div').children('.crayonbox').uncolor();
             $("input#tags").val(""); 
+		$('div#slider_progress').slider( "option", "value", 0 );
+		$('div#slider_priority').slider( "option", "value", 0 );
             document.getElementById('id').value="";
             this.notesListViewDataAsked();
         }
@@ -130,6 +180,68 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 			}
 		);
         };
+
+	interFace.containsTypeField = function(type, field) {
+		var ret = false;
+
+		switch(type) {
+		case "note":
+			switch(field) {
+			case "title":
+			case "tags":
+			case "content":
+			case "location":
+			case "date_start":
+			case "date_end":
+			case "reminder":
+			case "color":
+				ret = true;
+				break;
+			}
+			break;
+		case "todo":
+			switch(field) {
+			case "title":
+			case "color":
+			case "tags":
+			case "content":
+			case "progress":
+			case "date_start":
+			case "date_end":
+			case "priority":
+				ret = true;
+				break;
+			}
+			break;
+		case "appointment":
+			switch(field) {
+			case "title":
+			case "color":
+			case "tags":
+			case "date_start":
+			case "date_end":
+			case "reminder":
+			case "location":
+			case "content":
+				ret = true;
+				break;
+			}
+			break;
+		default:
+			switch(field) {
+			case "title":
+			case "color":
+			case "tags":
+			case "content":
+				ret = true;
+				break;
+			}
+			break;
+		}
+
+		return ret;
+	}
+
 	/* end of public methods */
 	
 	

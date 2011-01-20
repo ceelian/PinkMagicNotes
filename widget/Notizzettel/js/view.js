@@ -50,38 +50,134 @@ MVC.View = (function (interFace, Controller, $) {
 
 	interFace.showDetailNotesView = function(pd,id) {
 		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
-		var html_code = "";
-		$("input#title").val(pd.title);
-		var tag_string = "";
-		for(i = 0; i < pd.tags.length; i++) {
-			tag_string += pd.tags[i];
-			if(i + 1 != pd.tags.length) {
-				tag_string += ", ";
-			}
+		var type = "default";
+		if('type' in pd) {
+			type = pd.type.toLowerCase();
 		}
-		tag_string += "";
-        if (pd.location != null)
-            $("input#location").val(pd.location);
-        if (pd.start_date != null)
-            $("input#start_date").val(pd.start_date);
-        if (pd.end_date != null)
-            $("input#end_date").val(pd.end_date);
-        if (pd.reminder != null)
-            $("input#reminder").val(pd.reminder);
 
-        if (pd.color != null) {
-		$('div#color_div').children('.crayonbox').find('[title=' + pd.color + ']').trigger('click')
-	}
-
-		$("input#tags").val(tag_string);
-		$("textarea#description").val(pd.content);
+		// hidden fields
 		$("input#id").val(id);
+		$("input#type").val(type);
+
+		if(Controller.containsTypeField(type, "title")) {
+			$("#edit_title").show();
+ 			if (pd.title != null) {
+				$("input#title").val(pd.title);
+			} else {
+				$("input#title").val("");
+			}
+		} else {
+			$("#edit_title").hide();
+		}
+
+		if(Controller.containsTypeField(type, "tags")) {
+			$("#edit_tags").show();
+
+			var tag_string = "";
+			if (pd.tags != null) {
+				for(i = 0; i < pd.tags.length; i++) {
+					tag_string += pd.tags[i];
+					if(i + 1 != pd.tags.length) {
+						tag_string += ", ";
+					}
+				}
+				tag_string += "";
+			}
+
+			$("input#tags").val(tag_string);
+		} else {
+			$("#edit_tgas").hide();
+		}
+
+		if(Controller.containsTypeField(type, "content")) {
+			$("#edit_content").show();
+			if (pd.content != null) {
+				$("textarea#description").val(pd.content);
+			} else {
+				$("textarea#description").val("");
+			}
+		} else {
+			$("#edit_content").hide();
+		}
+
+		if(Controller.containsTypeField(type, "location")) {
+			$("#edit_location").show();
+			if (pd.location != null) {
+				$("input#location").val(pd.location);
+			} else {
+				$("input#location").val("");
+			}
+		} else {
+			$("#edit_location").hide();
+		}
+
+		if(Controller.containsTypeField(type, "date_start")) {
+			$("#edit_date_start").show();
+			if (pd.start_date != null) {
+				$("input#start_date").val(pd.start_date);
+			} else { 
+				$("input#start_date").val(null);
+			}
+		} else {
+			$("#edit_date_start").hide();
+		}
+
+		if(Controller.containsTypeField(type, "date_end")) {
+			$("#edit_date_end").show();
+			if (pd.end_date != null) {
+				$("input#end_date").val(pd.end_date);
+			} else { 
+				$("input#end_date").val(null);
+			}
+		} else {
+			$("#edit_date_end").hide();
+		}
+
+		if(Controller.containsTypeField(type, "reminder")) {
+			$("#edit_reminder").show();
+			if (pd.reminder != null) {
+				$("input#reminder").val(pd.reminder);
+			} else {
+				$("input#reminder").val(null);
+			}
+		} else {
+			$("#edit_reminder").hide();
+		}
+
+		if(Controller.containsTypeField(type, "color")) {
+			$('div#color_div').show();
+			$('div#color_div').children('.crayonbox').find('[title=' + pd.color + ']').trigger('click')
+		} else {
+			$('div#color_div').hide();
+		}
+
+		if(Controller.containsTypeField(type, "progress")) {
+			$('div#edit_progress').show();
+			if (pd.progress != null) {
+				$('div#slider_progress').slider( "option", "value", pd.progress );
+			} else {
+				$('div#slider_progress').slider( "option", "value", 0 );
+			}
+		} else {
+			$('div#edit_progress').hide();
+		}
+
+		if(Controller.containsTypeField(type, "priority")) {
+			$('div#edit_priority').show();
+			if (pd.priority != null) {
+				$('div#slider_priority').slider( "option", "value", pd.priority );
+			} else {
+				$('div#slider_priority').slider( "option", "value", 0 );
+			}
+		} else {
+			$('div#edit_priority').hide();
+		}
 
 		$("div#listview").hide();
 		$("div#tagcloudview").hide();
+		$("div#tag_cloud_outside").hide();
 		$("div#singlenoteview").show();
-        $("div#tag_cloud_outside").hide();
-	};
+	}
 
 	interFace.showTagCloudView = function(pd) {
 		debug('View showTagCloudView: write the interests data into DOM and show the div containing interests data');
