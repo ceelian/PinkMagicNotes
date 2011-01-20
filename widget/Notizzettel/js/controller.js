@@ -192,13 +192,9 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		case "note":
 			switch(field) {
 			case "title":
+			case "color":
 			case "tags":
 			case "content":
-			case "location":
-			case "date_start":
-			case "date_end":
-			case "reminder":
-			case "color":
 				ret = true;
 				break;
 			}
