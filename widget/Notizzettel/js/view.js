@@ -37,7 +37,20 @@ MVC.View = (function (interFace, Controller, $) {
 		var html_code = "";
 		for(var key in pd.notes) {
 			var note = pd.notes[key];
-			html_code += '<div id="' + key + '" class="list-item ui-corner-all ui-widget-content"><div class="list-item-icon"/><h2>' + note.title + '</h2><div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
+			var icon_style = "list-item-icon-dflt";
+
+			switch(note.type) {
+			case "note":
+				icon_style ="list-item-icon-note";
+				break;
+			case "todo":
+				icon_style ="list-item-icon-todo";
+				break;
+			case "appointment":
+				icon_style ="list-item-icon-appoint";
+				break;
+			}
+			html_code += '<div id="' + key + '" class="list-item ui-corner-all ui-widget-content"><div class="' + icon_style + '"/><h2>' + note.title + '</h2><div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
 		}
 		
 		$('div#noteslist').empty();
