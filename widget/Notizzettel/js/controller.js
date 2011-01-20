@@ -58,7 +58,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 
             document.getElementById('location').value = "";
             document.getElementById('description').value = "";
-            $("input[@name=color]:checked").attr('checked',false);
+	    $('div#color_div').children('.crayonbox').uncolor();
             document.getElementById('title').value = "";
             document.getElementById('start_date').value = "";
             document.getElementById('end_date').value = "";
@@ -75,7 +75,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             if (document.getElementById('title').value) {
                 jsonObj["location"] = $("input#location").val();
                 jsonObj["content"] = $("textarea#description").val();
-                jsonObj["color"] = $("input[@name=color]:checked").val();
+                jsonObj["color"] = $("input#colorSelector").val();
                 jsonObj["title"] = $("input#title").val();
                 jsonObj["start_date"] = $("input#start_date").val();
                 jsonObj["end_date"] = $("input#end_date").val();
@@ -107,7 +107,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             $("input#start_date").val("");
             $("input#end_date").val("");
             $("input#reminder").val("");
-            $("input[@name=color]:checked").attr('checked',false);
+	    $('div#color_div').children('.crayonbox').uncolor();
             $("input#tags").val(""); 
             document.getElementById('id').value="";
             this.notesListViewDataAsked();
