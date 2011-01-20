@@ -72,7 +72,9 @@ MVC.View = (function (interFace, Controller, $) {
             $("[name=color]").filter("[value="+pd.color+"]").attr("checked",true);
         else
             $("[name=color]").filter("[value=#FFFFFF]").attr("checked",true);
+
 		$("input#tags").val(tag_string);
+         $('input#tags').tagsInput({'height':'50px'});
 		$("textarea#description").val(pd.content);
         $("input#id").val(id);
 
@@ -152,7 +154,7 @@ MVC.View = (function (interFace, Controller, $) {
 			for(var tag in pd) {
 				var cnt_tmp = pd[tag];
 				var cnt = Math.round(cnt_tmp * fac);
-				html_code += '<li id="' + tag + '" class="tag' + cnt + '"><a href="#" onclick="appendTagToField(\''+tag+'\');">' + tag + '</a></li>';
+				html_code += '<li id="' + tag + '" class="tag' + cnt + '"><a href="#" onclick="return $(\'#tags\').addTag(\''+tag+'\');"">' + tag + '</a></li>';
 			}
 			html_code += "</ul>";
 		}

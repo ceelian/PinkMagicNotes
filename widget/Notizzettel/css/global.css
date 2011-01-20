@@ -53,7 +53,7 @@ textarea {
 }
 
 #noteslist {
-    height: 560px;
+    height: 400px;
     overflow:auto;
 }
 
@@ -100,4 +100,39 @@ ul#icons li {
     height: 5px;
     clear: both;
     margin: 0 auto;
+}
+
+div#new_note_menu ul, li {
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+.the_menu {
+    display:none;
+    width:150px;
+    border: 1px solid #1c1c1c;
+    position: absolute;
+    z-index:3;
+    background-color: #626262;
+    
+}
+
+.the_menu li {
+    background-color: #626262;
+
+}
+ 
+.the_menu li a {
+    color:#FFFFFF;
+    text-decoration:none;
+    padding:10px;
+    display:block;
+    float:left;
+}
+ 
+.the_menu li a:hover {
+    padding:10px;
+    font-weight:bold;
+    color: #E78C09;
 }

@@ -80,11 +80,16 @@ MVC.Controller = (function (interFace, Model, View, Request) {
                 jsonObj["start_date"] = $("input#start_date").val();
                 jsonObj["end_date"] = $("input#end_date").val();
                 jsonObj["reminder"] = $("input#reminder").val();
-                var tags =  $("input#tags").val(); 
-                tags = tags.split(','); 
+                //var tags =  $("input#tags").val(); 
+                //tags = tags.split(','); 
                 //tags[0] = tags[0].substr(1);
                 //tags[tags.length-1] = tags[tags.length-1].substr(0,tags[tags.length-1].length-1);
-                
+                var tags2 = document.getElementById('tags_tagsinput').getElementsByTagName('span');
+                var i = 0;
+                var tags = new Array();
+                while(oNode = tags2.item(i++)) {
+                    tags.push(oNode.firstChild.nodeValue);
+                }
                 for (var i = 0; i<tags.length; i++)  {
                     tags[i]=tags[i].replace(/^\s+|\s+$/g,"");
                 }    
@@ -109,6 +114,8 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             $("input#reminder").val("");
             $("input[@name=color]:checked").attr('checked',false);
             $("input#tags").val(""); 
+            $("#tags_tagsinput").remove();
+            
             document.getElementById('id').value="";
             this.notesListViewDataAsked();
         }

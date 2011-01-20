@@ -8,6 +8,7 @@
 		<link type="text/css" href="./css/ui-darkness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />
                 <link type="text/css" href="./css/global.css" rel="stylesheet" />
                 <link type="text/css" href="./css/tagclouds.css" rel="stylesheet" />
+                <link rel="stylesheet" href="./libs/jquery.tagsinput/jquery.tagsinput.css" /> 
                 
 		<style type="text/css">
 			#errorContainer { display: none; }
@@ -16,6 +17,7 @@
 		<!--embedding the jquery libraries-->
 		<script type="text/javascript" src="./libs/jquery-1.4.4.min.js"></script>
 		<script type="text/javascript" src="./libs/jquery-ui-1.8.7.custom.min.js"></script>
+        <script type="text/javascript" src="./libs/jquery.tagsinput/jquery.tagsinput.js"></script>
 		<script type="text/javascript" src="./libs/tinysort.js"></script>
 		
 		<!--defining some helpful functions (before loading js files, debug is used there)-->
@@ -36,14 +38,23 @@
 			}
 
             function appendTagToField(tag) {
-                $( "input#tags" ).val($( "input#tags" ).val() + ", "+ tag);
+                if ( $('input#tags').val())
+                    $( 'input#tags' ).val($( 'input#tags' ).val() + ", "+ tag);
+                else
+                    $( 'input#tags' ).val(tag);
 
             }
 
+            $(document).ready(function () {
+                $('.menu_class').click(function () {
+                $('ul.the_menu').slideToggle('medium');
+                });
+            });
+
             $(function() {
-		        $( "#start_date" ).datepicker();
-                $( "#end_date" ).datepicker();
-                $( "#reminder" ).datepicker();
+		        $( '#start_date' ).datepicker();
+                $( '#end_date' ).datepicker();
+                $( '#reminder' ).datepicker();
 	        });
 
 			
@@ -54,6 +65,7 @@
 		<script type="text/javascript" src="./js/model.js"></script>
 		<script type="text/javascript" src="./js/view.js"></script>
 		<script type="text/javascript" src="./js/controller.js"></script>
+
 	</head>
 	<body>
 		
@@ -70,7 +82,16 @@
 		<div id="listview">
                     <div id="navbar_list_view" class="ui-corner-all ui-widget-content">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
-                                <li class="ui-state-default ui-corner-all" title="Add Note" onclick="MVC.Controller.notesAddNewNote();"><span class="ui-icon ui-icon-plus"></span></li>
+                                <li class="ui-state-default ui-corner-all" title="Add Note" ><!--onclick="MVC.Controller.notesAddNewNote();">-->
+                                    <div id="new_note_menu">
+                                        <div class="menu_class"><span class="ui-icon ui-icon-plus"></span></div>
+                                        <ul class="the_menu">
+                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote();">Add Note</a></li>
+                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote();">Add ToDo</a></li>
+                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote();">Add Appointment</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
                                 <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.notesListViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
                                 <li class="ui-state-default ui-corner-all" title="TagCloud View" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-calculator"></span></li>
                         </ul>
@@ -121,12 +142,13 @@
 
                         <div class="ui-widget">
                             <label for="tags"><span lang="en">Tags</span>: </label>
-                            <input id="tags" onclick="MVC.Controller.getTagCloudData();">
+                            <div onclick="MVC.Controller.getTagCloudData();">
+                            <input id="tags" >
                             <div id="tag_cloud_outside">
-                                     <div style="float:left"><h2>Tag Cloud</h2></div>
                                     <div style="float:right"><span class="ui-icon ui-icon-circle-close" onclick=" $('div#tag_cloud_outside').hide();" "></span></div>
                                      <div style="clear: both;" id="tag_cloud">
                                      </div>
+                            </div>
                             </div>
                         </div>
 
