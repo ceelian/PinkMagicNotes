@@ -109,6 +109,14 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             document.getElementById('id').value="";
             this.notesListViewDataAsked();
         }
+
+        interFace.notesDeleteNote = function() {
+            var id = document.getElementById('id').value;
+            Request.deleteNote(id, function(interestsJsonData) {
+                debug('Controller notesDeleteNote: note deleted');
+            });
+            this.notesListViewDataAsked();
+        }
 	/* end of public methods */
 	
 	
