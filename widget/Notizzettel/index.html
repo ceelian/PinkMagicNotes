@@ -9,6 +9,7 @@
                 <link type="text/css" href="./css/global.css" rel="stylesheet" />
                 <link type="text/css" href="./css/tagclouds.css" rel="stylesheet" />
                 <link rel="stylesheet" href="./libs/jquery.tagsinput/jquery.tagsinput.css" /> 
+                <link type="text/css" href="./css/jquery.crayonbox.css" rel="stylesheet" />
                 
 		<style type="text/css">
 			#errorContainer { display: none; }
@@ -19,6 +20,21 @@
 		<script type="text/javascript" src="./libs/jquery-ui-1.8.7.custom.min.js"></script>
         <script type="text/javascript" src="./libs/jquery.tagsinput/jquery.tagsinput.js"></script>
 		<script type="text/javascript" src="./libs/tinysort.js"></script>
+		<script type="text/javascript" src="./libs/jquery.crayonbox.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function()
+			{
+				$('#colorSelector').crayonbox(
+				{
+					colors: new Array("#FF0000", "#FF9800", "#001FFF", "#FFF300", "#00F300", "#FFFFFF"),
+					crayonTag: "button"
+				});
+				$("#slider_progress").slider();
+				$("#slider_priority").slider({ step: 5 });
+			});
+
+		</script>
 		
 		<!--defining some helpful functions (before loading js files, debug is used there)-->
 		<script type="text/javascript">
@@ -59,6 +75,7 @@
 
 			
 		</script>
+
 		
 		<!--embedding code for the MVC pattern-->
 		<script type="text/javascript" src="./js/mvc.js"></script>
@@ -116,63 +133,63 @@
                     <div id="notesedits" class="ui-corner-all ui-widget-content">
                         <h2><span lang="en">Note</span></h2>
                         <input type="hidden" id="id">
-                        <div class="ui-widget">
+                        <input type="hidden" id="type">
+                        <div id="edit_title" class="ui-widget">
                             <label for="title"><span lang="en">Title</span>: </label>
                             <input id="title">
                         </div>
 
-                        <div class="ui-widget" id="color_picker_box">
-                            <label for="color"><span lang="en">Color</span>: </label>
-                            <!--<ul id="color_picker">
-                                <li><input type="radio" name="color" value="#FF0000"><img src="pics/color_red.png"></li>
-                                <li><input type="radio" name="color" value="#FF9800"><img src="pics/color_orange.png"></li>
-                                <li><input type="radio" name="color" value="#001FFF"><img src="pics/color_blue.png"></li>
-                                <li><input type="radio" name="color" value="#FFF300"><img src="pics/color_yellow.png"></li>
-                                <li><input type="radio" name="color" value="#00F300"><img src="pics/color_green.png"></li>
-                                <li><input type="radio" name="color" value="#FFFFFF"><img src="pics/color_no.png"></li>
-                            </ul>-->
-                                <input type="radio" name="color" value="#FF0000"><img src="pics/color_red.png">
-                                <input type="radio" name="color" value="#FF9800"><img src="pics/color_orange.png">
-                                <input type="radio" name="color" value="#001FFF"><img src="pics/color_blue.png">
-                                <input type="radio" name="color" value="#FFF300"><img src="pics/color_yellow.png">
-                                <input type="radio" name="color" value="#00F300"><img src="pics/color_green.png">
-                                <input type="radio" name="color" value="#FFFFFF"><img src="pics/color_no.png">
-                            <div class="clrflt"></div>
+                        <div id="color_div" class="ui-widget">
+				<!-- computed in view because of colorSelector -->
+				<label for="colors"><span lang="en">Color</span>: </label>
+				<input id="colorSelector" type="text" style="display: none" />
                         </div>
 
-                        <div class="ui-widget">
+                        <div id="edit_tag_cloud" class="ui-widget">
                             <label for="tags"><span lang="en">Tags</span>: </label>
                             <div onclick="MVC.Controller.getTagCloudData();">
                             <input id="tags" >
                             <div id="tag_cloud_outside">
+
                                     <div style="float:right"><span class="ui-icon ui-icon-circle-close" onclick=" $('div#tag_cloud_outside').hide();" "></span></div>
+
                                      <div style="clear: both;" id="tag_cloud">
                                      </div>
                             </div>
                             </div>
                         </div>
 
-                        <div class="ui-widget">
+                        <div id="edit_location" class="ui-widget">
                             <label for="location"><span lang="en">Location</span>: </label>
                             <input id="location">
                         </div>
 
-                        <div class="ui-widget">
+                        <div id="edit_date_start" class="ui-widget">
                             <label for="start_date"><span lan="en">Start Date</span>: </label>
                             <input id="start_date" type="text">
                         </div>
 
-                        <div class="ui-widget">
+                        <div id="edit_date_end" class="ui-widget">
                             <label for="end_date"><span lan="en">End Date</span>: </label>
                             <input id="end_date">
                         </div>
 
-                        <div class="ui-widget">
+                        <div id="edit_reminder" class="ui-widget">
                             <label for="reminder"><span lan="en">Reminder</span>: </label>
                             <input id="reminder">
                         </div>
 
-                        <div class="ui-widget">
+                        <div id="edit_progress">
+                            <label for="progress"><span lan="en">Progress</span>: </label>
+                            <div id="slider_progress"></div>
+                        </div>
+
+                        <div id="edit_priority" class="ui-widget">
+                            <label for="priority"><span lan="en">Priority</span>: </label>
+                            <div id="slider_priority"></div>
+                        </div>
+
+                        <div id="edit_content" class="ui-widget">
                             <label for="description"><span lang="en">Description</span>: </label>
                             <textarea id="description"></textarea>
                         </div>
