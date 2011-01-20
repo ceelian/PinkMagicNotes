@@ -1,18 +1,15 @@
 {
   "notes": {
     "5faa449b-b801-4769-a379-00e6cf40a96b": {
-      "location": "",
-      "content": "MMIS Mockup Text",
-      "color": "#001FFF",
+      "type": "default",
       "title": "MMIS Mockups",
-      "start_date": "",
-      "end_date": "",
-      "reminder": "",
       "tags": [
         "MMIS",
         "Uni",
         "mockups"
-      ]
+      ],
+      "content": "MMIS Mockup Text",
+      "color": "#FF0000"
     },
     "96b0e219-3200-445a-9439-187031741871": {
       "location": "Tschibuti ",
@@ -29,19 +26,16 @@
       ]
     },
     "e46613c5-283e-4968-9df9-4081d0beba6a": {
-      "location": "Amsterdam",
-      "content": "Literatur: Prozessorientiertes Anlagemanagement, ...",
-      "color": "#00F300",
+      "type": "default",
       "title": "IBL Literaturrecherche",
-      "start_date": "01\/17\/2011",
-      "end_date": "01\/20\/2011",
-      "reminder": "01\/19\/2011",
       "tags": [
-        "IBL",
         "Uni",
-        "Literatur",
-        "Recherche"
-      ]
+        "Recherche",
+        "MMIS",
+        "Literatur"
+      ],
+      "content": "Literatur: Prozessorientiertes Anlagemanagement, ...",
+      "color": "#001FFF"
     },
     "e46613l5-283e-4968-9df9-4081d0beba6a": {
       "location": "Balkon",
@@ -74,18 +68,15 @@
       ]
     },
     "8f8604e5-70c0-9d84-79c0-41e1dd4b2e0d": {
-      "location": "",
-      "content": "Abgabe am 26.01.2011",
-      "color": "#001FFF",
+      "type": "default",
       "title": "MMIS Abgabe",
-      "start_date": "",
-      "end_date": "",
-      "reminder": "",
       "tags": [
         "MMIS",
         "Uni",
         "Abgabe"
-      ]
+      ],
+      "content": "Abgabe am 26.01.2011",
+      "color": "#FF0000"
     }
   }
 }

@@ -98,8 +98,10 @@ MVC.View = (function (interFace, Controller, $) {
 			}
 
 			$("input#tags").val(tag_string);
+
+            $('input#tags').tagsInput({'height':'50px'});
 		} else {
-			$("#edit_tgas").hide();
+			$("#edit_tags").hide();
 		}
 
 		if(Controller.containsTypeField(type, "content")) {
@@ -186,7 +188,7 @@ MVC.View = (function (interFace, Controller, $) {
 			$('div#edit_priority').hide();
 		}
 
-
+        
 		$("div#listview").hide();
 		$("div#tagcloudview").hide();
 		$("div#tag_cloud_outside").hide();
