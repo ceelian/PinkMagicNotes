@@ -41,13 +41,28 @@ MVC.View = (function (interFace, Controller, $) {
 
 			switch(note.schema) {
 			case "note":
-				icon_style ="list-item-icon-note";
+				if(Controller.containsTypeField(note.schema, "reminder") && 
+					Controller.shouldReminderAlert(note.reminder, 2)) {
+					icon_style ="list-item-icon-note-alert";
+				} else {
+					icon_style ="list-item-icon-note";
+				}
 				break;
 			case "todo":
-				icon_style ="list-item-icon-todo";
+				if(Controller.containsTypeField(note.schema, "reminder") && 
+					Controller.shouldReminderAlert(note.reminder, 2)) {
+					icon_style ="list-item-icon-todo-alert";
+				} else {
+					icon_style ="list-item-icon-todo";
+				}
 				break;
 			case "appointment":
-				icon_style ="list-item-icon-appoint";
+				if(Controller.containsTypeField(note.schema, "reminder") && 
+					Controller.shouldReminderAlert(note.reminder, 2)) {
+					icon_style ="list-item-icon-appoint-alert";
+				} else {
+					icon_style ="list-item-icon-appoint";
+				}
 				break;
 			}
 			html_code += '<div id="' + key + '" class="list-item ui-corner-all ui-widget-content"><div class="' + icon_style + '"/><h2>' + note.title + '</h2><div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
@@ -152,6 +167,11 @@ MVC.View = (function (interFace, Controller, $) {
 			$("#edit_reminder").show();
 			if (pd.reminder != null) {
 				$("input#reminder").val(pd.reminder);
+				if (Controller.shouldReminderAlert(pd.reminder, 2)) {
+					$("input#reminder").css({'background-color' : 'red', 'font-weight' : 'bolder', "color": "lightgrey"});
+				} else {
+					$("input#reminder").css({'background-color' : 'white', 'font-weight' : 'normal', "color": "black"});
+				}
 			} else {
 				$("input#reminder").val(null);
 			}
@@ -281,6 +301,7 @@ MVC.View = (function (interFace, Controller, $) {
 		if(Controller.containsTypeField(schema, "reminder")) {
 			$("#edit_reminder").show();
 			$("input#reminder").val(null);
+			$("input#reminder").css({'background-color' : 'white', 'font-weight' : 'normal', "color": "black"});
 		} else {
 			$("#edit_reminder").hide();
 		}

@@ -242,6 +242,38 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		return ret;
 	}
 
+	
+	// p_date: pretty date = MM/DD/YYYY
+	// days_until_alert: days before p_date alter should be true
+	interFace.shouldReminderAlert = function(p_date, days_until_alert) {
+		var date = getDateFromPrettyDate(p_date);
+		var now = new Date();
+
+		var diff = daysFromDate1UntilDate2(date, now);
+		debug(diff);
+		if ( diff <= days_until_alert || diff < 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	var daysFromDate1UntilDate2 = function(date_one, date_two) {
+		var difference = date_two - date_one;
+		return Math.round(difference/(1000*60*60*24));
+	}
+
+	// pretty date = MM/DD/YYYY
+	var getDateFromPrettyDate = function(p_date) {
+		if(p_date != null) {
+			var dmy = p_date.split('/');
+			if(dmy.length == 3 && !isNaN(dmy[0]) && !isNaN(dmy[1]) && !isNaN(dmy[2])) {
+				return new Date(dmy[2], dmy[0]-1, dmy[1]);
+			}
+		}
+		return new Date(1970, 01, 01);
+	}
+
 	/* end of public methods */
 	
 	
