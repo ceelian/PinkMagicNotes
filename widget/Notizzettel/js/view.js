@@ -72,6 +72,7 @@ MVC.View = (function (interFace, Controller, $) {
 		$(html_code).appendTo('div#noteslist');
 		$("div#singlenoteview").hide();
 		$("div#tagcloudview").hide();
+		$("div#infopageview").hide();
 		$("div#listview").show();
 		_setDynamicClickEvents();
 	};
@@ -210,6 +211,7 @@ MVC.View = (function (interFace, Controller, $) {
 
         
 		$("div#listview").hide();
+		$("div#infopageview").hide();
 		$("div#tagcloudview").hide();
 		$("div#tag_cloud_outside").hide();
 		$("div#singlenoteview").show();
@@ -226,6 +228,7 @@ MVC.View = (function (interFace, Controller, $) {
 		$(html_code).appendTo('div#tags');
 		$("div#singlenoteview").hide();
 		$("div#listview").hide();
+		$("div#infopageview").hide();
 		$("div#tagcloudview").show();
 		$("input#title").val(pd.title);
 
@@ -331,8 +334,18 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#listview").hide();
 		$("div#tagcloudview").hide();
 		$("div#tag_cloud_outside").hide();
+		$("div#infopageview").hide();
 		$("div#singlenoteview").show();
     };
+
+	interFace.showInfoPageListView = function() {
+		$("div#listview").hide();
+		$("div#tagcloudview").hide();
+		$("div#tag_cloud_outside").hide();
+		$("div#singlenoteview").hide();
+		$("div#infopageview").show();
+	}
+
 	
 	/* end of public methods */
 	

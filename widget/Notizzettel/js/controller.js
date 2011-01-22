@@ -53,6 +53,11 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 			}
 		);
         };
+
+        interFace.infoPageViewDataAsked = function() {
+                debug('Controller infoPageViewDataAsked: get notes from Servics and let View append it to the tagcloud DOM');
+		View.showInfoPageListView();
+        };
 	
         interFace.notesAddNewNote = function(schema) {
 

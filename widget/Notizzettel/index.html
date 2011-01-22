@@ -111,6 +111,7 @@
                                 </li>
                                 <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.notesListViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
                                 <li class="ui-state-default ui-corner-all" title="TagCloud View" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-calculator"></span></li>
+                                <li class="ui-state-default ui-corner-all" title="About" onclick="MVC.Controller.infoPageViewDataAsked();"><span class="ui-icon ui-icon-help"></span></li>
                         </ul>
                     </div>
                     <div id="noteslist">
@@ -211,6 +212,20 @@
                     </div>
                     <div id="tags">
 		
+                    </div>
+		</div>
+
+		<div id="infopageview">
+                    <div id="navbar_infopage_view" class="ui-corner-all ui-widget-content">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Add Note" onclick="MVC.Controller.notesAddNewNote();"><span class="ui-icon ui-icon-plus"></span></li>
+                                <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
+                                <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesListViewDataAsked();"><span class="ui-icon ui-icon-script"></span></li>
+                        </ul>
+                    </div>
+                    <div id="infopage">
+                        <h2><span lang="en">Informations</span></h2>
+			<p>More to come tomorrow...</p>
                     </div>
 		</div>
 

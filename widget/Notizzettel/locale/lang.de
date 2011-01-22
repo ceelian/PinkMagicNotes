@@ -6,5 +6,6 @@
 	"Tags": "Schlagworte",
 	"Description": "Beschreibung",
 	"Location": "Ort",
-	"Color": "Farbe"
+	"Color": "Farbe",
+	"Informations": "Informationen"
 }
