@@ -13,5 +13,8 @@
 	"Legal": "Rechtliches",
 	"Authors": "Autoren",
 	"Thanks for using the Notizzettel-Widget": "Vielen Dank für die Benutzung der Notizzettel-Widgets",
-	"The main purpose of this widget is to track your notes, todo-lists and appointments": "Dieses Widget wurde entwickelt um Ihre Notizen, Todo-Listen und Termine zu verwalten"
+	"The main purpose of this widget is to track your notes, todo-lists and appointments": "Dieses Widget wurde entwickelt um Ihre Notizen, Todo-Listen und Termine zu verwalten",
+	"To search inside notes, just type text into the search box and press the search icon": "Um innerhalb der Notizen zu suchen, wird im Suchfeld einfach der Begriff eingegeben und der Suchknopf wird gedrückt",
+	"To start a pattern matching search, just type the property (e.g.: tags) followed by a colon (:) and the search term and press the search icon": "Weiters kann innerhalb bestimmter Eigenschaften einer Notiz gesucht werden, dafür einfach die Eigenschaft (zB tags) gefolgt von einem Doppelpunkt und der Suchbegriff eingegeben werden",
+	"The currently possible search properties are": "Die zum Zeitpunkt verfügbaren Eigenschaften sind"
 }

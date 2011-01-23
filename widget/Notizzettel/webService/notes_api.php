@@ -134,7 +134,7 @@ class NotesService {
 	private static function readFileContent($filename) {
 			$file = fopen($filename,"r");
 			if ($file == FALSE) {
-				error_log('fnf');			
+				error_log('fnf');
 				throw new Exception("DB File not found");
 			}
 			$content = fread($file, filesize($filename));
@@ -157,21 +157,26 @@ class NotesService {
 		$php_content = json_decode($content,TRUE);
 		$notes = $php_content['notes'];
 
-		if($pattern != '') {
+		if($pattern != null && $pattern != '') {
 			foreach ($notes as $key => $note) {
 				// check if tag patterned search is used
-				if(stripos($pattern, ':') === true) {
+				if(stripos($pattern, ':') == true) {
 					$patt_arr =  explode(':', $pattern, 2);
 					$keyword = $patt_arr[0];
 					$srchstr = $patt_arr[1];
 					if(array_key_exists($keyword, $note)) {
-						$part_string = implode(',', $note[$keyword]);
+						$part_string = "";
+						if(is_array($note[$keyword])) {
+							$part_string = implode(',', $note[$keyword]);
+						} else {
+							$part_string = $note[$keyword];
+						}	
 						if(stripos($part_string, $srchstr) == false) {
 							unset($notes[$key]);
 						}
 					}
 				} else { // if not patterned, search whole notes
-					$note_string = implode(",", $note);
+					$note_string = implode(',', $note);
 					if(stripos($note_string, $pattern) == false) {
 						unset($notes[$key]);
 					}
