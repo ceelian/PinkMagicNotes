@@ -63,14 +63,6 @@ MVC.Helper.ServerAPI = (function () {
                         }
                         _sendRequest(param,callback);
         },
-		getNotesForTag: function(tag, callback) {
-                        debug("Helper.ServerAPI getNotesForTag:: send a xhr request to fetch a notes by tag from the web service");
-                        var param = {
-                                "tag":tag,
-                                "action":'getNotesForTag'
-                        }
-                        _sendRequest(param, callback);
-                },
         deleteNote: function(id, callback) {
                        debug("Helper.ServerAPI deleteNote:: send a xhr request to delete a note"); 
                        var param = {

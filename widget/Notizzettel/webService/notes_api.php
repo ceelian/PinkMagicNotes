@@ -57,15 +57,6 @@
 					$response = NotesService::updateNote($uuid,$_GET['json_note'],$filename);
 					
 					break;
-				case 'getnotesfortag':
-					if(!isset($_GET['tag']))
-						throw new Exception("Tag is undefined.");
-					else
-						$response = NotesService::getNotesForTag($_GET['tag'],$filename);
-					if($response==NULL) {
-						throw new Exception("No Note was found for this ID");
-					}
-					break;
                 case 'deletenote':
                     if(!isset($_GET['uuid']))
 						throw new Exception("Note is undefined.");
@@ -262,28 +253,6 @@ class NotesService {
 		}
                 $result = json_encode($tags);
 		return $result;
-	}
-
-	public static function getNotesForTag($tag, $filename) {
-		$content = self::readFileContent($filename);
-		$php_content = json_decode($content,TRUE);
-		$notes = $php_content['notes'];
-
-		foreach ($notes as $key => $value) {
-				$taglist = $value['tags'];
-				$found = false;
-				foreach($taglist as $stag) {
-					if(strcmp($tag, $stag) == 0) {
-						$found = true;
-					}
-				}
-				if(!$found) {
-					unset($notes[$key]);
-				}
-		}
-		$php_content['notes'] = $notes;
-        	$content = self::arrayToJson($php_content);
-		return $content;
 	}
 
 	/**

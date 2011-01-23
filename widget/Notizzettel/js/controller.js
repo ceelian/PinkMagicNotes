@@ -15,7 +15,6 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	};
 
         interFace.notesListViewDataAsked = function(searchString) {
-		debug(searchString);
                 debug('Controller notesListViewDataAsked: get notes from Servics and let View append it to the listview DOM');
 		Request.getAllNotes(searchString,
 			function(interestsJsonData) {
@@ -47,10 +46,10 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 
         interFace.tagCloudSelectedViewDataAsked = function(tag) {
                 debug('Controller tagCloudViewDataAsked: get notes from Servics and let View append it to the tagcloud DOM');
-		Request.getNotesForTag(tag,
+		Request.getAllNotes('tags:' + tag,
 			function(interestsJsonData) {
 				debug("Controller tagCloudViewDataAsked: command the View to append the interests data into DOM.");
-				View.showNotesListView('tag: ' + tag, interestsJsonData);
+				View.showNotesListView('tags: ' + tag, interestsJsonData);
 			}
 		);
         };
@@ -256,7 +255,6 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		var now = new Date();
 
 		var diff = daysFromDate1UntilDate2(date, now);
-		debug(diff);
 		if ( diff <= days_until_alert || diff < 0) {
 			return true;
 		} else {

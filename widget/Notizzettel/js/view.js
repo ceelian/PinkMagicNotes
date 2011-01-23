@@ -425,11 +425,9 @@ MVC.View = (function (interFace, Controller, $) {
 
 		debug('View _setDynamicTagClickEvents(): set click event for #id');
 
-		//$('div#tags').ul').children().each(function() {
 		$('div#tags > ul').children().each(function() {
        			$(this).click(function() {
 				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
-				debug($(this));
 				Controller.tagCloudSelectedViewDataAsked($(this).attr("id"));
 			});
 		});
