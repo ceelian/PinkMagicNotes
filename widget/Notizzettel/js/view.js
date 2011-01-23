@@ -32,9 +32,13 @@ MVC.View = (function (interFace, Controller, $) {
 		});
 	};
 		
-	interFace.showNotesListView = function(pd) {
+	interFace.showNotesListView = function(searchString, pd) {
 		debug('View showUserInterestsData(): write the interests data into DOM and show the div containing interests data');
 		var html_code = "";
+		var searchstr = "";
+		if (searchString != null) {
+			searchstr = searchString;
+		}
 		for(var key in pd.notes) {
 			var note = pd.notes[key];
 			var icon_style = "list-item-icon-dflt";
@@ -67,7 +71,10 @@ MVC.View = (function (interFace, Controller, $) {
 			}
 			html_code += '<div id="' + key + '" class="list-item ui-corner-all ui-widget-content"><div class="' + icon_style + '"/><h2>' + note.title + '</h2><div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
 		}
+
 		
+		
+		$('input#searchbox_input').val(searchstr);
 		$('div#noteslist').empty();
 		$(html_code).appendTo('div#noteslist');
 		$("div#singlenoteview").hide();

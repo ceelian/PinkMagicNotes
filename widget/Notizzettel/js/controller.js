@@ -11,15 +11,16 @@ MVC.Controller = (function (interFace, Model, View, Request) {
     
 	interFace.init = function(language) {
 		_init(language);
-		this.notesListViewDataAsked();
+		this.notesListViewDataAsked('');
 	};
 
-        interFace.notesListViewDataAsked = function() {
+        interFace.notesListViewDataAsked = function(searchString) {
+		debug(searchString);
                 debug('Controller notesListViewDataAsked: get notes from Servics and let View append it to the listview DOM');
-		Request.getAllNotes(
+		Request.getAllNotes(searchString,
 			function(interestsJsonData) {
 				debug("Controller notesListViewDataAsked: command the View to append the interests data into DOM.");
-				View.showNotesListView(interestsJsonData);
+				View.showNotesListView(searchString, interestsJsonData);
 			}
 		);
         };
@@ -49,7 +50,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		Request.getNotesForTag(tag,
 			function(interestsJsonData) {
 				debug("Controller tagCloudViewDataAsked: command the View to append the interests data into DOM.");
-				View.showNotesListView(interestsJsonData);
+				View.showNotesListView('tag: ' + tag, interestsJsonData);
 			}
 		);
         };
@@ -169,7 +170,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		    $('div#slider_priority').slider( "option", "value", 0 );
 
             document.getElementById('id').value="";
-            this.notesListViewDataAsked();
+            this.notesListViewDataAsked('');
         }
 
         interFace.notesDeleteNote = function() {
@@ -177,7 +178,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             Request.deleteNote(id, function(interestsJsonData) {
                 debug('Controller notesDeleteNote: note deleted');
             });
-            this.notesListViewDataAsked();
+            this.notesListViewDataAsked('');
         }
 
         interFace.getTagCloudData = function() {

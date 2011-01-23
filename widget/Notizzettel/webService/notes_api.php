@@ -30,7 +30,13 @@
 			$action = strtolower($action);
 			switch($action) {
 				case 'getallnotes':
-					$response = NotesService::getAllNotes($filename);
+					if(!isset($_GET['searchString']))
+						$response = NotesService::getAllNotes('', $filename);
+					else
+						$response = NotesService::getAllNotes($_GET['searchString'], $filename);
+					if($response==NULL) {
+						throw new Exception("No Note was found with pattern");
+					}
 					break;
 
 				case 'getsinglenote':
@@ -146,8 +152,36 @@ class NotesService {
 		return self::json_format(json_encode($arr));
 	}
 	
-	public static function getAllNotes($filename) {
-		return self::readFileContent($filename);
+	public static function getAllNotes($pattern, $filename) {
+		$content = self::readFileContent($filename);
+		$php_content = json_decode($content,TRUE);
+		$notes = $php_content['notes'];
+
+		if($pattern != '') {
+			foreach ($notes as $key => $note) {
+				// check if tag patterned search is used
+				if(stripos($pattern, ':') === true) {
+					$patt_arr =  explode(':', $pattern, 2);
+					$keyword = $patt_arr[0];
+					$srchstr = $patt_arr[1];
+					if(array_key_exists($keyword, $note)) {
+						$part_string = implode(',', $note[$keyword]);
+						if(stripos($part_string, $srchstr) == false) {
+							unset($notes[$key]);
+						}
+					}
+				} else { // if not patterned, search whole notes
+					$note_string = implode(",", $note);
+					if(stripos($note_string, $pattern) == false) {
+						unset($notes[$key]);
+					}
+				}
+			}
+		}
+		$php_content['notes'] = $notes;
+        	$content = self::arrayToJson($php_content);
+		return $content;
+		//return self::readFileContent($filename);
 	}
 
 

@@ -18,7 +18,7 @@
 		<!--embedding the jquery libraries-->
 		<script type="text/javascript" src="./libs/jquery-1.4.4.min.js"></script>
 		<script type="text/javascript" src="./libs/jquery-ui-1.8.7.custom.min.js"></script>
-        <script type="text/javascript" src="./libs/jquery.tagsinput/jquery.tagsinput.js"></script>
+		<script type="text/javascript" src="./libs/jquery.tagsinput/jquery.tagsinput.js"></script>
 		<script type="text/javascript" src="./libs/tinysort.js"></script>
 		<script type="text/javascript" src="./libs/jquery.crayonbox.js"></script>
 
@@ -111,16 +111,21 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.notesListViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
+                                <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.notesListViewDataAsked($('input#searchbox_input').val());"><span class="ui-icon ui-icon-refresh"></span></li>
                                 <li class="ui-state-default ui-corner-all" title="TagCloud View" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-calculator"></span></li>
                                 <li class="ui-state-default ui-corner-all" title="About" onclick="MVC.Controller.infoPageViewDataAsked();"><span class="ui-icon ui-icon-help"></span></li>
                         </ul>
+                    </div>
+                    <div id="searchbox" class="ui-corner-all ui-widget-content">
+                        <input id="searchbox_input" style="width:30%;float:left;">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Search" onclick="MVC.Controller.notesListViewDataAsked($('input#searchbox_input').val());"><span class="ui-icon ui-icon-search"></span></li>
+			</ul>
                     </div>
                     <div id="noteslist">
 		
 
                     </div>
-                    <div id="searchbox"></div>
 		</div>
 
                 <div id="singlenoteview" class="ui-helper-hidden">
@@ -209,7 +214,7 @@
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Add Note" onclick="MVC.Controller.notesAddNewNote();"><span class="ui-icon ui-icon-plus"></span></li>
                                 <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
-                                <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesListViewDataAsked();"><span class="ui-icon ui-icon-script"></span></li>
+                                <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesListViewDataAsked('');"><span class="ui-icon ui-icon-script"></span></li>
                         </ul>
                     </div>
                     <div id="tags">
@@ -222,7 +227,7 @@
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Add Note" onclick="MVC.Controller.notesAddNewNote();"><span class="ui-icon ui-icon-plus"></span></li>
                                 <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
-                                <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesListViewDataAsked();"><span class="ui-icon ui-icon-script"></span></li>
+                                <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesListViewDataAsked('');"><span class="ui-icon ui-icon-script"></span></li>
                         </ul>
                     </div>
                     <div id="infopage">
@@ -238,8 +243,8 @@
 				<p><span lang="en">The main purpose of this widget is to track your notes, todo-lists and appointments</span>.</p>
 			</div>
 			<div id="infopage-fragment-searchbox">
-				Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-				Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+				<span lang="en">To search inside notes, just type text into the search box and press the search icon</span>.
+				<span lang="en">To start an pattern matching search, just type the property (e.g.: tags) followed by a colon (:) and the search term (not correctly working yet)</span>
 			</div>
 			<div id="infopage-fragment-legal">
 				Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
