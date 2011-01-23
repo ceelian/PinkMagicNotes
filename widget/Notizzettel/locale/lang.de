@@ -7,5 +7,11 @@
 	"Description": "Beschreibung",
 	"Location": "Ort",
 	"Color": "Farbe",
-	"Informations": "Informationen"
+	"Informations": "Informationen",
+	"Info": "Information",
+	"SearchInfo": "Such-Informationen",
+	"Legal": "Rechtliches",
+	"Authors": "Autoren",
+	"Thanks for using the Notizzettel-Widget": "Vielen Dank für die Benutzung der Notizzettel-Widgets",
+	"The main purpose of this widget is to track your notes, todo-lists and appointments": "Dieses Widget wurde entwickelt um Ihre Notizen, Todo-Listen und Termine zu verwalten"
 }
