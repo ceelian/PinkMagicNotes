@@ -1,5 +1,6 @@
 {
 	"id": "de",
+	"testkey": "Test Schlüssel",
 	"Note": "Notiz",
 	"Title": "Titel",
 	"Color": "Farbe",
@@ -16,5 +17,8 @@
 	"The main purpose of this widget is to track your notes, todo-lists and appointments": "Dieses Widget wurde entwickelt um Ihre Notizen, Todo-Listen und Termine zu verwalten",
 	"To search inside notes, just type text into the search box and press the search icon": "Um innerhalb der Notizen zu suchen, wird im Suchfeld einfach der Begriff eingegeben und der Suchknopf wird gedrückt",
 	"To start a pattern matching search, just type the property (e.g.: tags) followed by a colon (:) and the search term and press the search icon": "Weiters kann innerhalb bestimmter Eigenschaften einer Notiz gesucht werden, dafür einfach die Eigenschaft (zB tags) gefolgt von einem Doppelpunkt und der Suchbegriff eingegeben werden",
-	"The currently possible search properties are": "Die zum Zeitpunkt verfügbaren Eigenschaften sind"
+	"The currently possible search properties are": "Die zum Zeitpunkt verfügbaren Eigenschaften sind",
+	"This Notes Widget is provided 'as is'": "Dieses Widget ist bereitgestellt so wie es ist.",
+	"This Widget is a demo widget developed for the sake of learning the W3C Widget Specifications for a lecture at the University of Technology, Graz":"Dieses Widget ist ein Demo Widget entwickelt um die W3C Widget Spezifikation zu erlernen im Rahmen einer Lehrveranstaltung an der TU Graz. ",
+	"It is in no way recommended for production usage. Data is not encrypted and there are no strict mechanisms to protect unauthorized access to data of other widget user on the same widget server": "Es ist in keinster Weise für den Produktiveinsatz gedacht. Die Daten sind nicht verschlüsselt abgespeichert und es wurden abgesehen von einfachen Mechanismen keine Methoden zur strikten Benutzererkennung und Datenseparation zwischen den einzelnen Benutzern dieses Widgets auf einem Widgetserver verwendet."
 }
