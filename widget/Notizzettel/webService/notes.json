@@ -12,7 +12,6 @@
       "color": "#FFF300"
     },
     "96b0e219-3200-445a-9439-187031741871": {
-
       "schema": "appointment",
       "title": "Chili D\u00fcnger",
       "tags": [
@@ -40,14 +39,12 @@
       "color": "#00F300"
     },
     "e46613l5-283e-4968-9df9-4081d0beba6a": {
-
       "schema": "todo",
       "title": "Hasenpost",
       "tags": [
         "Kaninchen",
         "Humphy",
         "Daisy",
-
         "Sally",
         "dfase"
       ],
@@ -60,7 +57,6 @@
     },
     "96c340a7-3efc-2d84-352b-204d61824401": {
       "schema": "note",
-
       "title": "IBL Pr\u00fcfung",
       "tags": [
         "IBL",
@@ -94,6 +90,15 @@
       "color": "#001FFF",
       "progress": 69,
       "priority": 40
+    },
+    "bab60191-7970-d2b4-351e-4cfa28b9f80d": {
+      "schema": "note",
+      "title": "asdf",
+      "tags": [
+        
+      ],
+      "content": "",
+      "color": "#001FFF"
     }
   }
 }

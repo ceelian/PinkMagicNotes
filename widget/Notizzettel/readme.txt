@@ -1,9 +1,13 @@
-This is the widget you should implement!
-- Change the folder name from "MyWidget" to the id of your widget!
-- Change the widget id in config file from "MyWidget" to the id of your widget!
-- Change other elements of config file correspondingly!
-- Add other preferences in config file if needed!
-- Download some other jQuery CSS files with the help of ThemeRoller Application and put them under "css" folder to test the stylability!
-- Start with the implementation!
+Before you roll the widget to the PLE please do the following:
 
-wish you a funny widgetization :-)
+- Ensure that PHP has the permission to create files in the "webService" Folder
+  The Notes Datasets will be stored in that folder.
+- For security purposes it is highly recommendet that no file in the "webService" Folder
+  which has the scheme "*.json" can be directly viewed through the webserver. Use .htaccess
+  to prevent this
+- Make sure that the default value for apikey in the config.xml is empty! Otherwise all users
+  will share the same dataset
+- Ensure that you change the function "interFace.setPersistentData" in the controller.js so that
+  it writes to the preference file (config.xml)
+
+
