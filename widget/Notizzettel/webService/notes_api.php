@@ -30,7 +30,13 @@
 			$action = strtolower($action);
 			switch($action) {
 				case 'getallnotes':
-					$response = NotesService::getAllNotes($filename);
+					if(!isset($_GET['searchString']))
+						$response = NotesService::getAllNotes('', $filename);
+					else
+						$response = NotesService::getAllNotes($_GET['searchString'], $filename);
+					if($response==NULL) {
+						throw new Exception("No Note was found with pattern");
+					}
 					break;
 
 				case 'getsinglenote':
@@ -50,15 +56,6 @@
 					$uuid = isset($_GET['uuid']) ? $_GET['uuid'] : '';
 					$response = NotesService::updateNote($uuid,$_GET['json_note'],$filename);
 					
-					break;
-				case 'getnotesfortag':
-					if(!isset($_GET['tag']))
-						throw new Exception("Tag is undefined.");
-					else
-						$response = NotesService::getNotesForTag($_GET['tag'],$filename);
-					if($response==NULL) {
-						throw new Exception("No Note was found for this ID");
-					}
 					break;
                 case 'deletenote':
                     if(!isset($_GET['uuid']))
@@ -128,7 +125,7 @@ class NotesService {
 	private static function readFileContent($filename) {
 			$file = fopen($filename,"r");
 			if ($file == FALSE) {
-				error_log('fnf');			
+				error_log('fnf');
 				throw new Exception("DB File not found");
 			}
 			$content = fread($file, filesize($filename));
@@ -146,8 +143,41 @@ class NotesService {
 		return self::json_format(json_encode($arr));
 	}
 	
-	public static function getAllNotes($filename) {
-		return self::readFileContent($filename);
+	public static function getAllNotes($pattern, $filename) {
+		$content = self::readFileContent($filename);
+		$php_content = json_decode($content,TRUE);
+		$notes = $php_content['notes'];
+
+		if($pattern != null && $pattern != '') {
+			foreach ($notes as $key => $note) {
+				// check if tag patterned search is used
+				if(stripos($pattern, ':') == true) {
+					$patt_arr =  explode(':', $pattern, 2);
+					$keyword = $patt_arr[0];
+					$srchstr = $patt_arr[1];
+					if(array_key_exists($keyword, $note)) {
+						$part_string = "";
+						if(is_array($note[$keyword])) {
+							$part_string = implode(',', $note[$keyword]);
+						} else {
+							$part_string = $note[$keyword];
+						}	
+						if(stripos($part_string, $srchstr) == false) {
+							unset($notes[$key]);
+						}
+					}
+				} else { // if not patterned, search whole notes
+					$note_string = implode(',', $note);
+					if(stripos($note_string, $pattern) == false) {
+						unset($notes[$key]);
+					}
+				}
+			}
+		}
+		$php_content['notes'] = $notes;
+        	$content = self::arrayToJson($php_content);
+		return $content;
+		//return self::readFileContent($filename);
 	}
 
 
@@ -223,28 +253,6 @@ class NotesService {
 		}
                 $result = json_encode($tags);
 		return $result;
-	}
-
-	public static function getNotesForTag($tag, $filename) {
-		$content = self::readFileContent($filename);
-		$php_content = json_decode($content,TRUE);
-		$notes = $php_content['notes'];
-
-		foreach ($notes as $key => $value) {
-				$taglist = $value['tags'];
-				$found = false;
-				foreach($taglist as $stag) {
-					if(strcmp($tag, $stag) == 0) {
-						$found = true;
-					}
-				}
-				if(!$found) {
-					unset($notes[$key]);
-				}
-		}
-		$php_content['notes'] = $notes;
-        	$content = self::arrayToJson($php_content);
-		return $content;
 	}
 
 	/**

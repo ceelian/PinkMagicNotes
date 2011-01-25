@@ -78,6 +78,15 @@ ul#icons li {
     margin-top: 10px;
 }
 
+.list-item-icon-note-alert{
+    width:32px;
+    height:32px;
+    float:left;
+    background-image: url('../pics/view-pim-notes_alert_32.png');
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
 .list-item-icon-appoint{
     width:32px;
     height:32px;
@@ -87,11 +96,29 @@ ul#icons li {
     margin-top: 10px;
 }
 
+.list-item-icon-appoint-alert{
+    width:32px;
+    height:32px;
+    float:left;
+    background-image: url('../pics/view-calendar-workweek_alert_32.png');
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
 .list-item-icon-todo{
     width:32px;
     height:32px;
     float:left;
     background-image: url('../pics/view-pim-tasks-pending_32.png');
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
+.list-item-icon-todo-alert{
+    width:32px;
+    height:32px;
+    float:left;
+    background-image: url('../pics/view-pim-tasks-pending_alert_32.png');
     margin-right: 15px;
     margin-top: 10px;
 }

@@ -32,31 +32,54 @@ MVC.View = (function (interFace, Controller, $) {
 		});
 	};
 		
-	interFace.showNotesListView = function(pd) {
+	interFace.showNotesListView = function(searchString, pd) {
 		debug('View showUserInterestsData(): write the interests data into DOM and show the div containing interests data');
 		var html_code = "";
+		var searchstr = "";
+		if (searchString != null) {
+			searchstr = searchString;
+		}
 		for(var key in pd.notes) {
 			var note = pd.notes[key];
 			var icon_style = "list-item-icon-dflt";
 
 			switch(note.schema) {
 			case "note":
-				icon_style ="list-item-icon-note";
+				if(Controller.containsTypeField(note.schema, "reminder") && 
+					Controller.shouldReminderAlert(note.reminder, 2)) {
+					icon_style ="list-item-icon-note-alert";
+				} else {
+					icon_style ="list-item-icon-note";
+				}
 				break;
 			case "todo":
-				icon_style ="list-item-icon-todo";
+				if(Controller.containsTypeField(note.schema, "reminder") && 
+					Controller.shouldReminderAlert(note.reminder, 2)) {
+					icon_style ="list-item-icon-todo-alert";
+				} else {
+					icon_style ="list-item-icon-todo";
+				}
 				break;
 			case "appointment":
-				icon_style ="list-item-icon-appoint";
+				if(Controller.containsTypeField(note.schema, "reminder") && 
+					Controller.shouldReminderAlert(note.reminder, 2)) {
+					icon_style ="list-item-icon-appoint-alert";
+				} else {
+					icon_style ="list-item-icon-appoint";
+				}
 				break;
 			}
 			html_code += '<div id="' + key + '" class="list-item ui-corner-all ui-widget-content"><div class="' + icon_style + '"/><h2>' + note.title + '</h2><div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
 		}
+
 		
+		
+		$('input#searchbox_input').val(searchstr);
 		$('div#noteslist').empty();
 		$(html_code).appendTo('div#noteslist');
 		$("div#singlenoteview").hide();
 		$("div#tagcloudview").hide();
+		$("div#infopageview").hide();
 		$("div#listview").show();
 		_setDynamicClickEvents();
 	};
@@ -152,6 +175,11 @@ MVC.View = (function (interFace, Controller, $) {
 			$("#edit_reminder").show();
 			if (pd.reminder != null) {
 				$("input#reminder").val(pd.reminder);
+				if (Controller.shouldReminderAlert(pd.reminder, 2)) {
+					$("input#reminder").css({'background-color' : 'red', 'font-weight' : 'bolder', "color": "lightgrey"});
+				} else {
+					$("input#reminder").css({'background-color' : 'white', 'font-weight' : 'normal', "color": "black"});
+				}
 			} else {
 				$("input#reminder").val(null);
 			}
@@ -190,6 +218,7 @@ MVC.View = (function (interFace, Controller, $) {
 
         
 		$("div#listview").hide();
+		$("div#infopageview").hide();
 		$("div#tagcloudview").hide();
 		$("div#tag_cloud_outside").hide();
 		$("div#singlenoteview").show();
@@ -206,6 +235,7 @@ MVC.View = (function (interFace, Controller, $) {
 		$(html_code).appendTo('div#tags');
 		$("div#singlenoteview").hide();
 		$("div#listview").hide();
+		$("div#infopageview").hide();
 		$("div#tagcloudview").show();
 		$("input#title").val(pd.title);
 
@@ -281,6 +311,7 @@ MVC.View = (function (interFace, Controller, $) {
 		if(Controller.containsTypeField(schema, "reminder")) {
 			$("#edit_reminder").show();
 			$("input#reminder").val(null);
+			$("input#reminder").css({'background-color' : 'white', 'font-weight' : 'normal', "color": "black"});
 		} else {
 			$("#edit_reminder").hide();
 		}
@@ -310,8 +341,18 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#listview").hide();
 		$("div#tagcloudview").hide();
 		$("div#tag_cloud_outside").hide();
+		$("div#infopageview").hide();
 		$("div#singlenoteview").show();
     };
+
+	interFace.showInfoPageListView = function() {
+		$("div#listview").hide();
+		$("div#tagcloudview").hide();
+		$("div#tag_cloud_outside").hide();
+		$("div#singlenoteview").hide();
+		$("div#infopageview").show();
+	}
+
 	
 	/* end of public methods */
 	
@@ -384,11 +425,9 @@ MVC.View = (function (interFace, Controller, $) {
 
 		debug('View _setDynamicTagClickEvents(): set click event for #id');
 
-		//$('div#tags').ul').children().each(function() {
 		$('div#tags > ul').children().each(function() {
        			$(this).click(function() {
 				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
-				debug($(this));
 				Controller.tagCloudSelectedViewDataAsked($(this).attr("id"));
 			});
 		});

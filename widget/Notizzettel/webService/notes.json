@@ -12,14 +12,20 @@
       "color": "#FFF300"
     },
     "96b0e219-3200-445a-9439-187031741871": {
-      "schema": "default",
+
+      "schema": "appointment",
       "title": "Chili D\u00fcnger",
       "tags": [
         "Chilis",
-        "D\u00fcnger"
+        "D\u00fcnger",
+        "E-Mail"
       ],
       "content": "asdf",
-      "color": "#FFF300"
+      "location": "Tschibuti ",
+      "start_date": "01\/12\/2011",
+      "end_date": "01\/19\/2011",
+      "color": "#FFF300",
+      "reminder": "01\/21\/2011"
     },
     "e46613c5-283e-4968-9df9-4081d0beba6a": {
       "schema": "default",
@@ -34,19 +40,27 @@
       "color": "#00F300"
     },
     "e46613l5-283e-4968-9df9-4081d0beba6a": {
-      "type": "default",
+
+      "schema": "todo",
       "title": "Hasenpost",
       "tags": [
         "Kaninchen",
         "Humphy",
         "Daisy",
-        "Sally"
+
+        "Sally",
+        "dfase"
       ],
-      "content": "verschicken",
-      "color": "#FFF300"
+      "content": "verschicken\n\ndkdk",
+      "start_date": "01\/04\/2011",
+      "end_date": "01\/26\/2011",
+      "color": "#001FFF",
+      "progress": 49,
+      "priority": 15
     },
     "96c340a7-3efc-2d84-352b-204d61824401": {
-      "schema": "default",
+      "schema": "note",
+
       "title": "IBL Pr\u00fcfung",
       "tags": [
         "IBL",
@@ -58,7 +72,7 @@
       "color": "#00F300"
     },
     "8f8604e5-70c0-9d84-79c0-41e1dd4b2e0d": {
-      "type": "default",
+      "schema": "default",
       "title": "MMIS Abgabe",
       "tags": [
         "MMIS",
@@ -67,6 +81,19 @@
       ],
       "content": "Abgabe am 26.01.2011",
       "color": "#FF0000"
+    },
+    "381abc1b-fce5-a594-09ba-0e122e7f7343": {
+      "schema": "todo",
+      "title": "test",
+      "tags": [
+        "super"
+      ],
+      "content": "alles ist super",
+      "start_date": "01\/19\/2011",
+      "end_date": "01\/28\/2011",
+      "color": "#001FFF",
+      "progress": 69,
+      "priority": 40
     }
   }
 }
