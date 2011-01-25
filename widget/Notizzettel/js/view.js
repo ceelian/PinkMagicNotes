@@ -58,7 +58,7 @@ MVC.View = (function (interFace, Controller, $) {
                 description = note.content.substring(0,35);
                 description = description + " ...";
 			    tags = _createTagString(note.tags, number_tags);
-                content = '<div id="content"><div class="left_float"><span lang="en">Content</span>: '+description+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
+                content = '<div id="content"><div class="left_float"><span lang="en">Description</span>: '+description+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
 				break;
 			case "todo":
                 var priority=note.priority;
@@ -70,7 +70,7 @@ MVC.View = (function (interFace, Controller, $) {
 				} else {
 					icon_style ="list-item-icon-todo";
 				}
-                content = '<div id="content"><div class="left_float"><span lan="en">Priority</span>: '+priority+' </div><div class="right_float"><span lan="en">Start Date</span>: '+due+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
+                content = '<div id="content"><div class="left_float"><span lang="en">Priority</span>: '+priority+' </div><div class="right_float"><span lang="en">Start Date</span>: '+due+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
                 //add priority and due and tags
 				break;
 			case "appointment":
@@ -83,7 +83,7 @@ MVC.View = (function (interFace, Controller, $) {
 				} else {
 					icon_style ="list-item-icon-appoint";
 				}
-                content = '<div id="content"><div class="left_float"><span lang="en">Location</span>: '+location+' </div><div class="right_float"><span lan="en">Start Date</span>: '+due+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
+                content = '<div id="content"><div class="left_float"><span lang="en">Location</span>: '+location+' </div><div class="right_float"><span lang="en">Start Date</span>: '+due+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
 				break;
 			}
 			html_code += '<div id="' + key + '" class="list-item ui-corner-all ui-widget-content"><div class="' + icon_style + '"/><h2>' + note.title + '</h2>'+content+'<div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
