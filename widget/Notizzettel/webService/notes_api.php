@@ -240,7 +240,7 @@ class NotesService {
 		$php_content['notes']=$notes;
 		$content = self::arrayToJson($php_content);
 		self::writeFileContent($filename, $content);
-	    return $content;
+	    
 	}
 
 	public static function getTagsWeightened($filename) {
