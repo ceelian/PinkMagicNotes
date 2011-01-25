@@ -1,7 +1,7 @@
 {
   "notes": {
     "5faa449b-b801-4769-a379-00e6cf40a96b": {
-      "type": "default",
+      "schema": "default",
       "title": "MMIS Mockups",
       "tags": [
         "MMIS",
@@ -9,24 +9,20 @@
         "mockups"
       ],
       "content": "MMIS Mockup Text",
-      "color": "#FF0000"
+      "color": "#FFF300"
     },
     "96b0e219-3200-445a-9439-187031741871": {
-      "location": "Tschibuti ",
-      "content": "asdf",
-      "color": "#FFF300",
+      "schema": "default",
       "title": "Chili D\u00fcnger",
-      "start_date": "01\/12\/2011",
-      "end_date": "01\/19\/2011",
-      "reminder": "01\/19\/2011",
       "tags": [
         "Chilis",
-        "D\u00fcnger",
-        "E-Mail"
-      ]
+        "D\u00fcnger"
+      ],
+      "content": "asdf",
+      "color": "#FFF300"
     },
     "e46613c5-283e-4968-9df9-4081d0beba6a": {
-      "type": "default",
+      "schema": "default",
       "title": "IBL Literaturrecherche",
       "tags": [
         "Uni",
@@ -35,37 +31,31 @@
         "Literatur"
       ],
       "content": "Literatur: Prozessorientiertes Anlagemanagement, ...",
-      "color": "#001FFF"
+      "color": "#00F300"
     },
     "e46613l5-283e-4968-9df9-4081d0beba6a": {
-      "location": "Balkon",
-      "content": "verschicken",
-      "color": "#FFF300",
+      "type": "default",
       "title": "Hasenpost",
-      "start_date": "01\/04\/2011",
-      "end_date": "01\/26\/2011",
-      "reminder": "01\/12\/2011",
       "tags": [
         "Kaninchen",
         "Humphy",
         "Daisy",
         "Sally"
-      ]
+      ],
+      "content": "verschicken",
+      "color": "#FFF300"
     },
     "96c340a7-3efc-2d84-352b-204d61824401": {
-      "location": "Graz",
-      "content": "ba",
-      "color": "#00F300",
+      "schema": "default",
       "title": "IBL Pr\u00fcfung",
-      "start_date": "01\/04\/2011",
-      "end_date": "",
-      "reminder": "",
       "tags": [
         "IBL",
         "Uni",
         "Pr\u00fcfung",
         "lernen"
-      ]
+      ],
+      "content": "ba",
+      "color": "#00F300"
     },
     "8f8604e5-70c0-9d84-79c0-41e1dd4b2e0d": {
       "type": "default",
