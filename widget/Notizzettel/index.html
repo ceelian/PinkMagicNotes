@@ -212,14 +212,12 @@
                         <div id="edit_tag_cloud" class="ui-widget">
                             <label for="tags"><span lang="en">Tags</span>: </label>
                             <div onclick="MVC.Controller.getTagCloudData();">
-                            <input id="tags" >
+                                <input id="tags" >
+                            </div>   
                             <div id="tag_cloud_outside">
-
-                                    <div style="float:right"><span class="ui-icon ui-icon-circle-close" onclick=" $('div#tag_cloud_outside').hide();"></span></div>
-
-                                     <div style="clear: both;" id="tag_cloud">
+                                <div style="float:right" onclick="$('div#tag_cloud_outside').hide();"><span class="ui-icon ui-icon-circle-close" ></span></div>
+                                     <div class="clrflt" id="tag_cloud">
                                      </div>
-                            </div>
                             </div>
                         </div>
 
@@ -246,11 +244,17 @@
                         <div id="edit_progress">
                             <label for="progress"><span lan="en">Progress</span>: </label>
                             <div id="slider_progress"></div>
+                            <div style="float:left">0%</div>
+                            <div style="float:right">100%</div>
+                            <div class="clrflt"></div>
                         </div>
 
                         <div id="edit_priority" class="ui-widget">
                             <label for="priority"><span lan="en">Priority</span>: </label>
                             <div id="slider_priority"></div>
+                            <div style="float:left">low</div>
+                            <div style="float:right">high</div>
+                            <div class="clrflt"></div>
                         </div>
 
                         <div id="edit_content" class="ui-widget">
