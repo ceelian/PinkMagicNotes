@@ -24,9 +24,7 @@
 			if(filter_var($filename, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9]+\.json$/"))) === false) {
 				throw new Exception("APIKEY is syntactically wrong.");
 			}
-			//if (!file_exists($filename)) {
-			//	throw new Exception("APIKEY is wrong.");
-			//}
+			
 			$action = strtolower($action);
 			switch($action) {
 
@@ -69,7 +67,6 @@
                 break;
 			
 				default:
-					// action is empty or not defined
 					throw new Exception("Action is undefined.");
 					break;
 			}
@@ -97,7 +94,6 @@
 					break;
 			
 				default:
-					// action is empty or not defined
 					throw new Exception("Action is undefined.");
 					break;
 			}
@@ -125,7 +121,12 @@
  * returns all responses as JSON
  */
 class NotesService {
-	
+	/**
+    * Reads the content of a given file
+    * 
+    * @param $filename file which should be read
+    * @return Content of File
+    */ 
 	private static function readFileContent($filename) {
 			$file = fopen($filename,"r");
 			if ($file == FALSE) {
@@ -139,16 +140,33 @@ class NotesService {
 			return $content;
 	}
 
+    /**
+    * Writes content to a given file
+    * 
+    * @param $filename file which should be read
+    * @param $content content which should be written
+    */ 
 	private static function writeFileContent($filename, $content) {
 		$file = fopen($filename,"w");
 		fwrite($file, $content);
 		fclose($file);
 	}
 
+    /**
+    * Turns a given array into json-syntax
+    * 
+    * @param $arr Array which should be converted
+    */ 
 	private static function arrayToJson($arr) {
 		return self::json_format(json_encode($arr));
 	}
 	
+    /**
+    * Returns all notes which are stored in a given filename. If a pattern is given, the pattern is used for filtering the notes.
+    * 
+    * @param $pattern Pattern for filtering the msg
+    * @param $filename Name of the file where the notes are stored (filename contains the UUID)
+    */
 	public static function getAllNotes($pattern, $filename) {
 		$content = self::readFileContent($filename);
 		$php_content = json_decode($content,TRUE);
@@ -183,18 +201,28 @@ class NotesService {
 		$php_content['notes'] = $notes;
         	$content = self::arrayToJson($php_content);
 		return $content;
-		//return self::readFileContent($filename);
 	}
 
+    /**
+    * Creates a new UUID and returns it. The UUID is used for distinguishing between the users.
+    * 
+    * @return generated UUID
+    */
     public static function getUUID() {
        $dict = array();
        $dict['apikey']=self::uuid();
        return self::arrayToJson($dict);
     }
+
+    /**
+    * Returns a single note of a user, identified by the filename which contains the uuid. The note is filtered via the note_id
+    * 
+    * @param $note_id Id of the note which should be returned
+    * @param $filename Name of the file where the notes are stored (filename contains the UUID)
+    * @return returns the note
+    */
     public static function getSingleNote($note_id,$filename) {
         $content = self::readFileContent($filename);
-        
-        #$content = json_encode($content);
         $php_content = json_decode($content,TRUE);
         $notes = $php_content['notes'];
         foreach ($notes as $key => $value) {
@@ -205,10 +233,14 @@ class NotesService {
         }
         return $result;
 
-        #print $php_content->{'notes'};
     }
 
-
+    /**
+    * Deletes a specific note of a user, identified by the filename which contains the uuid. The note is filtered via the note_id
+    * 
+    * @param $note_id Id of the note which should be deleted
+    * @param $filename Name of the file where the notes are stored (filename contains the UUID)
+    */
     public static function deleteNote($note_id, $filename) {
         $content = self::readFileContent($filename);
         print_r($content);
@@ -225,18 +257,22 @@ class NotesService {
 
     }
 
-
+    /**
+    * Updates the content and metadata of a note
+    * 
+    * @param $uuid id of the note which should be updated
+    * @param $json_note the content of the note
+    * @param $filename Name of the file where the notes are stored (filename contains the UUID)
+    */
 	public static function updateNote($uuid, $json_note,$filename){
-		
-		
+				
 		$content = self::readFileContent($filename);
 		$php_content = json_decode($content,TRUE);
 		$notes = $php_content['notes'];
 		if ($uuid == '') $uuid = self::uuid();
-		//error_log($json_note);
 		$new_note = json_decode($json_note,TRUE);
 		$notes[$uuid] = $new_note;
-		//#rint $new_note;
+
 		$php_content['notes']=$notes;
 		$content = self::arrayToJson($php_content);
 		self::writeFileContent($filename, $content);
