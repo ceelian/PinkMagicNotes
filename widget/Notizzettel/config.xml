@@ -9,7 +9,7 @@
     <description>A Description for Your Widget</description>
 	<icon src="icon.png" width="16" height="16" />
 	<palette:preferences>
-		<palette:preference name="apikey"        display_name="User APIKEY"      datatype="string" default_value="a"/>
+		<palette:preference name="apikey"        display_name="User APIKEY"      datatype="string" default_value="notes"/>
 		<palette:preference name="lang" display_name="Language" datatype="enumeration" default_value="en">
 			<palette:enumeration value="en" display_value="English"/>
 			<palette:enumeration value="de" display_value="Deutsch"/>
