@@ -1,7 +1,7 @@
 <widget xmlns="http://www.w3.org/TR/widgets/"
 	xmlns:palette="http://palette.ercim.org/ns/"
-	width="300"
-	height="500"
+	width="350"
+	height="600"
 	id="Notizzettel">
 
     <title>NotitzZettel Widget</title>

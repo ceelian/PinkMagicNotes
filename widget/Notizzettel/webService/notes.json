@@ -1,18 +1,6 @@
 {
   "notes": {
-    "5faa449b-b801-4769-a379-00e6cf40a96b": {
-      "schema": "default",
-      "title": "MMIS Mockups",
-      "tags": [
-        "MMIS",
-        "Uni",
-        "mockups"
-      ],
-      "content": "MMIS Mockup Text",
-      "color": "#FFF300"
-    },
     "96b0e219-3200-445a-9439-187031741871": {
-
       "schema": "appointment",
       "title": "Chili D\u00fcnger",
       "tags": [
@@ -25,31 +13,20 @@
       "start_date": "01\/12\/2011",
       "end_date": "01\/19\/2011",
       "color": "#FFF300",
-      "reminder": "01\/21\/2011"
-    },
-    "e46613c5-283e-4968-9df9-4081d0beba6a": {
-      "schema": "default",
-      "title": "IBL Literaturrecherche",
-      "tags": [
-        "Uni",
-        "Recherche",
-        "MMIS",
-        "Literatur"
-      ],
-      "content": "Literatur: Prozessorientiertes Anlagemanagement, ...",
-      "color": "#00F300"
+      "reminder": "01\/24\/2011"
     },
     "e46613l5-283e-4968-9df9-4081d0beba6a": {
-
       "schema": "todo",
       "title": "Hasenpost",
       "tags": [
         "Kaninchen",
-        "Humphy",
         "Daisy",
-
         "Sally",
-        "dfase"
+        "Daisy",
+        "Sally",
+        "IBL",
+        "D\u00fcnger",
+        "Daisy"
       ],
       "content": "verschicken\n\ndkdk",
       "start_date": "01\/04\/2011",
@@ -60,7 +37,6 @@
     },
     "96c340a7-3efc-2d84-352b-204d61824401": {
       "schema": "note",
-
       "title": "IBL Pr\u00fcfung",
       "tags": [
         "IBL",
@@ -68,25 +44,15 @@
         "Pr\u00fcfung",
         "lernen"
       ],
-      "content": "ba",
+      "content": "ba asd\u00f6lkjf a\u00f6klsdjf\u00f6 askldjf\u00f6aklsdjf\u00f6 laksjdf\u00f6lka jsd\u00f6flkajsd\u00f6lfkjasd\u00f6lkfja\u00f6sdklfj\u00f6alskdjf\u00f6alskdjf\u00f6laksdjf\u00f6alskdjf \u00f6askdjf \u00f6laksjf \u00f6askjf\u00f6aklsdjfkajldhf\u00f6akj sd\u00f6fkljas \u00f6dkflja\u00f6sldk jfa\u00f6slkdjf \u00f6aslkdjf \u00f6skljdf \u00f6aklsdjf \u00f6aksldjf\u00f6 lakdjf\u00f6 aklsdjf\u00f6alksd jf\u00f6akjf\u00f6askldjf",
       "color": "#00F300"
-    },
-    "8f8604e5-70c0-9d84-79c0-41e1dd4b2e0d": {
-      "schema": "default",
-      "title": "MMIS Abgabe",
-      "tags": [
-        "MMIS",
-        "Uni",
-        "Abgabe"
-      ],
-      "content": "Abgabe am 26.01.2011",
-      "color": "#FF0000"
     },
     "381abc1b-fce5-a594-09ba-0e122e7f7343": {
       "schema": "todo",
       "title": "test",
       "tags": [
-        "super"
+        "super",
+        "Uni"
       ],
       "content": "alles ist super",
       "start_date": "01\/19\/2011",

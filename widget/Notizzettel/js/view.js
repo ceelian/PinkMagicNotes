@@ -36,6 +36,8 @@ MVC.View = (function (interFace, Controller, $) {
 		debug('View showUserInterestsData(): write the interests data into DOM and show the div containing interests data');
 		var html_code = "";
 		var searchstr = "";
+        var content = "";
+        var number_tags = 5;
 		if (searchString != null) {
 			searchstr = searchString;
 		}
@@ -45,31 +47,47 @@ MVC.View = (function (interFace, Controller, $) {
 
 			switch(note.schema) {
 			case "note":
+                var description = "";
+                var tags = "";
 				if(Controller.containsTypeField(note.schema, "reminder") && 
 					Controller.shouldReminderAlert(note.reminder, 2)) {
 					icon_style ="list-item-icon-note-alert";
 				} else {
 					icon_style ="list-item-icon-note";
 				}
+                description = note.content.substring(0,35);
+                description = description + " ...";
+			    tags = _createTagString(note.tags, number_tags);
+                content = '<div id="content"><div id="left_float"><span lang="en">Content</span>: '+description+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
 				break;
 			case "todo":
+                var priority=note.priority;
+                var due=note.start_date;
+                var tags = _createTagString(note.tags, number_tags);
 				if(Controller.containsTypeField(note.schema, "reminder") && 
 					Controller.shouldReminderAlert(note.reminder, 2)) {
 					icon_style ="list-item-icon-todo-alert";
 				} else {
 					icon_style ="list-item-icon-todo";
 				}
+                content = '<div id="content"><div id="left_float"><span lan="en">Priority</span>: '+priority+' </div><div id="right_float"><span lan="en">Start Date</span>: '+due+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
+                //add priority and due and tags
 				break;
 			case "appointment":
+                var location = note.location;
+                var due = note.start_date;
+                var tags = _createTagString(note.tags, number_tags);
 				if(Controller.containsTypeField(note.schema, "reminder") && 
 					Controller.shouldReminderAlert(note.reminder, 2)) {
 					icon_style ="list-item-icon-appoint-alert";
 				} else {
 					icon_style ="list-item-icon-appoint";
 				}
+                content = '<div id="content"><div id="left_float"><span lang="en">Location</span>: '+location+' </div><div id="right_float"><span lan="en">Start Date</span>: '+due+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
 				break;
 			}
-			html_code += '<div id="' + key + '" class="list-item ui-corner-all ui-widget-content"><div class="' + icon_style + '"/><h2>' + note.title + '</h2><div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
+			html_code += '<div id="' + key + '" class="list-item ui-corner-all ui-widget-content"><div class="' + icon_style + '"/><h2>' + note.title + '</h2>'+content+'<div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
+            content = "";
 		}
 
 		
@@ -275,7 +293,7 @@ MVC.View = (function (interFace, Controller, $) {
 			var tag_string = "";
 			$("input#tags").val(tag_string);
 
-            		$('input#tags').tagsInput({'height':'50px'});
+            $('input#tags').tagsInput({'height':'50px'});
 		} else {
 			$("#edit_tags").hide();
 		}
@@ -362,7 +380,22 @@ MVC.View = (function (interFace, Controller, $) {
 	/* variable to cache translation data */
     var _lang_data = null,
 	
-
+    _createTagString = function (tags, number_tags) {
+        var tag_string = "";
+        if (tags != null) {
+		    for(i = 0; i < tags.length; i++) {
+			    tag_string += tags[i];
+			    if(i + 1 != tags.length) {
+				    tag_string += ", ";
+			    }
+                if (i == number_tags) {
+                    tag_string += ", ...";
+                    break;
+                }
+		    }
+	    }
+        return tag_string;
+    },
     _createTagList = function(id,pd) {
         var html_code = "";
         if(pd) {

@@ -15,6 +15,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	};
 
         interFace.notesListViewDataAsked = function(searchString) {
+                
                 debug('Controller notesListViewDataAsked: get notes from Servics and let View append it to the listview DOM');
 		Request.getAllNotes(searchString,
 			function(interestsJsonData) {
@@ -60,7 +61,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
         };
 	
         interFace.notesAddNewNote = function(schema) {
-
+            
             document.getElementById('schema').value = schema;
 		$('div#slider_progress').slider( "option", "value", 0 );
 		$('div#slider_priority').slider( "option", "value", 0 );
@@ -71,13 +72,15 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             document.getElementById('start_date').value = "";
             document.getElementById('end_date').value = "";
             document.getElementById('reminder').value = "";
-            document.getElementById('tags').value = "";
+            $("#tags_tagsinput").remove();
             document.getElementById('id').value="";
             debug('Controller notesAddNewNote: show form for adding a new note');
             View.showAddNote(schema);
         };
 
        interFace.notesReturnToListView = function() {
+            
+
             var id = document.getElementById('id').value;
             var jsonObj = {};
             if (document.getElementById('title').value) {

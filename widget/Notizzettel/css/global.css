@@ -190,3 +190,14 @@ div#new_note_menu ul, li {
     font-weight:bold;
     color: #E78C09;
 }
+
+#content {
+    color:#626262;
+}
+
+#left_float {
+    float:left;
+}
+#right_float {
+    float:right;
+}
