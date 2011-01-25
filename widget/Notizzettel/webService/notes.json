@@ -60,6 +60,15 @@
       "color": "#001FFF",
       "progress": 69,
       "priority": 40
+    },
+    "bab60191-7970-d2b4-351e-4cfa28b9f80d": {
+      "schema": "note",
+      "title": "asdf",
+      "tags": [
+        
+      ],
+      "content": "",
+      "color": "#001FFF"
     }
   }
 }

@@ -52,6 +52,35 @@
 			//is called after the DOM tree is fully loaded
 			function onLoad(){
 				var lang = widget.preferenceForKey('lang');
+				var apikey = widget.preferenceForKey('apikey');
+				
+				
+				if (apikey == null){
+					var url ='./webService/notes_api.php'
+					var parameter = {
+		                       		"action":"getUUID"
+		                	}
+					widget.httpGetJSON(
+					url, 
+					parameter, 
+					function(jsonData) {
+					
+						if(typeof jsonData.error != 'undefined') {
+							debug('Server reported the following error while processing the request: ' + jsonData.error);
+							MVC.View.notify('An error occurred: '+jsonData.error+' <br />Please try again!');
+							return;
+						}
+						
+						MVC.Controller.setPersistentData('apikey', jsonData.apikey);
+						
+					},
+					function(xhr, textStatus, e) {
+						debug('Request failed: ' + e);
+						MVC.View.notify('An unexpected error occurred while trying to communicate with the server.');
+					}
+					);
+				}
+				debug('APIKEY: ' + widget.preferenceForKey('apikey'));
 				MVC.Controller.init(lang);
 
                 $('textarea#description').contextMenu('linkMenu', {
@@ -304,9 +333,10 @@
 				</ul>
 			</div>
 			<div id="infopage-fragment-legal">
-				Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-				Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-				Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+				<p>This Notes Widget is provided 'as is'</p>
+				<p>This Widget is a demo widget developed for the sake of learning the W3C Widget Specifications</p>
+				<p>It is in no way recommended for production usage. Data is not encrypted and there are no strict
+				 mechanisms to protect unauthorized access to data of other widget user on the same widget server</p>
 			</div>
 			<div id="infopage-fragment-authors">
 				<p>Christian Haintz</p>

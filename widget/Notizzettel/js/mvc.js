@@ -93,7 +93,7 @@ MVC.Helper.ServerAPI = (function () {
 				
 				if(typeof jsonData.error != 'undefined') {
 					debug('Server reported the following error while processing the request: ' + jsonData.error);
-					MVC.View.notify('An error occurred: '+jsonData.error+' <br />Please try again!');
+					MVC.View.notify('An error occurred: '+jsonData.error+' <br \/>Please try again!');
 					return;
 				}
 				callback(jsonData);

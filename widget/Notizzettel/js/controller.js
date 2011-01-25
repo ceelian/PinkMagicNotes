@@ -193,6 +193,11 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		);
         };
 
+	interFace.setPersistentData = function(key, value) {
+		debug('Controller setPersistentData: Beni please fix to set it in the live system');
+		//TODO: FIXXME: widget.setPreferenceForKey(value,key);
+	}; 
+
 	interFace.containsTypeField = function(schema, field) {
 		var ret = false;
 
