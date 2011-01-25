@@ -108,6 +108,7 @@ MVC.View = (function (interFace, Controller, $) {
 
 	interFace.showDetailNotesView = function(pd,id) {
 		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
+        $("#tags_tagsinput").remove();
 		var schema = "default";
 		if('schema' in pd) {
 			schema = pd.schema.toLowerCase();
@@ -288,7 +289,7 @@ MVC.View = (function (interFace, Controller, $) {
     interFace.showAddNote = function(new_schema) {
 		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
 		var schema = new_schema.toLowerCase();
-
+        $("#tags_tagsinput").remove();
 		// hidden fields
 		$("input#id").val('');
 		$("input#schema").val(schema);

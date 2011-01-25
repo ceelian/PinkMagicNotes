@@ -60,8 +60,9 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		View.showInfoPageListView();
         };
 	
+        // Clean all fields which are shown. Afterwards show the view.
         interFace.notesAddNewNote = function(schema) {
-            
+            this.storeNote();
             document.getElementById('schema').value = schema;
 		$('div#slider_progress').slider( "option", "value", 0 );
 		$('div#slider_priority').slider( "option", "value", 0 );
@@ -78,77 +79,83 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             View.showAddNote(schema);
         };
 
+       // Stores the note and returns to listview. 
        interFace.notesReturnToListView = function() {
             
 
+            this.storeNote();
+            this.notesListViewDataAsked('');
+        }
+
+        interFace.storeNote = function() {
             var id = document.getElementById('id').value;
             var jsonObj = {};
             if (document.getElementById('title').value) {
 
-		var schema = "default";
+		    var schema = "default";
 
-            	if (document.getElementById('schema').value) {
-			schema = $("input#schema").val();
-		}
-		// schema
-                jsonObj["schema"] = schema;
+            if (document.getElementById('schema').value) {
+			    schema = $("input#schema").val();
+		    }
+		    // schema
+                    jsonObj["schema"] = schema;
 
-		// title
-		if(this.containsTypeField(schema, "title")) {
-                	jsonObj["title"] = $("input#title").val();
-		}
+		    // title
+		    if(this.containsTypeField(schema, "title")) {
+                    	jsonObj["title"] = $("input#title").val();
+		    }
 
-		// tags
-		if(this.containsTypeField(schema, "tags")) {
-                	var tags2 = document.getElementById('tags_tagsinput').getElementsByTagName('span');
-                    var i = 0;
-                    var tags = new Array();
-                    while(oNode = tags2.item(i++)) {
-                        tags.push(oNode.firstChild.nodeValue);
-                    }
-                    for (var i = 0; i<tags.length; i++)  {
-                        tags[i]=tags[i].replace(/^\s+|\s+$/g,"");
-                    } 
-                	jsonObj["tags"] = tags;
-		}
+		    // tags
+		    if(this.containsTypeField(schema, "tags")) {
+                    	var tags2 = document.getElementById('tags_tagsinput').getElementsByTagName('span');
+                        var i = 0;
+                        var tags = new Array();
+                        while(oNode = tags2.item(i++)) {
+                            tags.push(oNode.firstChild.nodeValue);
+                        }
+                        for (var i = 0; i<tags.length; i++)  {
+                            tags[i]=tags[i].replace(/^\s+|\s+$/g,"");
+                        } 
+                    	jsonObj["tags"] = tags;
+		    }
 
-		// content
-		if(this.containsTypeField(schema, "content")) {
-                	jsonObj["content"] = $("textarea#description").val();
-		}
+		    // content
+		    if(this.containsTypeField(schema, "content")) {
+                    	jsonObj["content"] = $("textarea#description").val();
+		    }
 
-		// location
-		if(this.containsTypeField(schema, "location")) {
-                	jsonObj["location"] = $("input#location").val();
-		}
+		    // location
+		    if(this.containsTypeField(schema, "location")) {
+                    	jsonObj["location"] = $("input#location").val();
+		    }
 
-		// start and end date
-		if(this.containsTypeField(schema, "date_start")) {
-                	jsonObj["start_date"] = $("input#start_date").val();
-		}
-		if(this.containsTypeField(schema, "date_end")) {
-                	jsonObj["end_date"] = $("input#end_date").val();
-		}
+		    // start and end date
+		    if(this.containsTypeField(schema, "date_start")) {
+                    	jsonObj["start_date"] = $("input#start_date").val();
+		    }
+		    if(this.containsTypeField(schema, "date_end")) {
+                    	jsonObj["end_date"] = $("input#end_date").val();
+		    }
 
-		// color
-		if(this.containsTypeField(schema, "color")) {
-                	jsonObj["color"] = $("input#colorSelector").val();
-		}
+		    // color
+		    if(this.containsTypeField(schema, "color")) {
+                    	jsonObj["color"] = $("input#colorSelector").val();
+		    }
 		
-		// reminder
-		if(this.containsTypeField(schema, "reminder")) {
-                	jsonObj["reminder"] = $("input#reminder").val();
-		}
+		    // reminder
+		    if(this.containsTypeField(schema, "reminder")) {
+                    	jsonObj["reminder"] = $("input#reminder").val();
+		    }
 
-		// progress
-		if(this.containsTypeField(schema, "progress")) {
-			jsonObj["progress"] = $('div#slider_progress').slider( "option", "value" );
-		}
+		    // progress
+		    if(this.containsTypeField(schema, "progress")) {
+			    jsonObj["progress"] = $('div#slider_progress').slider( "option", "value" );
+		    }
 
-		// priority
-		if(this.containsTypeField(schema, "priority")) {
-			jsonObj["priority"] = $('div#slider_priority').slider( "option", "value" );
-		}
+		    // priority
+		    if(this.containsTypeField(schema, "priority")) {
+			    jsonObj["priority"] = $('div#slider_priority').slider( "option", "value" );
+		    }
 
                 json_string = JSON.stringify(jsonObj);
                 console.log(json_string);
@@ -172,11 +179,11 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		    $('div#slider_priority').slider( "option", "value", 0 );
 
             document.getElementById('id').value="";
-            this.notesListViewDataAsked('');
         }
 
         interFace.notesDeleteNote = function() {
             var id = document.getElementById('id').value;
+            $("#tags_tagsinput").remove();
             Request.deleteNote(id, function(interestsJsonData) {
                 debug('Controller notesDeleteNote: note deleted');
             });
