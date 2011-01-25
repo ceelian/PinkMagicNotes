@@ -75,10 +75,19 @@ MVC.Helper.ServerAPI = (function () {
                                 "action":"deleteNote"
                         }
                         _sendRequest(param,callback);
+        }, 
+        addAPIKey: function(callback) {
+                       debug("Helper.ServerAPI addAPIKey:: send a xhr request to delete a note"); 
+                       var param = {
+		                       		"action":"getUUID"
+		                }
+                        _sendRequest(param,callback);
         }
 		
 		/* end of public methods */
 	},
+
+
 	
 	
 	

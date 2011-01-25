@@ -191,7 +191,18 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 				View.createTagCloud(interestsJsonData);
 			}
 		);
-        };
+        }
+        
+        interFace.createAPIKey = function() {
+            debug("Controller createAPIKey: send request for api-creation");
+            var apikey="";
+            Request.addAPIKey(function(interestsJsonData) {
+                apikey = interestsJsonData.apikey;
+                debug("Controller createAPIKey: new API key created");
+            });
+            
+            this.setPersistentData('apikey', apikey);
+	    },
 
 	interFace.setPersistentData = function(key, value) {
 		debug('Controller setPersistentData: Beni please fix to set it in the live system');
