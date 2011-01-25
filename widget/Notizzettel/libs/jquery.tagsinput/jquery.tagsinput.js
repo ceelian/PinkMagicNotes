@@ -74,7 +74,7 @@
 	
 	jQuery.fn.tagsInput = function(options) { 
 	
-		var settings = jQuery.extend({defaultText:'add a tag',width:'300px',height:'100px','hide':true,'delimiter':',',autocomplete:{selectFirst:false}},options);
+		var settings = jQuery.extend({defaultText:'add a tag',width:'98%',height:'100px','hide':true,'delimiter':',',autocomplete:{selectFirst:false}},options);
 	
 		this.each(function() { 
 			if (settings.hide) { 
