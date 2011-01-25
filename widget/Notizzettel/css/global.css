@@ -36,7 +36,7 @@ textarea {
 }
 
 #singlenoteview {
-    height: 600px;
+    height: 488px;
     overflow:auto;
 }
 
@@ -150,7 +150,7 @@ ul#icons li {
 }
 
 .list-item-bgcolor {
-    width: 260px;
+    width: 80%;
     height: 5px;
     clear: both;
     margin: 0 auto;
