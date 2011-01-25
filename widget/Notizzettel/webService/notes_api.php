@@ -24,11 +24,15 @@
 			if(filter_var($filename, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9]+\.json$/"))) === false) {
 				throw new Exception("APIKEY is syntactically wrong.");
 			}
-			if (!file_exists($filename)) {
-				throw new Exception("APIKEY is wrong.");
-			}
+			//if (!file_exists($filename)) {
+			//	throw new Exception("APIKEY is wrong.");
+			//}
 			$action = strtolower($action);
 			switch($action) {
+
+				case 'getuuid':
+					$response = NotesService::getUUID();
+					break;
 				case 'getallnotes':
 					if(!isset($_GET['searchString']))
 						$response = NotesService::getAllNotes('', $filename);
@@ -125,8 +129,10 @@ class NotesService {
 	private static function readFileContent($filename) {
 			$file = fopen($filename,"r");
 			if ($file == FALSE) {
-				error_log('fnf');
-				throw new Exception("DB File not found");
+				$file = fopen($filename, 'w');
+				if ($file == FALSE){ throw new Exception("Give us permissions to create new files on the Server!");}
+				fclose($file);
+				$file = fopen($filename,"r");
 			}
 			$content = fread($file, filesize($filename));
 			fclose($file);
@@ -180,7 +186,11 @@ class NotesService {
 		//return self::readFileContent($filename);
 	}
 
-
+    public static function getUUID() {
+       $dict = array();
+       $dict['apikey']=self::uuid();
+       return self::arrayToJson($dict);
+    }
     public static function getSingleNote($note_id,$filename) {
         $content = self::readFileContent($filename);
         
