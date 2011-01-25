@@ -57,34 +57,11 @@
                 $('#navbar_singlenoteview').hide();
                 $('#navbar_tagcloudview').hide();
                 $('#navbar_infopageview').hide();
-				
-				if (apikey == null){
-					var url ='./webService/notes_api.php'
-					var parameter = {
-		                       		"action":"getUUID"
-		                	}
-					widget.httpGetJSON(
-					url, 
-					parameter, 
-					function(jsonData) {
-					
-						if(typeof jsonData.error != 'undefined') {
-							debug('Server reported the following error while processing the request: ' + jsonData.error);
-							MVC.View.notify('An error occurred: '+jsonData.error+' <br />Please try again!');
-							return;
-						}
-						
-						MVC.Controller.setPersistentData('apikey', jsonData.apikey);
-						
-					},
-					function(xhr, textStatus, e) {
-						debug('Request failed: ' + e);
-						MVC.View.notify('An unexpected error occurred while trying to communicate with the server.');
-					}
-					);
-				}
-				debug('APIKEY: ' + widget.preferenceForKey('apikey'));
 				MVC.Controller.init(lang);
+				if (apikey == null){
+                    MVC.Controller.createAPIKey();
+                }
+				
 
                 $('textarea#description').contextMenu('linkMenu', {
                       bindings: {
@@ -203,10 +180,11 @@
                             <input id="title">
                         </div>
 
-                        <div id="color_div" class="ui-widget">
+                        
 				<!-- computed in view because of colorSelector -->
-				<label for="colors"><span lang="en">Color</span>: </label>
-				<input id="colorSelector" type="text" style="display: none" />
+				        <div id="color" class="left_float"><label for="colors"><span lang="en">Color</span>: </label></div>
+                        <div id="color_div" class="ui-widget">
+				            <input id="colorSelector" type="text" style="display: none" />
                         </div>
 
                         <div id="edit_tag_cloud" class="ui-widget">
@@ -243,7 +221,7 @@
 
                         <div id="edit_progress">
                             <label for="progress"><span lan="en">Progress</span>: </label>
-                            <div id="slider_progress"></div>
+                            <div id="slider_progress" style="z-index:1;"></div>
                             <div style="float:left">0%</div>
                             <div style="float:right">100%</div>
                             <div class="clrflt"></div>
@@ -251,7 +229,7 @@
 
                         <div id="edit_priority" class="ui-widget">
                             <label for="priority"><span lan="en">Priority</span>: </label>
-                            <div id="slider_priority"></div>
+                            <div id="slider_priority" style="z-index:1;"></div>
                             <div style="float:left">low</div>
                             <div style="float:right">high</div>
                             <div class="clrflt"></div>

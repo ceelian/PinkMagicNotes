@@ -195,9 +195,9 @@ div#new_note_menu ul, li {
     color:#626262;
 }
 
-#left_float {
+.left_float {
     float:left;
 }
-#right_float {
+.right_float {
     float:right;
 }
