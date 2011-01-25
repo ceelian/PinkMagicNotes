@@ -31,7 +31,8 @@ MVC.Helper.ServerAPI = (function () {
 		getAllNotes: function(searchString, callback) {
                         debug("Helper.ServerAPI getAllNotes: send a xhr request to fetch all notes from the web service");
                         var param = {
-				"searchString": searchString,
+				                "searchString": searchString,
+                                "apikey": widget.preferenceForKey('apikey'),
                                 "action":'getAllNotes'
                         }
                         _sendRequest(param, callback);
@@ -41,6 +42,7 @@ MVC.Helper.ServerAPI = (function () {
                         debug("Helper.ServerAPI getSingleNotes: send a xhr request to fetch a single notes from the web service");
                         var param = {
                                 "notes_id":note_id,
+                                "apikey": widget.preferenceForKey('apikey'),
                                 "action":'getSingleNote'
                         }
                         _sendRequest(param, callback);
@@ -49,6 +51,7 @@ MVC.Helper.ServerAPI = (function () {
 		getTagsWeightened: function(callback) {
                         debug("Helper.ServerAPI getTagsWeightened: send a xhr request to fetch all tags from the web service");
                         var param = {
+                                "apikey": widget.preferenceForKey('apikey'),
                                 "action":'getTagsWeightened'
                         }
                         _sendRequest(param, callback);
@@ -59,6 +62,7 @@ MVC.Helper.ServerAPI = (function () {
                         var param = {
                             "uuid":id,
                             "json_note":json_string,
+                            "apikey": widget.preferenceForKey('apikey'),
                             "action":'updateNote'
                         }
                         _sendRequest(param,callback);
@@ -67,6 +71,7 @@ MVC.Helper.ServerAPI = (function () {
                        debug("Helper.ServerAPI deleteNote:: send a xhr request to delete a note"); 
                        var param = {
                                 "uuid":id,
+                                "apikey": widget.preferenceForKey('apikey'),
                                 "action":"deleteNote"
                         }
                         _sendRequest(param,callback);

@@ -99,6 +99,10 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#tagcloudview").hide();
 		$("div#infopageview").hide();
 		$("div#listview").show();
+        $('#navbar_listview').show();
+        $('#navbar_singlenoteview').hide();
+        $('#navbar_tagcloudview').hide();
+        $('#navbar_infopageview').hide();
 		_setDynamicClickEvents();
 	};
 
@@ -240,6 +244,10 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#tagcloudview").hide();
 		$("div#tag_cloud_outside").hide();
 		$("div#singlenoteview").show();
+        $('#navbar_listview').hide();
+        $('#navbar_singlenoteview').show();
+        $('#navbar_tagcloudview').hide();
+        $('#navbar_infopageview').hide();
 	}
 
 	interFace.showTagCloudView = function(pd) {
@@ -256,6 +264,10 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#infopageview").hide();
 		$("div#tagcloudview").show();
 		$("input#title").val(pd.title);
+        $('#navbar_listview').hide();
+        $('#navbar_singlenoteview').hide();
+        $('#navbar_tagcloudview').show();
+        $('#navbar_infopageview').hide();
 
 		_setDynamicTagClickEvents();
 	};
@@ -361,6 +373,10 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#tag_cloud_outside").hide();
 		$("div#infopageview").hide();
 		$("div#singlenoteview").show();
+        $('#navbar_listview').hide();
+        $('#navbar_singlenoteview').show();
+        $('#navbar_tagcloudview').hide();
+        $('#navbar_infopageview').hide();
     };
 
 	interFace.showInfoPageListView = function() {
@@ -369,6 +385,10 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#tag_cloud_outside").hide();
 		$("div#singlenoteview").hide();
 		$("div#infopageview").show();
+        $('#navbar_listview').hide();
+        $('#navbar_singlenoteview').hide();
+        $('#navbar_tagcloudview').hide();
+        $('#navbar_infopageview').show();
 	}
 
 	

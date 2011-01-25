@@ -53,7 +53,10 @@
 			function onLoad(){
 				var lang = widget.preferenceForKey('lang');
 				var apikey = widget.preferenceForKey('apikey');
-				
+				$('#navbar_listview').show();
+                $('#navbar_singlenoteview').hide();
+                $('#navbar_tagcloudview').hide();
+                $('#navbar_infopageview').hide();
 				
 				if (apikey == null){
 					var url ='./webService/notes_api.php'
@@ -143,9 +146,7 @@
               </ul>
 
         </div>
-
-		<div id="listview">
-                    <div id="navbar_list_view" class="ui-corner-all ui-widget-content">
+        <div id="navbar" class="ui-corner-all ui-widget-content">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Add Note" ><!--onclick="MVC.Controller.notesAddNewNote();">-->
                                     <div id="new_note_menu">
@@ -157,11 +158,27 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.notesListViewDataAsked($('input#searchbox_input').val());"><span class="ui-icon ui-icon-refresh"></span></li>
-                                <li class="ui-state-default ui-corner-all" title="TagCloud View" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-calculator"></span></li>
-                                <li class="ui-state-default ui-corner-all" title="About" onclick="MVC.Controller.infoPageViewDataAsked();"><span class="ui-icon ui-icon-help"></span></li>
+                                <div id="navbar_listview">
+                                    <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.notesListViewDataAsked($('input#searchbox_input').val());"><span class="ui-icon ui-icon-refresh"></span></li>
+                                    <li class="ui-state-default ui-corner-all" title="TagCloud View" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-calculator"></span></li>
+                                    <li class="ui-state-default ui-corner-all" title="About" onclick="MVC.Controller.infoPageViewDataAsked();"><span class="ui-icon ui-icon-help"></span></li>
+                                </div>
+                                <div id="navbar_singlenoteview">
+                                    <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesReturnToListView()"><span class="ui-icon ui-icon-arrowreturnthick-1-w"></span></li>
+                                    <li class="ui-state-default ui-corner-all" title="Delete Note" onclick="MVC.Controller.notesDeleteNote()"><span class="ui-icon ui-icon-trash"></span></li>
+                                </div>
+                                <div id="navbar_tagcloudview">
+                                    <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
+                                    <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesListViewDataAsked('');"><span class="ui-icon ui-icon-script"></span></li>
+                                </div>
+                                <div id="navbar_infopageview">
+                                    <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
+                                    <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesListViewDataAsked('');"><span class="ui-icon ui-icon-script"></span></li>
+                                </div>
                         </ul>
                     </div>
+		<div id="listview">
+              
                     <div id="searchbox" class="ui-corner-all ui-widget-content">
                         <input id="searchbox_input" style="width:30%;float:left;">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
@@ -176,22 +193,6 @@
 
                 <div id="singlenoteview" class="ui-helper-hidden">
 
-                    <div id="navbar_singlenoteview" class="ui-corner-all ui-widget-content">
-                        <ul id="icons" class="ui-widget ui-helper-clearfix">
-                            <li class="ui-state-default ui-corner-all" title="Add Note">
-                            <div id="new_note_menu">
-                                        <div class="menu_class"><span class="ui-icon ui-icon-plus"></span></div>
-                                        <ul class="the_menu">
-                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote('note');">Add Note</a></li>
-                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote('todo');">Add ToDo</a></li>
-                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote('appointment');">Add Appointment</a></li>
-                                        </ul>
-                                    </div>                            
-                            </li>
-                            <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesReturnToListView()"><span class="ui-icon ui-icon-arrowreturnthick-1-w"></span></li>
-                            <li class="ui-state-default ui-corner-all" title="Delete Note" onclick="MVC.Controller.notesDeleteNote()"><span class="ui-icon ui-icon-trash"></span></li>
-                        </ul>
-                    </div>
 
                     <div id="notesedits" class="ui-corner-all ui-widget-content">
                         <h2><span lang="en">Note</span></h2>
@@ -265,44 +266,12 @@
 		</div>
 
 		<div id="tagcloudview">
-                    <div id="navbar_tagcloud_view" class="ui-corner-all ui-widget-content">
-                        <ul id="icons" class="ui-widget ui-helper-clearfix">
-                                <li class="ui-state-default ui-corner-all" title="Add Note" ><!--onclick="MVC.Controller.notesAddNewNote();">-->
-                                    <div id="new_note_menu">
-                                        <div class="menu_class"><span class="ui-icon ui-icon-plus"></span></div>
-                                        <ul class="the_menu">
-                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote('note');">Add Note</a></li>
-                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote('todo');">Add ToDo</a></li>
-                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote('appointment');">Add Appointment</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
-                                <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesListViewDataAsked('');"><span class="ui-icon ui-icon-script"></span></li>
-                        </ul>
-                    </div>
                     <div id="tags">
 		
                     </div>
 		</div>
 
 		<div id="infopageview">
-                    <div id="navbar_infopage_view" class="ui-corner-all ui-widget-content">
-                        <ul id="icons" class="ui-widget ui-helper-clearfix">
-                                <li class="ui-state-default ui-corner-all" title="Add Note" ><!--onclick="MVC.Controller.notesAddNewNote();">-->
-                                    <div id="new_note_menu">
-                                        <div class="menu_class"><span class="ui-icon ui-icon-plus"></span></div>
-                                        <ul class="the_menu">
-                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote('note');">Add Note</a></li>
-                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote('todo');">Add ToDo</a></li>
-                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote('appointment');">Add Appointment</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
-                                <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesListViewDataAsked('');"><span class="ui-icon ui-icon-script"></span></li>
-                        </ul>
-                    </div>
                     <div id="infopage">
 			<ul>
 				<li><a href="#infopage-fragment-info"><span lang="en">Info</span></a></li>
