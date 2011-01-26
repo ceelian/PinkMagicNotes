@@ -7,7 +7,7 @@
 //=== PREPERATION ==============================================================
 //patch to support also not apache2 rewrite webservers (eg. TU-Graz)
 //just give the restresource with the dispatch.php as endpoint
-//http://www.restserver.org/dispatch.php/helloworld/asd/?var1=haha&var2=aa
+//http://www.restserver.org/api.php/v1.0/APIKEY/notes
 
 if (strpos($_SERVER['PATH_INFO'], $_SERVER['SCRIPT_NAME']) === 0) {
     $_SERVER['PATH_INFO'] = substr_replace($_SERVER['PATH_INFO'], '', 0, strlen($_SERVER['SCRIPT_NAME']));
@@ -19,6 +19,8 @@ if (!isset($_SERVER['REDIRECT_URL'])) {
 }
 
 //=== TONIC LIBRARY ============================================================
+//enhanced the tonic library (https://github.com/peej/tonic) to fit our single
+//server needs.
 // load Tonic library
 
 class Logger {
