@@ -109,12 +109,12 @@ MVC.Helper.ServerAPI = (function () {
 		 */
 		deleteNote: function(id, callback) {
                        debug("Helper.ServerAPI deleteNote:: send a xhr request to delete a note"); 
-                       var param = {
-                                "uuid":id,
-                                "apikey": widget.preferenceForKey('apikey'),
-                                "action":"deleteNote"
-                        }
-                        _sendRequest(param,callback);
+                        var url = widget.preferenceForKey('apiurl');
+                        var apikey = widget.preferenceForKey('apikey');
+         
+                        url = url+'/v1.0/'+apikey+'/notes/'+id;
+                       
+                        _sendRequestDelete("",callback,url);
 		}, 
 
 		/**
@@ -142,6 +142,33 @@ MVC.Helper.ServerAPI = (function () {
 	/* private methods */
 	
 	_SERVICE_URL = './webService/notes_api.php', 
+
+    _sendRequestDelete = function(parameter, callback, url){
+		if(typeof url == 'undefined')
+			url = _SERVICE_URL;
+        
+		widget.httpDelete(
+			url, 
+			parameter, 
+			function(jsonData) {
+				if (jsonData) {
+				    if(typeof jsonData.error != 'undefined') {
+					    debug('Server reported the following error while processing the request: ' + jsonData.error);
+					    MVC.View.notify('An error occurred: '+jsonData.error+' <br \/>Please try again!');
+					    return;
+				    }
+				callback(jsonData);
+                }
+                else {
+                    callback();
+                }
+			},
+			function(xhr, textStatus, e) {
+				debug('Request failed: ' + e);
+				MVC.View.notify('An unexpected error occurred while trying to communicate with the server.');
+			}
+		);
+	}
 
     _sendRequestPut = function(parameter, callback, url){
 		if(typeof url == 'undefined')
