@@ -53,6 +53,7 @@
 			function onLoad(){
 				var lang = widget.preferenceForKey('lang');
 				var apikey = widget.preferenceForKey('apikey');
+                var apiurl = widget.preferenceForKey('apiurl');
 				$('#navbar_listview').show();
                 $('#navbar_singlenoteview').hide();
                 $('#navbar_tagcloudview').hide();
@@ -60,6 +61,9 @@
 				MVC.Controller.init(lang);
 				if (apikey == null){
                     MVC.Controller.createAPIKey();
+                }
+                if (apiurl == null){
+                    MVC.Controller.createAPIUrl();
                 }
 				
 
@@ -205,22 +209,22 @@
                         </div>
 
                         <div id="edit_date_start" class="ui-widget">
-                            <label for="start_date"><span lan="en">Start Date</span>: </label>
+                            <label for="start_date"><span lang="en">Start Date</span>: </label>
                             <input id="start_date" type="text">
                         </div>
 
                         <div id="edit_date_end" class="ui-widget">
-                            <label for="end_date"><span lan="en">End Date</span>: </label>
+                            <label for="end_date"><span lang="en">End Date</span>: </label>
                             <input id="end_date">
                         </div>
 
                         <div id="edit_reminder" class="ui-widget">
-                            <label for="reminder"><span lan="en">Reminder</span>: </label>
+                            <label for="reminder"><span lang="en">Reminder</span>: </label>
                             <input id="reminder">
                         </div>
 
                         <div id="edit_progress">
-                            <label for="progress"><span lan="en">Progress</span>: </label>
+                            <label for="progress"><span lang="en">Progress</span>: </label>
                             <div id="slider_progress" style="z-index:1;"></div>
                             <div style="float:left">0%</div>
                             <div style="float:right">100%</div>
@@ -228,7 +232,7 @@
                         </div>
 
                         <div id="edit_priority" class="ui-widget">
-                            <label for="priority"><span lan="en">Priority</span>: </label>
+                            <label for="priority"><span lang="en">Priority</span>: </label>
                             <div id="slider_priority" style="z-index:1;"></div>
                             <div style="float:left">low</div>
                             <div style="float:right">high</div>

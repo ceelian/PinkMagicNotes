@@ -175,7 +175,7 @@ class NotesService {
 		if($pattern != null && $pattern != '') {
 			foreach ($notes as $key => $note) {
 				// check if tag patterned search is used
-				if(stripos($pattern, ':') == true) {
+				if(stripos($pattern, ':') !== false) {
 					$patt_arr =  explode(':', $pattern, 2);
 					$keyword = $patt_arr[0];
 					$srchstr = $patt_arr[1];
@@ -186,7 +186,7 @@ class NotesService {
 						} else {
 							$part_string = $note[$keyword];
 						}	
-						if(stripos($part_string, $srchstr) == false) {
+						if(stripos($part_string, $srchstr) === false) {
 							unset($notes[$key]);
 						}
 					}

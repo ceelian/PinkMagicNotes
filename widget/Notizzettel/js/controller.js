@@ -276,6 +276,15 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             this.setPersistentData('apikey', apikey);
 	 }
 
+    /**
+	 * Method to set a default api-url if no url is given in the config file.
+	 * In the config file, the new preference is being set.
+	 */
+        interFace.createAPIUrl = function() {
+            debug("Controller createAPIUrl: set apiurl in the preferences");           
+            this.setPersistentData('apiurl', './webService/api.php');
+	 }
+
 	/**
 	 * Method to store an value to a specific key to the Widget Preferences.
 	 * A Request to the webService is sent to retrieve a new apikey, and
