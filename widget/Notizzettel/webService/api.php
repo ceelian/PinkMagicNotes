@@ -798,6 +798,40 @@ class NotesResource extends Resource {
     }
 
 
+    function post($request) {
+
+        $response = new Response($request);
+
+        $storage_filename = $this->parameters['apikey'].".json";
+        $valid_apikey_syntax = filter_var($storage_filename, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9]+\.json$/")));
+
+        //Check if APIKEY is valid syntax
+        if ($valid_apikey_syntax == FALSE){
+            $response->code = Response::FORBIDDEN;
+            $response->addHeader('Content-type', 'text/plain');
+            $response->body = "Forbidden: No valid apikey!";
+            return $response;
+        }
+        if (!$request->data) {
+            error_log('No DATA!');
+            $response->code = Response::LENGTHREQUIRED;
+            $response->addHeader('Content-type', 'text/plain');
+            $response->body = "Error: No Data given!";
+            return $response;
+
+
+        }
+        error_log("Process: ".strval($request->data));
+        $id = NotesService::updateNote('', $request->data, $storage_filename );
+
+        $response->addHeader('Content-type', 'text/plain');
+        $response->code = Response::OK;
+	$response->body = $id;
+        return $response;
+
+    }
+
+
 
 }
 
@@ -865,11 +899,11 @@ class SingleNoteResource extends Resource {
         
         }
         error_log("Process: ".strval($request->data));
-        NotesService::updateNote($this->parameters['id'], $request->data, $storage_filename );
+        $id = NotesService::updateNote($this->parameters['id'], $request->data, $storage_filename );
 
-        $response->addHeader('Content-type', 'text/json');
+        $response->addHeader('Content-type', 'text/plain');
         $response->code = Response::OK;
-	//$response->body = $json;
+	$response->body = $id;
         return $response;
 
     }
@@ -1081,6 +1115,7 @@ class NotesService {
 		$php_content['notes']=$notes;
 		$content = self::arrayToJson($php_content);
 		self::writeFileContent($filename, $content);
+                return $uuid;
 
 	}
 
