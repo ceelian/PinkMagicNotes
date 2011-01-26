@@ -53,6 +53,7 @@
 			function onLoad(){
 				var lang = widget.preferenceForKey('lang');
 				var apikey = widget.preferenceForKey('apikey');
+                var apiurl = widget.preferenceForKey('apiurl');
 				$('#navbar_listview').show();
                 $('#navbar_singlenoteview').hide();
                 $('#navbar_tagcloudview').hide();
@@ -60,6 +61,9 @@
 				MVC.Controller.init(lang);
 				if (apikey == null){
                     MVC.Controller.createAPIKey();
+                }
+                if (apiurl == null){
+                    MVC.Controller.createAPIUrl();
                 }
 				
 

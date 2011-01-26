@@ -10,6 +10,7 @@
 	<icon src="icon.png" width="16" height="16" />
 	<palette:preferences>
 		<palette:preference name="apikey"        display_name="User APIKEY"      datatype="string" default_value="notes"/>
+        <palette:preference name="apiurl"        display_name="APIURL"      datatype="string" default_value="./webService/api.php"/>
 		<palette:preference name="lang" display_name="Language" datatype="enumeration" default_value="de">
 			<palette:enumeration value="en" display_value="English"/>
 			<palette:enumeration value="de" display_value="Deutsch"/>

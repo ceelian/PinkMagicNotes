@@ -3,7 +3,7 @@
 		margin:1em 0;
 		padding:.5em 10px;
 		text-align:center;
-		background:#71b5e9 url(bg_tags.gif) repeat-x;		
+		background:#262626;		
 		}
 	#tags li{
 		margin:0;
@@ -17,7 +17,7 @@
 		padding:0 2px;	
 		}
 	#tags li a:hover {	
-		color:#cff400;
+		color:#626262;
 		}		
 	
 	.tag1{font-size:50%;}
@@ -40,7 +40,7 @@
 		}
 	#tags .alt li{
 		padding:2px 10px;
-		background:#efefef;
+		background:#262626;
 		display:block;
 		}
 	#tags .alt .tag1, 

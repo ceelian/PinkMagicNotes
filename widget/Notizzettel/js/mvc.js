@@ -41,13 +41,12 @@ MVC.Helper.ServerAPI = (function () {
 		 * corresponding Controller- and webService methods.
 		 */
 		getAllNotes: function(searchString, callback) {
+                        var url = widget.preferenceForKey('apiurl');
+                        var apikey = widget.preferenceForKey('apikey');
+                        url = url+'/v1.0/'+apikey+'/notes';
                         debug("Helper.ServerAPI getAllNotes: send a xhr request to fetch all notes from the web service");
-                        var param = {
-				                "searchString": searchString,
-                                "apikey": widget.preferenceForKey('apikey'),
-                                "action":'getAllNotes'
-                        }
-                        _sendRequest(param, callback);
+
+                        _sendRequest("", callback, url);
                 },
 
 		/**
