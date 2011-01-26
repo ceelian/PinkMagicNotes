@@ -24,10 +24,22 @@ MVC.Helper.ServerAPI = (function () {
 	
 		/* public methods */
 
+		/**
+		 * Mapping Translation Request to webService XMLHttpRequest
+		 * Therefore that this is just a mapper function,
+		 * detailed description can be found at the
+		 * corresponding Controller- and webService methods.
+		 */
 		getTranslations: function(lang, callback) {
 			_sendRequest({}, callback, './locale/lang.'+lang);
 		},
 	
+		/**
+		 * Mapping getAllNotes Request to webService XMLHttpRequest
+		 * Therefore that this is just a mapper function,
+		 * detailed description can be found at the
+		 * corresponding Controller- and webService methods.
+		 */
 		getAllNotes: function(searchString, callback) {
                         debug("Helper.ServerAPI getAllNotes: send a xhr request to fetch all notes from the web service");
                         var param = {
@@ -38,6 +50,12 @@ MVC.Helper.ServerAPI = (function () {
                         _sendRequest(param, callback);
                 },
 
+		/**
+		 * Mapping getSingleNote Request to webService XMLHttpRequest
+		 * Therefore that this is just a mapper function,
+		 * detailed description can be found at the
+		 * corresponding Controller- and webService methods.
+		 */
 		getSingleNote: function(note_id, callback) {
                         debug("Helper.ServerAPI getSingleNotes: send a xhr request to fetch a single notes from the web service");
                         var param = {
@@ -48,6 +66,12 @@ MVC.Helper.ServerAPI = (function () {
                         _sendRequest(param, callback);
                 },
 
+		/**
+		 * Mapping getTagsWeightened Request to webService XMLHttpRequest
+		 * Therefore that this is just a mapper function,
+		 * detailed description can be found at the
+		 * corresponding Controller- and webService methods.
+		 */
 		getTagsWeightened: function(callback) {
                         debug("Helper.ServerAPI getTagsWeightened: send a xhr request to fetch all tags from the web service");
                         var param = {
@@ -57,7 +81,13 @@ MVC.Helper.ServerAPI = (function () {
                         _sendRequest(param, callback);
                 },
 
-        updateNote: function(id, json_string,callback) {
+		/**
+		 * Mapping updateNote Request to webService XMLHttpRequest
+		 * Therefore that this is just a mapper function,
+		 * detailed description can be found at the
+		 * corresponding Controller- and webService methods.
+		 */
+		updateNote: function(id, json_string,callback) {
                         debug("Helper.ServerAPI updateNote: send a xhr request to update the actual note");
                         var param = {
                             "uuid":id,
@@ -66,8 +96,15 @@ MVC.Helper.ServerAPI = (function () {
                             "action":'updateNote'
                         }
                         _sendRequest(param,callback);
-        },
-        deleteNote: function(id, callback) {
+		},
+
+		/**
+		 * Mapping deleteNote Request to webService XMLHttpRequest
+		 * Therefore that this is just a mapper function,
+		 * detailed description can be found at the
+		 * corresponding Controller- and webService methods.
+		 */
+		deleteNote: function(id, callback) {
                        debug("Helper.ServerAPI deleteNote:: send a xhr request to delete a note"); 
                        var param = {
                                 "uuid":id,
@@ -75,14 +112,21 @@ MVC.Helper.ServerAPI = (function () {
                                 "action":"deleteNote"
                         }
                         _sendRequest(param,callback);
-        }, 
-        addAPIKey: function(callback) {
+		}, 
+
+		/**
+		 * Mapping addAPIKey Request to webService XMLHttpRequest
+		 * Therefore that this is just a mapper function,
+		 * detailed description can be found at the
+		 * corresponding Controller- and webService methods.
+		 */
+		addAPIKey: function(callback) {
                        debug("Helper.ServerAPI addAPIKey:: send a xhr request to delete a note"); 
                        var param = {
 		                       		"action":"getUUID"
 		                }
                         _sendRequest(param,callback);
-        }
+		}
 		
 		/* end of public methods */
 	},
