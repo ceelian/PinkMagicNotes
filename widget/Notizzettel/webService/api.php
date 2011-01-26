@@ -776,6 +776,7 @@ class NotesResource extends Resource {
         $storage_filename = $this->parameters['apikey'].".json";
         $valid_apikey_syntax = filter_var($storage_filename, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9]+\.json$/")));
 
+        //Check if APIKEY is valid syntax
         if ($valid_apikey_syntax == FALSE){
             $response->code = Response::FORBIDDEN;
             $response->addHeader('Content-type', 'text/plain');
@@ -790,6 +791,50 @@ class NotesResource extends Resource {
 
         $response->addHeader('Content-type', 'text/json');
         $json = NotesService::getAllNotes($filter, $storage_filename );
+        $response->code = Response::OK;
+	$response->body = $json;
+        return $response;
+
+    }
+
+
+
+}
+
+class SingleNoteResource extends Resource {
+
+
+    /**
+     * Handle a GET request for this resource
+     * @param Request request
+     * @return Response
+     */
+    function get($request) {
+
+        $response = new Response($request);
+
+        $storage_filename = $this->parameters['apikey'].".json";
+        $valid_apikey_syntax = filter_var($storage_filename, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9]+\.json$/")));
+
+        //Check if APIKEY is valid syntax
+        if ($valid_apikey_syntax == FALSE){
+            $response->code = Response::FORBIDDEN;
+            $response->addHeader('Content-type', 'text/plain');
+            $response->body = "Forbidden: No valid apikey!";
+            return $response;
+        }
+ 
+        $json = NotesService::getSingleNote($this->parameters['id'], $storage_filename );
+ 
+        //check if a note could be retrieved
+        if ($json == '') {
+            $response->addHeader('Content-type', 'text/plain');
+            $response->code = Response::NOTFOUND;
+            $response->body = "Error: Item not found!";
+            return $response;
+            }
+
+        $response->addHeader('Content-type', 'text/json');
         $response->code = Response::OK;
 	$response->body = $json;
         return $response;
@@ -1121,7 +1166,7 @@ class NotesService {
 $urls = array();
 $urls['/helloworld/(?P<bla>.*)']=array('class' => 'HelloWorldResource');
 $urls['/v1.0/(?P<apikey>.*)/notes']=array('class' => 'NotesResource');
-
+$urls['/v1.0/(?P<apikey>.*)/notes/(?P<id>.*)']=array('class' => 'SingleNoteResource');
 
 // handle request
 $request = new Request();
