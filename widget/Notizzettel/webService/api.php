@@ -1055,14 +1055,7 @@ class NotesService {
         $content = self::readFileContent($filename);
         $php_content = json_decode($content, TRUE);
         $notes = $php_content['notes'];
-
-       /* foreach ($notes as $key => $value) {
-            if ($key == $note_id) {
-                $result = json_encode($value);
-                break;
-            }
-        }*/
-        return $notes[$note_id];
+        return self::arrayToJson($notes[$note_id]);
     }
 
     /**
