@@ -914,6 +914,31 @@ class SingleNoteResource extends Resource {
     }
 
 
+    function delete($request) {
+        error_log('IN Delete Method');
+        $response = new Response($request);
+
+        $storage_filename = $this->parameters['apikey'].".json";
+        $valid_apikey_syntax = filter_var($storage_filename, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9]+\.json$/")));
+
+        //Check if APIKEY is valid syntax
+        if ($valid_apikey_syntax == FALSE){
+            $response->code = Response::FORBIDDEN;
+            $response->addHeader('Content-type', 'text/plain');
+            $response->body = "Forbidden: No valid apikey!";
+            return $response;
+        }
+
+        NotesService::deleteNote($this->parameters['id'], $storage_filename );
+        
+        $response->addHeader('Content-type', 'text/plain');
+        $response->code = Response::OK;
+        return $response;
+
+    }
+
+
+
 }
 
 
@@ -1080,7 +1105,6 @@ class NotesService {
     */
     public static function deleteNote($note_id, $filename) {
         $content = self::readFileContent($filename);
-        print_r($content);
         $php_content = json_decode($content, TRUE);
         $notes = $php_content['notes'];
         foreach ($notes as $key => $value) {
