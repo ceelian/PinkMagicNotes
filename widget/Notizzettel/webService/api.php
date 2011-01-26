@@ -525,7 +525,7 @@ class Resource {
         }
 
         # good for debugging, remove this at some point
-        $response->addHeader('X-Resource', get_class($this));
+        //$response->addHeader('X-Resource', get_class($this));
 
         return $response;
 
@@ -874,6 +874,10 @@ class SingleNoteResource extends Resource {
 
     }
 
+    function post($request) {
+        error_log('trhough post');
+        return self::put($request);
+    }
 
 
 }
