@@ -783,8 +783,13 @@ class NotesResource extends Resource {
             return $response;
         }
 
+        $filter = '';
+        if (isset($_GET['filter'])){
+            $filter = $_GET['filter'];
+        }
+
         $response->addHeader('Content-type', 'text/json');
-        $json = NotesService::getAllNotes('', $storage_filename );
+        $json = NotesService::getAllNotes($filter, $storage_filename );
         $response->code = Response::OK;
 	$response->body = $json;
         return $response;
@@ -890,7 +895,7 @@ class NotesService {
     */
     public static function getUUID() {
        $dict = array();
-       $dict['apikey']=self::uuid();
+       $dict['apikey']=str_replace("-","",self::uuid());
        return self::arrayToJson($dict);
     }
 
