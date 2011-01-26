@@ -72,15 +72,6 @@
       "color": "#FFF300",
       "progress": 0,
       "priority": 65
-    },
-    "2b493370-0549-3624-e9a4-afd7332bdbca": {
-      "schema": "note",
-      "title": "test",
-      "tags": [
-        "as"
-      ],
-      "content": "asdf",
-      "color": "#001FFF"
     }
   }
 }

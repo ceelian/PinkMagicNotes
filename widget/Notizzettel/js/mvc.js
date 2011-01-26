@@ -113,8 +113,11 @@ MVC.Helper.ServerAPI = (function () {
                         var apikey = widget.preferenceForKey('apikey');
          
                         url = url+'/v1.0/'+apikey+'/notes/'+id;
+                        var params = {
+                            "method":"delete"
+                        }
                        
-                        _sendRequestDelete("",callback,url);
+                        _sendRequestPost(params,callback,url);
 		}, 
 
 		/**
@@ -143,6 +146,9 @@ MVC.Helper.ServerAPI = (function () {
 	
 	_SERVICE_URL = './webService/notes_api.php', 
 
+    /**
+	 * Sends a Delete-Request to the Rest-Server
+	 */
     _sendRequestDelete = function(parameter, callback, url){
 		if(typeof url == 'undefined')
 			url = _SERVICE_URL;
@@ -169,7 +175,38 @@ MVC.Helper.ServerAPI = (function () {
 			}
 		);
 	}
-
+    /**
+	 * Sends a Post-Request to the Rest-Server
+	 */
+    _sendRequestPost = function(parameter, callback, url){
+		if(typeof url == 'undefined')
+			url = _SERVICE_URL;
+        
+		widget.httpPost(
+			url, 
+			parameter, 
+			function(jsonData) {
+				if (jsonData) {
+				    if(typeof jsonData.error != 'undefined') {
+					    debug('Server reported the following error while processing the request: ' + jsonData.error);
+					    MVC.View.notify('An error occurred: '+jsonData.error+' <br \/>Please try again!');
+					    return;
+				    }
+				callback(jsonData);
+                }
+                else {
+                    callback();
+                }
+			},
+			function(xhr, textStatus, e) {
+				debug('Request failed: ' + e);
+				MVC.View.notify('An unexpected error occurred while trying to communicate with the server.');
+			}
+		);
+	}
+    /**
+	 * Sends a Put-Request to the Rest-Server
+	 */
     _sendRequestPut = function(parameter, callback, url){
 		if(typeof url == 'undefined')
 			url = _SERVICE_URL;
@@ -196,7 +233,9 @@ MVC.Helper.ServerAPI = (function () {
 			}
 		);
 	}
-
+    /**
+	 * Sends a Get-Request to the Rest-Server
+	 */
 	_sendRequest = function(parameter, callback, url){
 		if(typeof url == 'undefined')
 			url = _SERVICE_URL;
