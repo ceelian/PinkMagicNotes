@@ -910,6 +910,12 @@ class SingleNoteResource extends Resource {
 
     function post($request) {
         error_log('trhough post');
+
+        if (strtolower($_POST['method']) == 'delete'){
+            error_log('delete through post');
+            return self::delete($request);
+        }
+
         return self::put($request);
     }
 
