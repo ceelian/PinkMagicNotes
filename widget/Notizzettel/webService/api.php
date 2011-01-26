@@ -761,7 +761,350 @@ class HelloWorldResource extends Resource {
 
 }
 
+class NotesResource extends Resource {
 
+
+    /**
+     * Handle a GET request for this resource
+     * @param Request request
+     * @return Response
+     */
+    function get($request) {
+
+        $response = new Response($request);
+
+        $storage_filename = $this->parameters['apikey'].".json";
+        $valid_apikey_syntax = filter_var($storage_filename, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9]+\.json$/")));
+
+        if ($valid_apikey_syntax == FALSE){
+            $response->code = Response::FORBIDDEN;
+            $response->addHeader('Content-type', 'text/plain');
+            $response->body = "Forbidden: No valid apikey!";
+            return $response;
+        }
+
+        $response->addHeader('Content-type', 'text/json');
+        $json = NotesService::getAllNotes('', $storage_filename );
+        $response->code = Response::OK;
+	$response->body = $json;
+        return $response;
+
+    }
+
+
+
+}
+
+
+/**
+ * static class provides the web services
+ * returns all responses as JSON
+ */
+class NotesService {
+	/**
+    * Reads the content of a given file
+    *
+    * @param $filename file which should be read
+    * @return Content of File
+    */
+	private static function readFileContent($filename) {
+			$file = fopen($filename,"r");
+			if ($file == FALSE) {
+				$file = fopen($filename, 'w');
+				if ($file == FALSE){ throw new Exception("Give us permissions to create new files on the Server!");}
+				fclose($file);
+				$file = fopen($filename,"r");
+			}
+			$content = fread($file, filesize($filename));
+			fclose($file);
+			return $content;
+	}
+
+    /**
+    * Writes content to a given file
+    *
+    * @param $filename file which should be read
+    * @param $content content which should be written
+    */
+	private static function writeFileContent($filename, $content) {
+		$file = fopen($filename,"w");
+		fwrite($file, $content);
+		fclose($file);
+	}
+
+    /**
+    * Turns a given array into json-syntax
+    *
+    * @param $arr Array which should be converted
+    */
+	private static function arrayToJson($arr) {
+		return self::json_format(json_encode($arr));
+	}
+
+    /**
+    * Returns all notes which are stored in a given filename. If a pattern is given, the pattern is used for filtering the notes.
+    *
+    * @param $pattern Pattern for filtering the msg
+    * @param $filename Name of the file where the notes are stored (filename contains the UUID)
+    */
+	public static function getAllNotes($pattern, $filename) {
+		$content = self::readFileContent($filename);
+		$php_content = json_decode($content,TRUE);
+		$notes = $php_content['notes'];
+
+		if($pattern != null && $pattern != '') {
+			foreach ($notes as $key => $note) {
+				// check if tag patterned search is used
+				if(stripos($pattern, ':') == true) {
+					$patt_arr =  explode(':', $pattern, 2);
+					$keyword = $patt_arr[0];
+					$srchstr = $patt_arr[1];
+					if(array_key_exists($keyword, $note)) {
+						$part_string = "";
+						if(is_array($note[$keyword])) {
+							$part_string = implode(',', $note[$keyword]);
+						} else {
+							$part_string = $note[$keyword];
+						}
+						if(stripos($part_string, $srchstr) == false) {
+							unset($notes[$key]);
+						}
+					}
+				} else { // if not patterned, search whole notes
+					$note_string = implode(',', $note);
+					if(stripos($note_string, $pattern) == false) {
+						unset($notes[$key]);
+					}
+				}
+			}
+		}
+		$php_content['notes'] = $notes;
+        	$content = self::arrayToJson($php_content);
+		return $content;
+	}
+
+    /**
+    * Creates a new UUID and returns it. The UUID is used for distinguishing between the users.
+    *
+    * @return generated UUID
+    */
+    public static function getUUID() {
+       $dict = array();
+       $dict['apikey']=self::uuid();
+       return self::arrayToJson($dict);
+    }
+
+    /**
+    * Returns a single note of a user, identified by the filename which contains the uuid. The note is filtered via the note_id
+    *
+    * @param $note_id Id of the note which should be returned
+    * @param $filename Name of the file where the notes are stored (filename contains the UUID)
+    * @return returns the note
+    */
+    public static function getSingleNote($note_id,$filename) {
+        $content = self::readFileContent($filename);
+        $php_content = json_decode($content,TRUE);
+        $notes = $php_content['notes'];
+        foreach ($notes as $key => $value) {
+            if ($key == $note_id) {
+                $result = json_encode($value);
+                break;
+            }
+        }
+        return $result;
+
+    }
+
+    /**
+    * Deletes a specific note of a user, identified by the filename which contains the uuid. The note is filtered via the note_id
+    *
+    * @param $note_id Id of the note which should be deleted
+    * @param $filename Name of the file where the notes are stored (filename contains the UUID)
+    */
+    public static function deleteNote($note_id, $filename) {
+        $content = self::readFileContent($filename);
+        print_r($content);
+        $php_content = json_decode($content, TRUE);
+        $notes = $php_content['notes'];
+        foreach ($notes as $key => $value) {
+            if ($key == $note_id) {
+                unset($notes[$key]);
+            }
+        }
+        $php_content['notes'] = $notes;
+        $content = self::arrayToJson($php_content);
+        self::writeFileContent($filename, $content);
+
+    }
+
+    /**
+    * Updates the content and metadata of a note
+    *
+    * @param $uuid id of the note which should be updated
+    * @param $json_note the content of the note
+    * @param $filename Name of the file where the notes are stored (filename contains the UUID)
+    */
+	public static function updateNote($uuid, $json_note,$filename){
+
+		$content = self::readFileContent($filename);
+		$php_content = json_decode($content,TRUE);
+		$notes = $php_content['notes'];
+		if ($uuid == '') $uuid = self::uuid();
+		$new_note = json_decode($json_note,TRUE);
+		$notes[$uuid] = $new_note;
+
+		$php_content['notes']=$notes;
+		$content = self::arrayToJson($php_content);
+		self::writeFileContent($filename, $content);
+		return 42;
+
+	}
+
+	public static function getTagsWeightened($filename) {
+        	$content = self::readFileContent($filename);
+		$php_content = json_decode($content,TRUE);
+		$notes = $php_content['notes'];
+
+		$tags=array();
+		foreach ($notes as $key => $value) {
+			$taglist = $value['tags'];
+			foreach ($taglist as $tag) {
+				if(array_key_exists($tag, $tags)) {
+					$val = $tags[$tag];
+					$val = $val + 1;
+					$tags[$tag] = $val;
+				} else {
+					$tags[$tag] = 1;
+				}
+			}
+		}
+                $result = json_encode($tags);
+		return $result;
+	}
+
+	/**
+	 * Generates a Universally Unique IDentifier, version 4.
+	 *
+	 * RFC 4122 (http://www.ietf.org/rfc/rfc4122.txt) defines a special type of Globally
+	 * Unique IDentifiers (GUID), as well as several methods for producing them. One
+	 * such method, described in section 4.4, is based on truly random or pseudo-random
+	 * number generators, and is therefore implementable in a language like PHP.
+	 *
+	 * We choose to produce pseudo-random numbers with the Mersenne Twister, and to always
+	 * limit single generated numbers to 16 bits (ie. the decimal value 65535). That is
+	 * because, even on 32-bit systems, PHP's RAND_MAX will often be the maximum *signed*
+	 * value, with only the equivalent of 31 significant bits. Producing two 16-bit random
+	 * numbers to make up a 32-bit one is less efficient, but guarantees that all 32 bits
+	 * are random.
+	 *
+	 * The algorithm for version 4 UUIDs (ie. those based on random number generators)
+	 * states that all 128 bits separated into the various fields (32 bits, 16 bits, 16 bits,
+	 * 8 bits and 8 bits, 48 bits) should be random, except : (a) the version number should
+	 * be the last 4 bits in the 3rd field, and (b) bits 6 and 7 of the 4th field should
+	 * be 01. We try to conform to that definition as efficiently as possible, generating
+	 * smaller values where possible, and minimizing the number of base conversions.
+	 *
+	 * @copyright   Copyright (c) CFD Labs, 2006. This function may be used freely for
+	 *              any purpose ; it is distributed without any form of warranty whatsoever.
+	 * @author      David Holmes <dholmes@cfdsoftware.net>
+	 *
+	 * @return  string  A UUID, made up of 32 hex digits and 4 hyphens.
+	 */
+
+	private static function uuid() {
+
+		// The field names refer to RFC 4122 section 4.1.2
+
+		return sprintf('%04x%04x-%04x-%03x4-%04x-%04x%04x%04x',
+		    mt_rand(0, 65535), mt_rand(0, 65535), // 32 bits for "time_low"
+		    mt_rand(0, 65535), // 16 bits for "time_mid"
+		    mt_rand(0, 4095),  // 12 bits before the 0100 of (version) 4 for "time_hi_and_version"
+		    bindec(substr_replace(sprintf('%016b', mt_rand(0, 65535)), '01', 6, 2)),
+		        // 8 bits, the last two of which (positions 6 and 7) are 01, for "clk_seq_hi_res"
+		        // (hence, the 2nd hex digit after the 3rd hyphen can only be 1, 5, 9 or d)
+		        // 8 bits for "clk_seq_low"
+		    mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535) // 48 bits for "node"
+		);
+	}
+
+	private static function json_format($json)
+	{
+		$tab = "  ";
+		$new_json = "";
+		$indent_level = 0;
+		$in_string = false;
+
+		$json_obj = json_decode($json);
+
+		if($json_obj === false)
+		    return false;
+
+		$json = json_encode($json_obj);
+		$len = strlen($json);
+
+		for($c = 0; $c < $len; $c++)
+		{
+		    $char = $json[$c];
+		    switch($char)
+		    {
+		        case '{':
+		        case '[':
+		            if(!$in_string)
+		            {
+		                $new_json .= $char . "\n" . str_repeat($tab, $indent_level+1);
+		                $indent_level++;
+		            }
+		            else
+		            {
+		                $new_json .= $char;
+		            }
+		            break;
+		        case '}':
+		        case ']':
+		            if(!$in_string)
+		            {
+		                $indent_level--;
+		                $new_json .= "\n" . str_repeat($tab, $indent_level) . $char;
+		            }
+		            else
+		            {
+		                $new_json .= $char;
+		            }
+		            break;
+		        case ',':
+		            if(!$in_string)
+		            {
+		                $new_json .= ",\n" . str_repeat($tab, $indent_level);
+		            }
+		            else
+		            {
+		                $new_json .= $char;
+		            }
+		            break;
+		        case ':':
+		            if(!$in_string)
+		            {
+		                $new_json .= ": ";
+		            }
+		            else
+		            {
+		                $new_json .= $char;
+		            }
+		            break;
+		        case '"':
+		            if($c > 0 && $json[$c-1] != '\\')
+		            {
+		                $in_string = !$in_string;
+		            }
+		        default:
+		            $new_json .= $char;
+		            break;
+		    }
+		}
+
+		return $new_json;
+	}
+}
 
 //=== MAIN ENTRY POINT =========================================================
 
@@ -772,7 +1115,7 @@ class HelloWorldResource extends Resource {
 // define url mapping
 $urls = array();
 $urls['/helloworld/(?P<bla>.*)']=array('class' => 'HelloWorldResource');
-
+$urls['/v1.0/(?P<apikey>.*)/notes']=array('class' => 'NotesResource');
 
 
 // handle request
