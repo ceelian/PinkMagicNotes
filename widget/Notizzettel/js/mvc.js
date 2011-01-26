@@ -61,12 +61,13 @@ MVC.Helper.ServerAPI = (function () {
 		 */
 		getSingleNote: function(note_id, callback) {
                         debug("Helper.ServerAPI getSingleNotes: send a xhr request to fetch a single notes from the web service");
-                        var param = {
-                                "notes_id":note_id,
-                                "apikey": widget.preferenceForKey('apikey'),
-                                "action":'getSingleNote'
-                        }
-                        _sendRequest(param, callback);
+
+                        var url = widget.preferenceForKey('apiurl');
+                        var apikey = widget.preferenceForKey('apikey');
+         
+                        url = url+'/v1.0/'+apikey+'/notes/'+note_id;
+                        
+                        _sendRequest("", callback, url);
                 },
 
 		/**
@@ -77,11 +78,11 @@ MVC.Helper.ServerAPI = (function () {
 		 */
 		getTagsWeightened: function(callback) {
                         debug("Helper.ServerAPI getTagsWeightened: send a xhr request to fetch all tags from the web service");
-                        var param = {
-                                "apikey": widget.preferenceForKey('apikey'),
-                                "action":'getTagsWeightened'
-                        }
-                        _sendRequest(param, callback);
+                        var url = widget.preferenceForKey('apiurl');
+                        var apikey = widget.preferenceForKey('apikey');
+         
+                        url = url+'/v1.0/'+apikey+'/tags';
+                        _sendRequest("", callback,url);
                 },
 
 		/**
@@ -92,13 +93,12 @@ MVC.Helper.ServerAPI = (function () {
 		 */
 		updateNote: function(id, json_string,callback) {
                         debug("Helper.ServerAPI updateNote: send a xhr request to update the actual note");
-                        var param = {
-                            "uuid":id,
-                            "json_note":json_string,
-                            "apikey": widget.preferenceForKey('apikey'),
-                            "action":'updateNote'
-                        }
-                        _sendRequest(param,callback);
+                        var url = widget.preferenceForKey('apiurl');
+                        var apikey = widget.preferenceForKey('apikey');
+         
+                        url = url+'/v1.0/'+apikey+'/notes/'+id;
+                        var param = json_string
+                        _sendRequestPut(param,callback,url);
 		},
 
 		/**
@@ -142,6 +142,33 @@ MVC.Helper.ServerAPI = (function () {
 	/* private methods */
 	
 	_SERVICE_URL = './webService/notes_api.php', 
+
+    _sendRequestPut = function(parameter, callback, url){
+		if(typeof url == 'undefined')
+			url = _SERVICE_URL;
+        
+		widget.httpPut(
+			url, 
+			parameter, 
+			function(jsonData) {
+				if (jsonData) {
+				    if(typeof jsonData.error != 'undefined') {
+					    debug('Server reported the following error while processing the request: ' + jsonData.error);
+					    MVC.View.notify('An error occurred: '+jsonData.error+' <br \/>Please try again!');
+					    return;
+				    }
+				callback(jsonData);
+                }
+                else {
+                    callback();
+                }
+			},
+			function(xhr, textStatus, e) {
+				debug('Request failed: ' + e);
+				MVC.View.notify('An unexpected error occurred while trying to communicate with the server.');
+			}
+		);
+	}
 
 	_sendRequest = function(parameter, callback, url){
 		if(typeof url == 'undefined')

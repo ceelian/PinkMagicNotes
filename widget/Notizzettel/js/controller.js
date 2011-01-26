@@ -138,6 +138,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
        interFace.storeNote = function() {
             var id = document.getElementById('id').value;
             var jsonObj = {};
+            
             if (document.getElementById('title').value) {
 
 		    var schema = "default";
@@ -241,6 +242,18 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             Request.deleteNote(id, function(interestsJsonData) {
                 debug('Controller notesDeleteNote: note deleted');
             });
+            $("input#location").val("");
+            $("textarea#description").val("");
+            $("input#title").val("");
+            $("input#schema").val("");
+            $("input#start_date").val("");
+            $("input#end_date").val("");
+            $("input#reminder").val("");
+	        $('div#color_div').children('.crayonbox').uncolor();
+            $("input#tags").val(""); 
+            $("#tags_tagsinput").remove();
+		    $('div#slider_progress').slider( "option", "value", 0 );
+		    $('div#slider_priority').slider( "option", "value", 0 );
             this.notesListViewDataAsked('');
         }
 

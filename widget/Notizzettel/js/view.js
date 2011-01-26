@@ -333,7 +333,8 @@ MVC.View = (function (interFace, Controller, $) {
     interFace.showAddNote = function(new_schema) {
 		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
 		var schema = new_schema.toLowerCase();
-		$("#tags_tagsinput").remove();
+        if ($("#tags_tagsinput"))
+		    $("#tags_tagsinput").remove();
 		// hidden fields
 		$("input#id").val('');
 		$("input#schema").val(schema);
