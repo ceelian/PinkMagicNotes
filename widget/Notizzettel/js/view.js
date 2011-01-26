@@ -8,7 +8,7 @@ MVC.View = (function (interFace, Controller, $) {
 
 	/* public methods */
 
-    interFace.notify = function(message) {
+	interFace.notify = function(message) {
 		$("span#notification").html(message);
 		$("div#errorContainer").slideDown(500, function() {
 			var $self = $(this);
@@ -16,7 +16,12 @@ MVC.View = (function (interFace, Controller, $) {
 		});
 	};
 	
-    interFace.init = function(languageData) {
+	/**
+	 * Initialization Method of View.
+	 * If lang is set the locale system is used
+	 * @param {String} languageData current sytem language
+	 */
+        interFace.init = function(languageData) {
 
 		// to be sure the document in DOM s really loaded completely
 		$(document).ready(function() {
@@ -32,12 +37,21 @@ MVC.View = (function (interFace, Controller, $) {
 		});
 	};
 		
+	/**
+	 * Method to build up the view to show the notes list view.
+	 * The Data passed in the parameters is filled to the View
+	 * Fields accordingly. Afterward the NotesListView is shown,
+	 * and all other views gets hided.
+	 * @param {String} searchString is used if a previous searchString was used
+	 * @param {String-Array} pd data packed in String Array for display in view
+	 */
 	interFace.showNotesListView = function(searchString, pd) {
 		debug('View showUserInterestsData(): write the interests data into DOM and show the div containing interests data');
 		var html_code = "";
 		var searchstr = "";
-        var content = "";
-        var number_tags = 5;
+		var content = "";
+		var number_tags = 5;
+
 		if (searchString != null) {
 			searchstr = searchString;
 		}
@@ -99,16 +113,24 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#tagcloudview").hide();
 		$("div#infopageview").hide();
 		$("div#listview").show();
-        $('#navbar_listview').show();
-        $('#navbar_singlenoteview').hide();
-        $('#navbar_tagcloudview').hide();
-        $('#navbar_infopageview').hide();
+		$('#navbar_listview').show();
+		$('#navbar_singlenoteview').hide();
+		$('#navbar_tagcloudview').hide();
+		$('#navbar_infopageview').hide();
 		_setDynamicClickEvents();
 	};
 
+	/**
+	 * Method to build up the view to show a single note in detail.
+	 * The Data passed in the parameters is filled to the View
+	 * Fields accordingly. Afterward the DetailedNotesView is shown,
+	 * and all other views gets hided.
+	 * @param {String-Array} pd data packed in String Array for display in view
+	 * @param {String} id the is of the currently displayed note
+	 */
 	interFace.showDetailNotesView = function(pd,id) {
 		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
-        $("#tags_tagsinput").remove();
+		$("#tags_tagsinput").remove();
 		var schema = "default";
 		if('schema' in pd) {
 			schema = pd.schema.toLowerCase();
@@ -118,6 +140,7 @@ MVC.View = (function (interFace, Controller, $) {
 		$("input#id").val(id);
 		$("input#schema").val(schema);
 
+		// check first if type has to be set in current schema, if yes process, else ignore
 		if(Controller.containsTypeField(schema, "title")) {
 			$("#edit_title").show();
  			if (pd.title != null) {
@@ -145,7 +168,7 @@ MVC.View = (function (interFace, Controller, $) {
 
 			$("input#tags").val(tag_string);
 
-            $('input#tags').tagsInput({'height':'50px'});
+			$('input#tags').tagsInput({'height':'50px'});
 		} else {
 			$("#edit_tags").hide();
 		}
@@ -240,17 +263,25 @@ MVC.View = (function (interFace, Controller, $) {
 		}
 
         
+		// hide all unneeded view
 		$("div#listview").hide();
 		$("div#infopageview").hide();
 		$("div#tagcloudview").hide();
 		$("div#tag_cloud_outside").hide();
 		$("div#singlenoteview").show();
-        $('#navbar_listview').hide();
-        $('#navbar_singlenoteview').show();
-        $('#navbar_tagcloudview').hide();
-        $('#navbar_infopageview').hide();
+        	$('#navbar_listview').hide();
+        	$('#navbar_singlenoteview').show();
+        	$('#navbar_tagcloudview').hide();
+        	$('#navbar_infopageview').hide();
 	}
 
+	/**
+	 * Method to build up the view to show the tags in a tag cloud view.
+	 * The Data passed in the parameters is filled to the View
+	 * Fields accordingly. Afterward the TagCloudView is shown,
+	 * and all other views gets hided.
+	 * @param {String-Array} pd data packed in String Array containing the tags
+	 */
 	interFace.showTagCloudView = function(pd) {
 		debug('View showTagCloudView: write the interests data into DOM and show the div containing interests data');
 
@@ -265,14 +296,21 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#infopageview").hide();
 		$("div#tagcloudview").show();
 		$("input#title").val(pd.title);
-        $('#navbar_listview').hide();
-        $('#navbar_singlenoteview').hide();
-        $('#navbar_tagcloudview').show();
-        $('#navbar_infopageview').hide();
+		$('#navbar_listview').hide();
+		$('#navbar_singlenoteview').hide();
+		$('#navbar_tagcloudview').show();
+		$('#navbar_infopageview').hide();
 
 		_setDynamicTagClickEvents();
 	};
 
+	/**
+	 * Method which generates the actual tag cloud view
+	 * The Data passed in the parameters is filled to the View
+	 * Fields accordingly. Afterward the TagCloudView is shown,
+	 * and all other views gets hided.
+	 * @param {String-Array} pd data packed in String Array containing the tags
+	 */
     interFace.createTagCloud = function(pd) {
         debug('View createTagCloud: write the interests data into DOM and show the div containing interests data');
 		$('div#tag_cloud').empty();
@@ -286,14 +324,21 @@ MVC.View = (function (interFace, Controller, $) {
 		_setDynamicTagClickEvents();
     };
 
+	/**
+	 * Method which resets all input fields in DetailedNoteView for display as new Note View.
+	 * The Data passed is used to identify the type of the new note.
+	 * Afterward the DetailedNoteView is shown and all other views gets hided.
+	 * @param {String} new_schema the definition of the note
+	 */
     interFace.showAddNote = function(new_schema) {
 		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
 		var schema = new_schema.toLowerCase();
-        $("#tags_tagsinput").remove();
+		$("#tags_tagsinput").remove();
 		// hidden fields
 		$("input#id").val('');
 		$("input#schema").val(schema);
 
+		// reset all fields first
 		if(Controller.containsTypeField(schema, "title")) {
 			$("#edit_title").show();
 			$("input#title").val("");
@@ -306,7 +351,7 @@ MVC.View = (function (interFace, Controller, $) {
 			var tag_string = "";
 			$("input#tags").val(tag_string);
 
-            $('input#tags').tagsInput({'height':'50px'});
+		$('input#tags').tagsInput({'height':'50px'});
 		} else {
 			$("#edit_tags").hide();
 		}
@@ -369,27 +414,33 @@ MVC.View = (function (interFace, Controller, $) {
 		}
 
         
+		// hide all other views
 		$("div#listview").hide();
 		$("div#tagcloudview").hide();
 		$("div#tag_cloud_outside").hide();
 		$("div#infopageview").hide();
 		$("div#singlenoteview").show();
-        $('#navbar_listview').hide();
-        $('#navbar_singlenoteview').show();
-        $('#navbar_tagcloudview').hide();
-        $('#navbar_infopageview').hide();
+		$('#navbar_listview').hide();
+		$('#navbar_singlenoteview').show();
+		$('#navbar_tagcloudview').hide();
+		$('#navbar_infopageview').hide();
     };
 
+	/**
+	 * Method which just displays the static Information Page.
+	 * Therefore all other views are hide and the InfoPage is shown.
+	 */
 	interFace.showInfoPageListView = function() {
+		// hide all other views
 		$("div#listview").hide();
 		$("div#tagcloudview").hide();
 		$("div#tag_cloud_outside").hide();
 		$("div#singlenoteview").hide();
 		$("div#infopageview").show();
-        $('#navbar_listview').hide();
-        $('#navbar_singlenoteview').hide();
-        $('#navbar_tagcloudview').hide();
-        $('#navbar_infopageview').show();
+		$('#navbar_listview').hide();
+		$('#navbar_singlenoteview').hide();
+		$('#navbar_tagcloudview').hide();
+		$('#navbar_infopageview').show();
 	}
 
 	
@@ -401,6 +452,11 @@ MVC.View = (function (interFace, Controller, $) {
 	/* variable to cache translation data */
     var _lang_data = null,
 	
+	/**
+	 * Private method to create a tag string out of a list of tags.
+	 * @param {String-Array} tags list of tags to add to string
+	 * @param {Integer} number_tags number of tags to add to the string
+	 */
     _createTagString = function (tags, number_tags) {
         var tag_string = "";
         if (tags != null) {
@@ -417,6 +473,13 @@ MVC.View = (function (interFace, Controller, $) {
 	    }
         return tag_string;
     },
+
+	/**
+	 * Private method to create a html-tag-list out of a list of tags.
+	 * This is used by the tagCloud library.
+	 * @param {String} id TagList identifier.
+	 * @param {Array} pd holds the tag and the wheigtened number
+	 */
     _createTagList = function(id,pd) {
         var html_code = "";
         if(pd) {
