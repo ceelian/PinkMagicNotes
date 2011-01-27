@@ -104,18 +104,6 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	 */
         interFace.notesAddNewNote = function(schema) {
                 this.storeNote();
-                document.getElementById('schema').value = schema;
-		$('div#slider_progress').slider( "option", "value", 0 );
-		$('div#slider_priority').slider( "option", "value", 0 );
-                document.getElementById('location').value = "";
-                document.getElementById('description').value = "";
-	        $('div#color_div').children('.crayonbox').uncolor();
-                document.getElementById('title').value = "";
-                document.getElementById('start_date').value = "";
-                document.getElementById('end_date').value = "";
-                document.getElementById('reminder').value = "";
-                $("#tags_tagsinput").remove();
-                document.getElementById('id').value="";
                 debug('Controller notesAddNewNote: show form for adding a new note');
                 View.showAddNote(schema);
         };
@@ -214,21 +202,8 @@ MVC.Controller = (function (interFace, Model, View, Request) {
                 });
             }
 
-            // clear all values after saveing
-            $("input#location").val("");
-            $("textarea#description").val("");
-            $("input#title").val("");
-            $("input#schema").val("");
-            $("input#start_date").val("");
-            $("input#end_date").val("");
-            $("input#reminder").val("");
-	        $('div#color_div').children('.crayonbox').uncolor();
-            $("input#tags").val(""); 
-            $("#tags_tagsinput").remove();
-		    $('div#slider_progress').slider( "option", "value", 0 );
-		    $('div#slider_priority').slider( "option", "value", 0 );
-
-            document.getElementById('id').value="";
+		// clear all values after saveing
+		View.clearSingeNoteView();
         }
 
 	/**
@@ -237,24 +212,17 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	 * after completion an updated for the NotesListView is triggered.
 	 */
         interFace.notesDeleteNote = function() {
-            var id = document.getElementById('id').value;
-            $("#tags_tagsinput").remove();
-            Request.deleteNote(id, function(interestsJsonData) {
-                debug('Controller notesDeleteNote: note deleted');
-            });
-            $("input#location").val("");
-            $("textarea#description").val("");
-            $("input#title").val("");
-            $("input#schema").val("");
-            $("input#start_date").val("");
-            $("input#end_date").val("");
-            $("input#reminder").val("");
-	        $('div#color_div').children('.crayonbox').uncolor();
-            $("input#tags").val(""); 
-            $("#tags_tagsinput").remove();
-		    $('div#slider_progress').slider( "option", "value", 0 );
-		    $('div#slider_priority').slider( "option", "value", 0 );
-            this.notesListViewDataAsked('');
+		var id = document.getElementById('id').value;
+		$("#tags_tagsinput").remove();
+		if(id != null && !isNaN(id)) {
+			Request.deleteNote(id, function(interestsJsonData) {
+			debug('Controller notesDeleteNote: note deleted');
+            		});
+		} else {
+			debug('Controller notesDeleteNote: delete requested for unsaved note');
+		}
+		View.clearSingeNoteView();
+		this.notesListViewDataAsked('');
         }
 
 	/**

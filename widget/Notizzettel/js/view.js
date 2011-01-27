@@ -333,8 +333,9 @@ MVC.View = (function (interFace, Controller, $) {
     interFace.showAddNote = function(new_schema) {
 		debug('View showDetailNotesView(): write the interests data into DOM and show the div containing interests data');
 		var schema = new_schema.toLowerCase();
-        if ($("#tags_tagsinput"))
-		    $("#tags_tagsinput").remove();
+		if ($("#tags_tagsinput")) {
+			$("#tags_tagsinput").remove();
+		}
 		// hidden fields
 		$("input#id").val('');
 		$("input#schema").val(schema);
@@ -442,7 +443,27 @@ MVC.View = (function (interFace, Controller, $) {
 		$('#navbar_singlenoteview').hide();
 		$('#navbar_tagcloudview').hide();
 		$('#navbar_infopageview').show();
-	}
+	};
+
+	/**
+	 * Method which clears the values of all the fields in the
+	 * singleNoteView.
+	 */
+	interFace.clearSingeNoteView = function() {
+		$("input#location").val("");
+		$("textarea#description").val("");
+		$("input#title").val("");
+		$("input#schema").val("");
+		$("input#start_date").val("");
+		$("input#end_date").val("");
+		$("input#reminder").val("");
+	        $('div#color_div').children('.crayonbox').uncolor();
+		$("input#tags").val(""); 
+		$("#tags_tagsinput").remove();
+		$('div#slider_progress').slider( "option", "value", 0 );
+		$('div#slider_priority').slider( "option", "value", 0 );
+		$("input#id").val('');
+	};
 
 	
 	/* end of public methods */
