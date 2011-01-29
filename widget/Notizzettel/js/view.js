@@ -61,47 +61,47 @@ MVC.View = (function (interFace, Controller, $) {
 
 			switch(note.schema) {
 			case "note":
-                var description = "";
-                var tags = "";
+				var description = "";
+				var tags ="";
 				if(Controller.containsTypeField(note.schema, "reminder") && 
 					Controller.shouldReminderAlert(note.reminder, 2)) {
 					icon_style ="list-item-icon-note-alert";
 				} else {
 					icon_style ="list-item-icon-note";
 				}
-                description = note.content.substring(0,35);
-                description = description + " ...";
-			    tags = _createTagString(note.tags, number_tags);
-                content = '<div id="content"><div class="left_float"><span lang="en">Description</span>: '+description+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
+				description = note.content.substring(0,35);
+				description = description + " ...";
+				tags = _createTagString(note.tags, number_tags);
+				content = '<div id="content"><div class="left_float"><span lang="en">Description</span>: '+description+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
 				break;
 			case "todo":
-                var priority=note.priority;
-                var due=note.start_date;
-                var tags = _createTagString(note.tags, number_tags);
+                		//add priority and due and tags
+				var priority=note.priority;
+				var due=note.start_date;
+				var tags = _createTagString(note.tags, number_tags);
 				if(Controller.containsTypeField(note.schema, "reminder") && 
 					Controller.shouldReminderAlert(note.reminder, 2)) {
 					icon_style ="list-item-icon-todo-alert";
 				} else {
 					icon_style ="list-item-icon-todo";
 				}
-                content = '<div id="content"><div class="left_float"><span lang="en">Priority</span>: '+priority+' </div><div class="right_float"><span lang="en">Start Date</span>: '+due+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
-                //add priority and due and tags
+				content = '<div id="content"><div class="left_float"><span lang="en">Priority</span>: '+priority+' </div><div class="right_float"><span lang="en">Start Date</span>: '+due+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
 				break;
 			case "appointment":
-                var location = note.location;
-                var due = note.start_date;
-                var tags = _createTagString(note.tags, number_tags);
+				var location = note.location;
+				var due = note.start_date;
+				var tags = _createTagString(note.tags, number_tags);
 				if(Controller.containsTypeField(note.schema, "reminder") && 
 					Controller.shouldReminderAlert(note.reminder, 2)) {
 					icon_style ="list-item-icon-appoint-alert";
 				} else {
 					icon_style ="list-item-icon-appoint";
 				}
-                content = '<div id="content"><div class="left_float"><span lang="en">Location</span>: '+location+' </div><div class="right_float"><span lang="en">Start Date</span>: '+due+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
+				content = '<div id="content"><div class="left_float"><span lang="en">Location</span>: '+location+' </div><div class="right_float"><span lang="en">Start Date</span>: '+due+' </div><br \\><div style="margin-left:46px"><span lang="en">Tags</span>: '+tags+'</div></div>';
 				break;
 			}
 			html_code += '<div id="' + key + '" class="list-item ui-corner-all ui-widget-content"><div class="' + icon_style + '"/><h2>' + note.title + '</h2>'+content+'<div class="list-item-bgcolor" style="background-color:' + note.color + '"/></div>';
-            content = "";
+			content = "";
 		}
 
 		
