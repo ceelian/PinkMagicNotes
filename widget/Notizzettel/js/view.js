@@ -461,12 +461,125 @@ MVC.View = (function (interFace, Controller, $) {
 		$("input#reminder").val("");
 	        $('div#color_div').children('.crayonbox').uncolor();
 		$("input#tags").val(""); 
-		$("#tags_tagsinput").remove();
+		this.clearTagsSingeNoteView();
 		$('div#slider_progress').slider( "option", "value", 0 );
 		$('div#slider_priority').slider( "option", "value", 0 );
 		$("input#id").val('');
 	};
 
+	/**
+	 * Method which clears the tags list in the
+	 * singleNoteView.
+	 */
+	interFace.clearTagsSingeNoteView = function() {
+		$("#tags_tagsinput").remove();
+	};
+
+	/**
+	 * Method which return the current value of the id
+	 * field at the SingleNoteView.
+	 * @return {String} current value of the id field
+	 */
+	interFace.getSingleNoteViewId = function() {
+		return $("input#id").val();
+	}
+
+	/**
+	 * Method which return the current value of the schema
+	 * field at the SingleNoteView.
+	 * @return {String} current value of the schema field
+	 */
+	interFace.getSingleNoteViewSchema = function() {
+		return $("input#schema").val();
+	}
+
+	/**
+	 * Method which return the current value of the title
+	 * field at the SingleNoteView.
+	 * @return {String} current value of the title field
+	 */
+	interFace.getSingleNoteViewTitle = function() {
+		return $("input#title").val();
+	};
+
+	/**
+	 * Method which return the current value of the tags
+	 * list at the SingleNoteView.
+	 * @return {String-List} current list of the tags list
+	 */
+	interFace.getSingleNoteViewTags = function() {
+		return document.getElementById('tags_tagsinput').getElementsByTagName('span');
+	};
+
+	/**
+	 * Method which return the current value of the content
+	 * field at the SingleNoteView.
+	 * @return {String} current value of the content field
+	 */
+	interFace.getSingleNoteViewContent = function() {
+		return $("textarea#description").val();
+	};
+
+	/**
+	 * Method which return the current value of the location
+	 * field at the SingleNoteView.
+	 * @return {String} current value of the location field
+	 */
+	interFace.getSingleNoteViewLocation = function() {
+		return $("input#location").val();
+	};
+
+	/**
+	 * Method which return the current value of the start_date
+	 * field at the SingleNoteView.
+	 * @return {String} current value of the start_date field
+	 */
+	interFace.getSingleNoteViewStartDate = function() {
+		return $("input#start_date").val();
+	};
+
+	/**
+	 * Method which return the current value of the end_date
+	 * field at the SingleNoteView.
+	 * @return {String} current value of the end_date field
+	 */
+	interFace.getSingleNoteViewEndDate = function() {
+		return $("input#end_date").val();
+	};
+
+	/**
+	 * Method which return the current value of the color
+	 * field at the SingleNoteView.
+	 * @return {String} current value of the color field as hex string
+	 */
+	interFace.getSingleNoteViewColor = function() {
+		return $("input#colorSelector").val();
+	};
+
+	/**
+	 * Method which return the current value of the reminder
+	 * field at the SingleNoteView.
+	 * @return {String} current value of the reminder field
+	 */
+	interFace.getSingleNoteViewReminder = function() {
+		return $("input#reminder").val();
+	/**
+	 * Method which return the current value of the progress
+	 * field at the SingleNoteView.
+	 * @return {Integer} current value of the progress field
+	 */
+	interFace.getSingleNoteViewProgress = function() {
+		return $('div#slider_progress').slider( "option", "value" );
+	};
+
+	/**
+	 * Method which return the current value of the priority
+	 * field at the SingleNoteView.
+	 * @return {Integer} current value of the priority field
+	 */
+	interFace.getSingleNoteViewPriority = function() {
+		return $('div#slider_priority').slider( "option", "value" );
+	};
 	
 	/* end of public methods */
 	

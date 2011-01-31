@@ -123,27 +123,27 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	 */
        interFace.storeNote = function() {
             
-            var id = document.getElementById('id').value;
+            var id = View.getSingleNoteViewId();
             var jsonObj = {};
             
-            if (document.getElementById('title').value) {
+            if (View.getSingleNoteViewTitle()) {
 
 		    var schema = "default";
 
-            if (document.getElementById('schema').value) {
-			    schema = $("input#schema").val();
+                    if (View.getSingleNoteViewSchema()) {
+                            schema = View.getSingleNoteViewSchema();
 		    }
 		    // schema
                     jsonObj["schema"] = schema;
 
 		    // title
 		    if(this.containsTypeField(schema, "title")) {
-                    	jsonObj["title"] = $("input#title").val();
+                    	jsonObj["title"] = View.getSingleNoteViewTitle();
 		    }
 
 		    // tags
 		    if(this.containsTypeField(schema, "tags")) {
-                    	var tags2 = document.getElementById('tags_tagsinput').getElementsByTagName('span');
+                    	var tags2 = View.getSingleNoteViewTags();
                         var i = 0;
                         var tags = new Array();
                         while(oNode = tags2.item(i++)) {
@@ -157,40 +157,40 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 
 		    // content
 		    if(this.containsTypeField(schema, "content")) {
-                    	jsonObj["content"] = $("textarea#description").val();
+                    	jsonObj["content"] = View.getSingleNoteViewContent();
 		    }
 
 		    // location
 		    if(this.containsTypeField(schema, "location")) {
-                    	jsonObj["location"] = $("input#location").val();
+                    	jsonObj["location"] = View.getSingleNoteViewLocation();
 		    }
 
 		    // start and end date
 		    if(this.containsTypeField(schema, "date_start")) {
-                    	jsonObj["start_date"] = $("input#start_date").val();
+                    	jsonObj["start_date"] = View.getSingleNoteViewStartDate();
 		    }
 		    if(this.containsTypeField(schema, "date_end")) {
-                    	jsonObj["end_date"] = $("input#end_date").val();
+                    	jsonObj["end_date"] = View.getSingleNoteViewEndDate();
 		    }
 
 		    // color
 		    if(this.containsTypeField(schema, "color")) {
-                    	jsonObj["color"] = $("input#colorSelector").val();
+                    	jsonObj["color"] = View.getSingleNoteViewColor();
 		    }
 		
 		    // reminder
 		    if(this.containsTypeField(schema, "reminder")) {
-                    	jsonObj["reminder"] = $("input#reminder").val();
+                    	jsonObj["reminder"] = View.getSingleNoteViewReminder();
 		    }
 
 		    // progress
 		    if(this.containsTypeField(schema, "progress")) {
-			    jsonObj["progress"] = $('div#slider_progress').slider( "option", "value" );
+			    jsonObj["progress"] = View.getSingleNoteViewProgress();
 		    }
 
 		    // priority
 		    if(this.containsTypeField(schema, "priority")) {
-			    jsonObj["priority"] = $('div#slider_priority').slider( "option", "value" );
+			    jsonObj["priority"] = View.getSingleNoteViewPriority();
 		    }
 
                 json_string = JSON.stringify(jsonObj);
@@ -213,8 +213,8 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	 * after completion an updated for the NotesListView is triggered.
 	 */
      interFace.notesDeleteNote = function() {
-		var id = document.getElementById('id').value;      
-		$("#tags_tagsinput").remove();
+		var id = View.getSingleNoteViewId();
+		Controller.clearTagsSingeNoteView();
 		if(id) { //id != null && !isNaN(id)
 			Request.deleteNote(id, function(interestsJsonData) {
 			debug('Controller notesDeleteNote: note deleted');
