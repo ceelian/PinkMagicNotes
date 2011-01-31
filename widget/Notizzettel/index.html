@@ -133,28 +133,28 @@
                                     <div id="new_note_menu">
                                         <div class="menu_class"><span class="ui-icon ui-icon-plus"></span></div>
                                         <ul class="the_menu">
-                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote('note');"><span lang="en">Add Note</span></a></li>
-                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote('todo');"><span lang="en">Add ToDo</span></a></li>
-                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');MVC.Controller.notesAddNewNote('appointment');"><span lang="en">Add Appointment</span></a></li>
+                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');"><span id="add_note" lang="en">Add Note</span></a></li>
+                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');"><span id="add_todo" lang="en">Add ToDo</span></a></li>
+                                            <li><a href="#" onclick="$('ul.the_menu').slideToggle('medium');"><span id="add_appointment" lang="en">Add Appointment</span></a></li>
                                         </ul>
                                     </div>
                                 </li>
                                 <div id="navbar_listview">
-                                    <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.notesListViewDataAsked($('input#searchbox_input').val());"><span class="ui-icon ui-icon-refresh"></span></li>
-                                    <li class="ui-state-default ui-corner-all" title="TagCloud View" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-calculator"></span></li>
-                                    <li class="ui-state-default ui-corner-all" title="About" onclick="MVC.Controller.infoPageViewDataAsked();"><span class="ui-icon ui-icon-help"></span></li>
+                                    <li class="ui-state-default ui-corner-all" title="Refresh List" ><span id="menu_refresh_list" class="ui-icon ui-icon-refresh"></span></li>
+                                    <li class="ui-state-default ui-corner-all" title="TagCloud View"><span id="menu_tag_cloud_view" class="ui-icon ui-icon-calculator"></span></li>
+                                    <li class="ui-state-default ui-corner-all" title="About"><span id="menu_about_view" class="ui-icon ui-icon-help"></span></li>
                                 </div>
                                 <div id="navbar_singlenoteview">
-                                    <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesReturnToListView()"><span class="ui-icon ui-icon-arrowreturnthick-1-w"></span></li>
-                                    <li class="ui-state-default ui-corner-all" title="Delete Note" onclick="MVC.Controller.notesDeleteNote()"><span class="ui-icon ui-icon-trash"></span></li>
+                                    <li class="ui-state-default ui-corner-all" title="List View"><span id="single_list_view" class="ui-icon ui-icon-arrowreturnthick-1-w"></span></li>
+                                    <li class="ui-state-default ui-corner-all" title="Delete Note"><span id="single_delete_note" class="ui-icon ui-icon-trash"></span></li>
                                 </div>
                                 <div id="navbar_tagcloudview">
-                                    <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
-                                    <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesListViewDataAsked('');"><span class="ui-icon ui-icon-script"></span></li>
+                                    <li class="ui-state-default ui-corner-all" title="Refresh List""><span id="tag_refresh_tag_cloud" class="ui-icon ui-icon-refresh"></span></li>
+                                    <li class="ui-state-default ui-corner-all" title="List View"><span id="tag_refresh_list" class="ui-icon ui-icon-script"></span></li>
                                 </div>
                                 <div id="navbar_infopageview">
-                                    <li class="ui-state-default ui-corner-all" title="Refresh List" onclick="MVC.Controller.tagCloudViewDataAsked();"><span class="ui-icon ui-icon-refresh"></span></li>
-                                    <li class="ui-state-default ui-corner-all" title="List View" onclick="MVC.Controller.notesListViewDataAsked('');"><span class="ui-icon ui-icon-script"></span></li>
+                                    <!--<li class="ui-state-default ui-corner-all" title="Refresh List"><span id="info_refresh_list" class="ui-icon ui-icon-refresh"></span></li>-->
+                                    <li class="ui-state-default ui-corner-all" title="List View"><span id="info_list_view" class="ui-icon ui-icon-script"></span></li>
                                 </div>
                         </ul>
                     </div>
@@ -163,7 +163,7 @@
                     <div id="searchbox" class="ui-corner-all ui-widget-content">
                         <input id="searchbox_input" style="width:85%;float:left;">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
-                            <li class="ui-state-default ui-corner-all" title="Search" onclick="MVC.Controller.notesListViewDataAsked($('input#searchbox_input').val());"><span class="ui-icon ui-icon-search"></span></li>
+                            <li class="ui-state-default ui-corner-all" title="Search" ><span id="search_list_view" class="ui-icon ui-icon-search"></span></li>
 			</ul>
                     </div>
                     <div id="noteslist">
@@ -193,7 +193,7 @@
 
                         <div id="edit_tag_cloud" class="ui-widget">
                             <div style="clear:both"><span style="float:left" class="ui-icon ui-icon-tag" ></span><label style="float:left" for="tags"><span lang="en">Tags</span>: </label></div>
-                            <div style="clear:both" onclick="MVC.Controller.getTagCloudData();">
+                            <div id="single_tag_cloud_get_data" style="clear:both">
                                 <input id="tags" >
                             </div>   
                             <div id="tag_cloud_outside">

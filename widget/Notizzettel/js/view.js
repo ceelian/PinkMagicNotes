@@ -55,6 +55,7 @@ MVC.View = (function (interFace, Controller, $) {
 		if (searchString != null) {
 			searchstr = searchString;
 		}
+       
 		for(var key in pd.notes) {
 			var note = pd.notes[key];
 			var icon_style = "list-item-icon-dflt";
@@ -269,10 +270,11 @@ MVC.View = (function (interFace, Controller, $) {
 		$("div#tagcloudview").hide();
 		$("div#tag_cloud_outside").hide();
 		$("div#singlenoteview").show();
-        	$('#navbar_listview').hide();
-        	$('#navbar_singlenoteview').show();
-        	$('#navbar_tagcloudview').hide();
-        	$('#navbar_infopageview').hide();
+    	$('#navbar_listview').hide();
+    	$('#navbar_singlenoteview').show();
+    	$('#navbar_tagcloudview').hide();
+    	$('#navbar_infopageview').hide();
+        _setClickEvents();
 	}
 
 	/**
@@ -540,12 +542,85 @@ MVC.View = (function (interFace, Controller, $) {
 	},
 
 	_setClickEvents = function() {
+  
+		debug('View _setClickEvents(): set click event for #menu_refresh_list');
+			$("#menu_refresh_list").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.notesListViewDataAsked();
+		});
 
-//		debug('View _setClickEvents(): set click event for button#button_show_noteslistview');
-//			$("button#button_show_noteslistview").click(function() {
-//				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
-//				Controller.notesListViewDataAsked();
-//		});
+        debug('View _setClickEvents(): set click event for #menu_tag_cloud_view');
+			$("#menu_tag_cloud_view").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.tagCloudViewDataAsked();
+		});
+
+        debug('View _setClickEvents(): set click event for #menu_about_view');
+			$("#menu_about_view").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.infoPageViewDataAsked();
+		});
+
+        debug('View _setClickEvents(): set click event for #single_list_view');
+			$("#single_list_view").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.notesReturnToListView();
+		});
+
+        debug('View _setClickEvents(): set click event for #single_delete_note');
+			$("#single_delete_note").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.notesDeleteNote();
+		});
+
+        debug('View _setClickEvents(): set click event for #tag_refresh_tag_cloud');
+			$("#tag_refresh_tag_cloud").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.tagCloudViewDataAsked();
+		});
+
+        debug('View _setClickEvents(): set click event for #tag_refresh_list');
+			$("#tag_refresh_list").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.notesListViewDataAsked('');
+		});
+
+        debug('View _setClickEvents(): set click event for #info_list_view');
+			$("#info_list_view").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.notesListViewDataAsked('');
+		});
+
+        debug('View _setClickEvents(): set click event for #single_tag_cloud_get_data');
+			$("#single_tag_cloud_get_data").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.getTagCloudData();
+		});
+
+        debug('View _setClickEvents(): set click event for #add_note');
+			$("#add_note").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.notesAddNewNote('note');
+		});
+    
+        debug('View _setClickEvents(): set click event for #add_todo');
+			$("#add_todo").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.notesAddNewNote('todo');
+		});
+
+        debug('View _setClickEvents(): set click event for #add_appointment');
+			$("#add_appointment").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.notesAddNewNote('appointment');
+		});
+
+        debug('View _setClickEvents(): set click event for #search_list_view');
+			$("#search_list_view").click(function() {
+				debug('View Click Event triggered: notice the Controller that the user wants to see the Interests data');
+				Controller.notesListViewDataAsked($('input#searchbox_input').val());
+		});
+
 	},
 
 	_setDynamicClickEvents = function() {

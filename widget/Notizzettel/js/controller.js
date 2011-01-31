@@ -16,7 +16,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	interFace.init = function(language) {
 		_init(language);
 		this.notesListViewDataAsked('');
-	};
+	}
 
 	/**
 	 * Method to request the overview of all notes as a list,
@@ -26,7 +26,6 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	 * @param {String} searchString search query to limit results
 	 */
         interFace.notesListViewDataAsked = function(searchString) {
-                
                 debug('Controller notesListViewDataAsked: get notes from Servics and let View append it to the listview DOM');
 		Request.getAllNotes(searchString,
 			function(interestsJsonData) {
@@ -34,7 +33,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 				View.showNotesListView(searchString, interestsJsonData);
 			}
 		);
-        };
+        }
 	
 	/**
 	 * Method to request a single note, used for the detailed view.
@@ -50,7 +49,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 				View.showDetailNotesView(interestsJsonData,id);
 			}
 		);
-        };
+        }
         
 	/**
 	 * Method to request a the overview of the tags weigthened by there occurence count
@@ -66,7 +65,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 				View.showTagCloudView(interestsJsonData);
 			}
 		);
-        };
+        }
 
 	/**
 	 * Method to request a list of notes containing a tag. The Method
@@ -85,7 +84,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 				View.showNotesListView('tags: ' + tag, interestsJsonData);
 			}
 		);
-        };
+        }
 
 	/**
 	 * Method to request the static Information Page.
@@ -94,7 +93,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
         interFace.infoPageViewDataAsked = function() {
                 debug('Controller infoPageViewDataAsked: get notes from Servics and let View append it to the tagcloud DOM');
 		View.showInfoPageListView();
-        };
+        }
 	
 	/**
 	 * Method to request the screen to add the new node.
@@ -106,15 +105,14 @@ MVC.Controller = (function (interFace, Model, View, Request) {
                 this.storeNote();
                 debug('Controller notesAddNewNote: show form for adding a new note');
                 View.showAddNote(schema);
-        };
+        }
 
 	/**
 	 * Method which stores the currently edited/shown note and 
 	 * requests the ListView afterwards from the view.
 	 */
        interFace.notesReturnToListView = function() {
-            
-            this.storeNote();
+            this.storeNote();         
             this.notesListViewDataAsked('');
         }
 
@@ -124,6 +122,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	 * schema of the specified note.
 	 */
        interFace.storeNote = function() {
+            
             var id = document.getElementById('id').value;
             var jsonObj = {};
             
@@ -195,7 +194,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		    }
 
                 json_string = JSON.stringify(jsonObj);
-                console.log(json_string);
+                //console.log(json_string);
                 debug('Controller notesReturnToListView: saving note');
                 Request.updateNote(id,json_string, function(interestsJsonData) {
                     debug('Controller notesReturnToListView: show list view');
@@ -203,7 +202,9 @@ MVC.Controller = (function (interFace, Model, View, Request) {
             }
 
 		// clear all values after saveing
+
 		View.clearSingeNoteView();
+
         }
 
 	/**
@@ -211,10 +212,10 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	 * note at the view. The Request is sent to the webService and
 	 * after completion an updated for the NotesListView is triggered.
 	 */
-        interFace.notesDeleteNote = function() {
-		var id = document.getElementById('id').value;
+     interFace.notesDeleteNote = function() {
+		var id = document.getElementById('id').value;      
 		$("#tags_tagsinput").remove();
-		if(id != null && !isNaN(id)) {
+		if(id) { //id != null && !isNaN(id)
 			Request.deleteNote(id, function(interestsJsonData) {
 			debug('Controller notesDeleteNote: note deleted');
             		});
@@ -223,7 +224,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 		}
 		View.clearSingeNoteView();
 		this.notesListViewDataAsked('');
-        }
+     }
 
 	/**
 	 * Method to request a tag-cloud to get shown in the view.
