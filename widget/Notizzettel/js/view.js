@@ -482,7 +482,7 @@ MVC.View = (function (interFace, Controller, $) {
 	 */
 	interFace.getSingleNoteViewId = function() {
 		return $("input#id").val();
-	}
+	};
 
 	/**
 	 * Method which return the current value of the schema
@@ -491,7 +491,7 @@ MVC.View = (function (interFace, Controller, $) {
 	 */
 	interFace.getSingleNoteViewSchema = function() {
 		return $("input#schema").val();
-	}
+	};
 
 	/**
 	 * Method which return the current value of the title
@@ -563,6 +563,8 @@ MVC.View = (function (interFace, Controller, $) {
 	 */
 	interFace.getSingleNoteViewReminder = function() {
 		return $("input#reminder").val();
+	};
+
 	/**
 	 * Method which return the current value of the progress
 	 * field at the SingleNoteView.

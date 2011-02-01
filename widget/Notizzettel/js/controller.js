@@ -214,7 +214,7 @@ MVC.Controller = (function (interFace, Model, View, Request) {
 	 */
      interFace.notesDeleteNote = function() {
 		var id = View.getSingleNoteViewId();
-		Controller.clearTagsSingeNoteView();
+		View.clearTagsSingeNoteView();
 		if(id) { //id != null && !isNaN(id)
 			Request.deleteNote(id, function(interestsJsonData) {
 			debug('Controller notesDeleteNote: note deleted');
